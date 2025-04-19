@@ -1,0 +1,472 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-tw" lang="zh-tw" dir="ltr">
+<head>
+    <meta name="og:title" content="ZEUS Helmets - ZEUS Helmets｜瑞獅安全帽" />
+    <meta name="og:type" content="website" />
+    <meta name="og:image" content="https://www.zeus-helmets.tw/uploads/ui/logo.jpg" />
+    <meta name="og:url" content="https://www.zeus-helmets.tw/" />
+    <meta name="og:site_name" content="ZEUS Helmets｜瑞獅安全帽" />
+    <meta name="og:description" content="瑞獅安全帽是世界知名專業摩托車安全帽製造商，產品以創新設計、材質研發與專利機構為最大特色。提供全罩式、可掀式、JET、Open Face、Demi、雪帽、童帽、安全帽配件等產品。" />
+
+    <script type="application/ld+json">
+    {
+        "@context":"http://schema.org",
+        "@type":"ProfessionalService",
+        "@id": "https://www.zeus-helmets.tw/",
+        "name": "隆輝安全帽有限公司",
+        "image":"https://www.zeus-helmets.tw/uploads/ui/logo.jpg",
+        "address":{
+            "@type":"PostalAddress",
+            "streetAddress":"",
+            "addressLocality":"",
+            "postalCode":"",
+            "addressCountry":"TW"
+        },
+        "url": "https://www.zeus-helmets.tw/",
+        "logo": "https://www.zeus-helmets.tw/uploads/ui/logo.jpg",
+        "description": "瑞獅安全帽是世界知名專業摩托車安全帽製造商，產品以創新設計、材質研發與專利機構為最大特色。提供全罩式、可掀式、JET、Open Face、Demi、雪帽、童帽、安全帽配件等產品。",
+        "email": "zeustwservice@zeus-helmets.tw",
+        "telephone": "",
+        "priceRange": ""
+    }
+    </script>
+
+    <meta name="author" content="隆輝安全帽有限公司">
+    <meta name="rating" content="general">
+    <meta name="robots" content="index, follow">
+    <meta name="company" content="隆輝安全帽有限公司" />
+    <meta name="copyright" content="隆輝安全帽有限公司" />
+
+    <base href="https://www.zeus-helmets.tw/" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="安全帽,全罩式,可掀式,JET,Open Face,Demi,雪帽,童帽,安全帽配件" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="瑞獅安全帽是世界知名專業摩托車安全帽製造商，產品以創新設計、材質研發與專利機構為最大特色。提供全罩式、可掀式、JET、Open Face、Demi、雪帽、童帽、安全帽配件等產品。" />
+    <title>ZEUS Helmets - ZEUS Helmets｜瑞獅安全帽</title>
+
+    <link href="/?format=feed&type=rss" rel="alternate" type="application/rss+xml" title="RSS 2.0" />
+    <link href="/?format=feed&type=atom" rel="alternate" type="application/atom+xml" title="Atom 1.0" />
+    <link href="/templates/cadiis/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+    <link href="/plugins/system/jcemediabox/css/jcemediabox.css?1d12bb5a40100bbd1841bfc0e498ce7b" rel="stylesheet" type="text/css" />
+    <link href="/plugins/system/jcemediabox/themes/shadow/css/style.css?587b87a7390648bab4f4f6d04a8c420d" rel="stylesheet" type="text/css" />
+    <link href="/templates/cadiis/plugin/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/templates/cadiis/plugin/ionicon/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="/templates/cadiis/plugin/aos/dist/aos.css" rel="stylesheet" type="text/css" />
+    <link href="/templates/cadiis/css/template.css" rel="stylesheet" type="text/css" />
+    <link href="/templates/cadiis/css/extensions.css" rel="stylesheet" type="text/css" />
+    <link href="/templates/cadiis/css/editor.css" rel="stylesheet" type="text/css" />
+    <link href="/templates/cadiis/css/moblie.css" rel="stylesheet" type="text/css" />
+    <link href="/modules/mod_ebstickycookienotice/tmpl/assets/css/cookie.css" rel="stylesheet" type="text/css" />
+    <link href="/modules/mod_ebstickycookienotice/tmpl/assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <link href="/modules/mod_kkcontent_custom/tmpl/assets/css/owl-carousel/owl.carousel.css" rel="stylesheet" type="text/css" />
+    <link href="/modules/mod_kkcontent_custom/tmpl/assets/css/owl-carousel/owl.theme.css" rel="stylesheet" type="text/css" />
+    <link href="/modules/mod_kkcontent_custom/tmpl/assets/css/owl-carousel/custom.css" rel="stylesheet" type="text/css" />
+    <link href="/modules/mod_kkcontent_custom/tmpl/assets/css/owl-carousel/owl.theme.default.min.css" rel="stylesheet" type="text/css" />
+    <link href="/modules/mod_kkcontent_custom/tmpl/assets/css/superslider/style.css" rel="stylesheet" type="text/css" />
+    <link href="/modules/mod_kkcontent_custom/tmpl/assets/css/superslider/extralayers.css" rel="stylesheet" type="text/css" />
+    <link href="/modules/mod_kkcontent_custom/tmpl/assets/css/superslider/settings.css" rel="stylesheet" type="text/css" />
+    <link href="https://www.zeus-helmets.tw/modules/mod_je_accordionmenu/css/style.css" rel="stylesheet" type="text/css" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="apple-mobile-web-app-capable" content="YES" />
+    <meta name="format-detection" content="telephone=no">
+</head>
+<body>
+    <!-- Mobile Header -->
+    <div class="navbar-fixed-top d-xl-none header-mobile">
+        <div class="logo">
+            <a href="https://www.zeus-helmets.tw/" title="ZEUS Helmets｜瑞獅安全帽">
+                <span>ZEUS Helmets｜瑞獅安全帽</span>
+            </a>
+        </div>
+        <div class="language-btn-m">
+            <div class="langChoose langOpen"> </div>
+            <div class="langList" style="display: none;">
+                <div class="trangle"> </div>
+                <ul class="lang-block">
+                    <li class=""><a href="http://www.zeus-helmets.com/" target="_blank" rel="noopener">English</a></li>
+                    <li class=""><a href="http://www.zeus-helmets.com/es/" target="_blank" rel="noopener">Español</a></li>
+                    <li class=""><a href="http://www.zeus-helmets.com/pt/" target="_blank" rel="noopener">Português</a></li>
+                    <li class=""><a href="http://www.zeus-helmets.com/cn/" target="_blank" rel="noopener">简体中文</a></li>
+                    <li class=""><a href="http://www.zeus-helmets.com/jp/" target="_blank" rel="noopener">日本語</a></li>
+                    <li class=""><a href="http://www.zeus-helmets.com/vn/" target="_blank" rel="noopener">Tiếng Việt</a></li>
+                    <li class=""><a href="http://www.zeus-helmets.com/id/" target="_blank" rel="noopener">Indonesia</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="search-btn-m">
+            <p><a href="/2019-08-30-08-45-13"><img src="/Uploads/icon/search-btn.svg" alt="search btn" /></a></p>
+        </div>
+    </div>
+    <div class="menu-btn d-xl-none">
+        <span class="line-1"></span>
+        <span class="line-2"></span>
+        <span class="line-3"></span>
+    </div>
+    <nav class="mobilenav d-xl-none">
+        <div class="m-menu hidden-md-up">
+            <div class="moduletable">
+                <div id="je_accord95" class="je_acc">
+                    <ul>
+                        <li class="item-128 has-sub parent"><a href="/products">產品介紹</a>
+                            <ul>
+                                <li class="item-344 parent"><a href="/products/full-face"><img src="/Uploads/product/menu/ZS-1800B_AM16_tou ming tan xian_hong_1.png" alt="全罩式" /><span class="image-title">全罩式</span></a></li>
+                                <li class="item-349 parent"><a href="/products/modular">可掀式</a></li>
+                                <li class="item-351 parent"><a href="/products/jet">3/4罩式</a></li>
+                                <li class="item-327 parent"><a href="/products/open-face"><img src="/Uploads/ZR-B_butter_white.png" alt="復古帽" /><span class="image-title">復古帽</span></a></li>
+                                <li class="item-336 parent"><a href="/products/demi-jet">半罩式</a></li>
+                                <li class="item-338 parent"><a href="/products/snow">雪帽</a></li>
+                                <li class="item-343 parent"><a href="/products/kids">童帽</a></li>
+                                <li class="item-367 parent"><a href="/products/accessory">配件</a></li>
+                            </ul>
+                        </li>
+                        <li class="item-393 has-sub parent"><a href="#">關於瑞獅</a>
+                            <ul>
+                                <li class="item-394"><a href="/about/company">公司</a></li>
+                                <li class="item-491"><a href="/about/security">安心</a></li>
+                                <li class="item-395"><a href="/about/brand">品牌</a></li>
+                                <li class="item-396"><a href="/about/team">團隊</a></li>
+                                <li class="item-397"><a href="/about/capability">能力</a></li>
+                                <li class="item-398"><a href="/about/technology">技術</a></li>
+                            </ul>
+                        </li>
+                        <li class="item-303 has-sub parent"><a href="#">經銷據點</a>
+                            <ul>
+                                <li class="item-305"><a href="/distributor/points">官方授權店家</a></li>
+                                <li class="item-311"><a href="/distributor/featured-distributors">每月優質店家</a></li>
+                            </ul>
+                        </li>
+                        <li class="item-154 has-sub parent"><a href="/all-news">最新消息</a>
+                            <ul>
+                                <li class="item-287"><a href="/product-spec">產品特色</a></li>
+                                <li class="item-289"><a href="/exhibition">展覽消息</a></li>
+                                <li class="item-290"><a href="/activity">行銷活動</a></li>
+                                <li class="item-291"><a href="/news">帽款新訊</a></li>
+                            </ul>
+                        </li>
+                        <li class="item-293 has-sub parent"><a href="/service">客戶服務</a>
+                            <ul>
+                                <li class="item-129"><a href="/service/contact">聯絡我們</a></li>
+                                <li class="item-294"><a href="/general-questions">常見問題</a></li>
+                                <li class="item-301"><a href="/all-videos">影片區</a></li>
+                                <li class="item-302"><a href="/2021">下載區</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="social-links-top-m">
+            <p>
+                <a href="https://www.flickr.com/photos/132538331@N04/albums" target="_blank" rel="noopener"><img src="/Uploads/icon/flickr.svg" alt="flickr" style="margin-right: 10px;" title="Flickr產品大圖觀看" /></a>
+                <a href="https://www.facebook.com/ZEUS.Helmets.Taiwan" target="_blank" rel="noopener"><img src="/Uploads/icon/fb.svg" alt="fb" width="26" height="26" style="margin-right: 10px;" title="ZEUS Helmets粉絲團" /></a>
+                <a href="https://www.youtube.com/channel/UC1Yzku3oK2i7FscFEPgcknA?view_as=subscriber" target="_blank" rel="noopener"><img src="/Uploads/icon/youtube.svg" alt="youtube" style="margin-right: 10px;" title="ZEUS Youtube頻道" /></a>
+                <a href="https://www.instagram.com/zeushelmetstw/?hl=zh-tw" target="_blank" rel="noopener"><img src="/Uploads/icon/ig.svg" alt="ig" width="26" height="26" title="ZEUS Instagram" /></a>
+            </p>
+        </div>
+    </nav>
+
+    <!-- PC Header -->
+    <header id="header" class="navbar navbar-fixed-top d-none d-xl-block">
+        <div class="container header">
+            <h1 class="logo">
+                <a href="https://www.zeus-helmets.tw/" title="ZEUS Helmets｜瑞獅安全帽">
+                    <span>ZEUS Helmets｜瑞獅安全帽</span>
+                </a>
+            </h1>
+            <nav class="navigation mainmenu" role="navigation">
+                <ul class="nav menu cl-effect-17 mod-list">
+                    <li class="item-128 deeper parent"><a href="/products">產品介紹</a>
+                        <ul class="nav-child unstyled small">
+                            <li class="item-344 deeper parent"><a href="/products/full-face">全罩式</a><span class="kds-menuimg"><img class="menuimg" src="/"></span>
+                                <ul class="nav-child unstyled small">
+                                    <li class="item-461"><a href="/products/full-face/zs-1800b">ZS-1800B</a></li>
+                                    <li class="item-498"><a href="/products/full-face/zs-1800a">ZS-1800A</a></li>
+                                    <li class="item-377"><a href="/products/full-face/zs-1600">ZS-1600</a></li>
+                                    <li class="item-347"><a href="/products/full-face/zs-1200h">ZS-1200H</a></li>
+                                    <li class="item-379"><a href="/products/full-face/zs-1200e">ZS-1200E</a></li>
+                                    <li class="item-479"><a href="/products/full-face/zs-826">ZS-826</a></li>
+                                    <li class="item-380"><a href="/products/full-face/zs-813">ZS-813</a></li>
+                                    <li class="item-448"><a href="/products/full-face/zs-821">ZS-821</a></li>
+                                    <li class="item-381"><a href="/products/full-face/zs-811">ZS-811</a></li>
+                                    <li class="item-434"><a href="/products/full-face/zs-811a">ZS-811A</a></li>
+                                    <li class="item-382"><a href="/products/full-face/zs-806f">ZS-806F</a></li>
+                                    <li class="item-384"><a href="/products/full-face/zs-807a">ZS-807A</a></li>
+                                    <li class="item-385"><a href="/products/full-face/zs-801">ZS-801</a></li>
+                                    <li class="item-387"><a href="/products/full-face/zs-2000c">ZS-2000C</a></li>
+                                </ul>
+                            </li>
+                            <li class="item-349 deeper parent"><a href="/products/modular">可掀式</a><span class="kds-menuimg"><img class="menuimg" src="/"></span>
+                                <ul class="nav-child unstyled small">
+                                    <li class="item-352"><a href="/products/modular/zs-3500">ZS-3500</a></li>
+                                    <li class="item-353"><a href="/products/modular/zs-3300">ZS-3300</a></li>
+                                    <li class="item-388"><a href="/products/modular/zs-3100">ZS-3100</a></li>
+                                    <li class="item-390"><a href="/products/modular/zs-3030">ZS-3030</a></li>
+                                    <li class="item-391"><a href="/products/modular/zs-3010">ZS-3010</a></li>
+                                </ul>
+                            </li>
+                            <!-- 其他子菜單省略，結構類似 -->
+                        </ul>
+                    </li>
+                    <li class="item-393 deeper parent"><a href="#">關於瑞獅</a>
+                        <ul class="nav-child unstyled small">
+                            <li class="item-394"><a href="/about/company">公司</a></li>
+                            <li class="item-491"><a href="/about/security">安心</a></li>
+                            <li class="item-395"><a href="/about/brand">品牌</a></li>
+                            <li class="item-396"><a href="/about/team">團隊</a></li>
+                            <li class="item-397"><a href="/about/capability">能力</a></li>
+                            <li class="item-398"><a href="/about/technology">技術</a></li>
+                        </ul>
+                    </li>
+                    <!-- 其他主菜單省略，結構類似 -->
+                </ul>
+            </nav>
+            <div class="social-links-top">
+                <p>
+                    <a href="https://www.flickr.com/photos/132538331@N04/albums" target="_blank" rel="noopener"><img src="/Uploads/icon/flickr.svg" alt="flickr" style="margin-right: 10px;" title="Flickr產品大圖觀看" /></a>
+                    <a href="https://www.facebook.com/ZEUS.Helmets.Taiwan" target="_blank" rel="noopener"><img src="/Uploads/icon/fb.svg" alt="fb" width="26" height="26" style="margin-right: 10px;" title="ZEUS Helmets粉絲團" /></a>
+                    <a href="https://www.youtube.com/channel/UC1Yzku3oK2i7FscFEPgcknA?view_as=subscriber" target="_blank" rel="noopener"><img src="/Uploads/icon/youtube.svg" alt="youtube" style="margin-right: 10px;" title="ZEUS Youtube頻道" /></a>
+                    <a href="https://www.instagram.com/zeushelmetstw/?hl=zh-tw" target="_blank" rel="noopener"><img src="/Uploads/icon/ig.svg" alt="ig" width="26" height="26" title="ZEUS Instagram" /></a>
+                </p>
+            </div>
+            <div class="language-btn">
+                <div class="langChoose langOpen"> </div>
+                <div class="langList" style="display: none;">
+                    <div class="trangle"> </div>
+                    <ul class="lang-block">
+                        <li class=""><a href="http://www.zeus-helmets.com/" target="_blank" rel="noopener">English</a></li>
+                        <li class=""><a href="http://www.zeus-helmets.com/es/" target="_blank" rel="noopener">Español</a></li>
+                        <li class=""><a href="http://www.zeus-helmets.com/pt/" target="_blank" rel="noopener">Português</a></li>
+                        <li class=""><a href="http://www.zeus-helmets.com/cn/" target="_blank" rel="noopener">简体中文</a></li>
+                        <li class=""><a href="http://www.zeus-helmets.com/jp/" target="_blank" rel="noopener">日本語</a></li>
+                        <li class=""><a href="http://www.zeus-helmets.com/vn/" target="_blank" rel="noopener">Tiếng Việt</a></li>
+                        <li class=""><a href="http://www.zeus-helmets.com/id/" target="_blank" rel="noopener">Indonesia</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="search-btn">
+                <p><a href="/2019-08-30-08-45-13"><img src="/Uploads/icon/search-btn.svg" alt="search btn" /></a></p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Slider -->
+    <div class="slider d-none d-sm-block">
+        <div class="tp-banner-container">
+            <div id="sc_101" class="tp-banner">
+                <ul style="display:none;">
+                    <li data-transition="fade" data-masterspeed="300" data-link="https://www.zeus-helmets.tw/about/security" data-target="_self">
+                        <img src="/images/kkcontent_thumbs/thumb_101_591_1738895705_ZEUS_reliable_factory.jpg" alt="">
+                    </li>
+                    <!-- 其他幻燈片項目省略 -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slider_m -->
+    <div class="slider d-sm-none">
+        <div class="tp-banner-container">
+            <div id="sc_132" class="tp-banner">
+                <ul style="display:none;">
+                    <li data-transition="fade" data-masterspeed="300" data-link="https://www.zeus-helmets.tw/about/security" data-target="_self">
+                        <img src="/images/kkcontent_thumbs/thumb_132_593_1738897491_ZEUS_reliable_factory_m.jpg" alt="">
+                    </li>
+                    <!-- 其他幻燈片項目省略 -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- home-product -->
+    <div class="home-product" data-aos="fade-up" data-aos-delay="300">
+        <div class="fullblock">
+            <div class="container">
+                <h2 class="module-header">最新產品</h2>
+                <div class="kkcontent-carousel-wrap">
+                    <div id="owlcarousel-content-104" class="kkcontent-carousel owl-carousel owl-theme">
+                        <div class="item">
+                            <a href="https://www.zeus-helmets.tw/products/open-face/zr-b" target="_self">
+                                <span class="kkcontent">
+                                    <span class="img-wrap">
+                                        <img src="/images/kkcontent_thumbs/thumb_104_590_1736836439_ZR-B_butter_white.png" alt="">
+                                    </span>
+                                    <span class="intro">
+                                        <p></p>
+                                        <p>ZR-B 奶油白</p>
+                                    </span>
+                                    <span class="title">
+                                        Retro新系 全面進化
+                                    </span>
+                                </span>
+                            </a>
+                        </div>
+                        <!-- 其他產品項目省略 -->
+                    </div>
+                    <div id="oc_104" class="kkcontent-carousel-controls">
+                        <a class="controls-left" href="javascript:void(0)"></a>
+                        <a class="controls-right" href="javascript:void(0)"> </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- home-news -->
+    <div class="home-news" data-aos="fade" data-aos-delay="300">
+        <div class="fullblock">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-3 catgorydesc">
+                        <h2>最新消息</h2>
+                        <p>歡迎來與我們一同交流與分享，讓我們一起享受各種冒險旅程吧！<br />透過你最喜愛的社交媒體來關注我們，隨時了解我們的最新消息、活動並與其他ZEUS夥伴們一起聯繫交流。</p>
+                    </div>
+                    <div class="kkcontent-carousel-wrap col-12 col-lg-9">
+                        <div id="owlcarousel-content-105" class="kkcontent-carousel owl-carousel owl-theme">
+                            <div class="item">
+                                <a href="/activity/576-zeus-2024-summer" target="_self">
+                                    <span class="kkcontent">
+                                        <img src="/images/kkcontent_thumbs/thumb_105_576_1726727030_ZEUS_SUMMER_01_A_SHORT.jpg" alt="">
+                                        <span class="intro-wrap">
+                                            <span class="date">2024/09/19</span>
+                                            <span class="title">【ZEUS 2024 夏日狂歡特賣會】</span>
+                                            <span class="intro">2024 夏日狂歡特賣會來囉!感謝大家對ZEUS多年來的支持與肯定!特別在9月底舉辦優惠活動回饋大家!</span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                            <!-- 其他新聞項目省略 -->
+                        </div>
+                        <div id="oc_105" class="kkcontent-carousel-controls">
+                            <a class="controls-left" href="javascript:void(0)"></a>
+                            <a class="controls-right" href="javascript:void(0)"> </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- home-links -->
+    <div class="home-links" data-aos="fade" data-aos-delay="300">
+        <ul class="row">
+            <li class="col-12 col-md-6 col-xl-4">
+                <a href="https://www.zeus-helmets.tw/products/full-face/zs-1800b" target="_self">
+                    <img src="/images/kkcontent_thumbs/thumb_106_529_1705891819_DSC_6224A.jpg" alt="">
+                    <span class="title-wrap">
+                        <span class="intro">你值得最頂級!</span>
+                        <span class="title">ZS-1800B</span>
+                    </span>
+                </a>
+            </li>
+            <!-- 其他連結項目省略 -->
+        </ul>
+        <div class="more_articles">
+            <a href="/" target=""></a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="bbox row">
+                <div class="col-md-3 col-6">
+                    <h2 class="module-header">安全帽</h2>
+                    <ul class="nav menu mod-list">
+                        <li class="item-344 active parent"><a href="/products/full-face">全罩式</a></li>
+                        <li class="item-349 parent"><a href="/products/modular">可掀式</a></li>
+                        <li class="item-351 parent"><a href="/products/jet">3/4罩式</a></li>
+                        <li class="item-327 parent"><a href="/products/open-face">復古帽</a></li>
+                        <li class="item-336 parent"><a href="/products/demi-jet">半罩式</a></li>
+                        <li class="item-338 parent"><a href="/products/snow">雪帽</a></li>
+                        <li class="item-343 parent"><a href="/products/kids">童帽</a></li>
+                        <li class="item-367 parent"><a href="/products/accessory">配件</a></li>
+                    </ul>
+                </div>
+                <!-- 其他 footer 區塊省略 -->
+            </div>
+            <div class="social-links">
+                <div class="fullblock">
+                    <div class="container">
+                        <p><img src="/Uploads/icon/footer-logo.svg" alt="footer logo" style="margin-bottom: 30px;" /></p>
+                        <p>
+                            <a href="https://www.flickr.com/photos/132538331@N04/albums" target="_blank" rel="noopener"><img src="/Uploads/icon/flickr.svg" alt="flickr" style="margin-right: 7px;" /></a>
+                            <a href="https://www.facebook.com/ZEUS.Helmets.Taiwan" target="_blank" rel="noopener"><img src="/Uploads/icon/fb.svg" alt="fb" width="26" style="margin-right: 7px;" /></a>
+                            <a href="https://www.youtube.com/channel/UC1Yzku3oK2i7FscFEPgcknA?view_as=subscriber" target="_blank" rel="noopener"><img src="/Uploads/icon/youtube.svg" alt="youtube" width="26" style="margin-right: 7px;" /></a>
+                            <a href="https://www.instagram.com/zeushelmetstw/?hl=zh-tw" target="_blank" rel="noopener"><img src="/Uploads/icon/ig.svg" alt="ig" width="26" height="26" /></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-wrap">
+                <div class="footnav text-center">
+                    <div class="fullblock">
+                        <div class="container">
+                            <ul class="nav menu mod-list">
+                                <li class="item-101 default current active"><a href="/">Home</a></li>
+                                <li class="item-133"><a href="/sitemap">網站地圖</a></li>
+                                <li class="item-449"><a href="/cookie">COOKIES使用政策</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <div class="fullblock">
+                        <div class="container">
+                            <p>版權所有 © 隆輝安全帽有限公司 | Designed by CADIIS <a href="https://www.cadiis.com.tw" rel="dofollow">網頁設計</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookies Notice -->
+    <div class="notice_div_ribbin bottom" id="eu_cookies">
+        <div class="inner1">
+            <div class="inner3 eb_contentwrap">
+                <p>
+                    <div style="line-height: 150%; color: #FFF;">
+                        為提供您最佳的網站使用體驗，ZEUS Helmets Taiwan官方網站會於網站使用Cookie，以作為技術、分析、行
+// 以下為簡化，省略部分重複內容以縮短範例，實際應包含完整 HTML 結構
