@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e心守護回報表單</title>
+    <!-- 引入外部 CSS 檔案 -->
+    <link rel="stylesheet" href="css/EHeartRE.css">
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<style>
+    /* 設置 HTML 和 Body 背景圖片 */
+    html, body {
+        background-image: url('https://i.imgur.com/CN87QdK.jpeg'); /* 替換為您的 Imgur 圖片直接連結 */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        margin: 0; /* 移除預設的 margin */
+        height: 100%; /* 確保 html 和 body 高度為 100% */
+    }
+
+    /* 其他樣式 */
+    .container {
+        background-color: rgba(255, 255, 255, 0.8); /* 表單背景顏色 */
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 600px;
+        margin: 50px auto;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    input, select, button, textarea {
+        margin-top: 5px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    textarea {
+        resize: vertical; /* 允許垂直調整大小 */
+        min-height: 100px; /* 最小高度 */
+    }
+
+    button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #218838;
+    }
+
+    #reports-list {
+        margin-top: 20px;
+    }
+
+    #reports-list h2 {
+        color: #333;
+    }
+
+    #reports {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    #reports li {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <h1>e心守護回報表單</h1>
+        <form id="report-form">
+            <label for="rank">級職：</label>
+            <select id="rank" name="rank" required>
+                <option value="上尉">上尉</option>
+                <option value="中尉">中尉</option>
+                <option value="少尉">少尉</option>
+                <option value="士官長">士官長</option>
+                <option value="上士">上士</option>
+                <option value="中士">中士</option>
+                <option value="下士">下士</option>
+                <option value="上兵">上兵</option>
+                <option value="一兵">一兵</option>
+                <option value="二兵">二兵</option>
+            </select>
+
+            <label for="name">姓名：</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="photo">上傳截圖：</label>
+            <input type="file" id="photo" name="photo" accept="image/*" required>
+
+            <!-- 新增的輸入框 -->
+            <label for="suggestion">請提供建議或反映問題：</label>
+            <textarea id="suggestion" name="suggestion" placeholder="請輸入您的建議或問題..." required></textarea>
+
+            <button type="submit">提交</button>
+            <h3 style="color: red;">提交鈕按下後，請稍等，上傳需要時間</h3>
+        </form>
+    </div>
+
+    <!-- 引入 Firebase SDK -->
+    <script type="module">
+        // 引入 Firebase 功能
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, writeBatch, doc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
+
+        // Firebase 設定檔
+        const firebaseConfig = {
+            apiKey: "AIzaSyBv-DYm4c4l9Dn-o7ME4TnI92YsCpss1nM",
+            authDomain: "carsign-423fc.firebaseapp.com",
+            databaseURL: "https://carsign-423fc-default-rtdb.firebaseio.com",
+            projectId: "carsign-423fc",
+            storageBucket: "carsign-423fc.firebasestorage.app",
+            messagingSenderId: "219688439999",
+            appId: "1:219688439999:web:2d4f8646c98bcb76e4360a",
+            measurementId: "G-7FRW6JPXBJ"
+        };
+
+        // 初始化 Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        // 處理表單提交
+        document.getElementById('report-form').addEventListener('submit', async function (event) {
+            event.preventDefault(); // 阻止表單默認提交行為
+
+            // 獲取表單資料
+            const rank = document.getElementById('rank').value;
+            const name = document.getElementById('name').value;
+            const photo = document.getElementById('photo').files[0];
+            const suggestion = document.getElementById('suggestion').value;
+
+            // 檢查所有欄位是否都有內容
+            if (!rank || !name || !photo || !suggestion) {
+                alert('請填寫所有欄位！');
+                return;
+            }
+
+            let retryCount = 3; // 重試次數
+            while (retryCount > 0) {
+                try {
+                    // 上傳圖片到 Firebase Storage
+                    const storageRef = ref(storage, `photos/${photo.name}`);
+                    const snapshot = await uploadBytes(storageRef, photo);
+                    const photoUrl = await getDownloadURL(snapshot.ref);
+
+                    // 使用批次寫入功能
+                    const batch = writeBatch(db);
+                    const reportRef = doc(collection(db, 'reports'));
+
+                    batch.set(reportRef, {
+                        rank,
+                        name,
+                        photoUrl, // 存儲圖片連結
+                        suggestion, // 存儲建議或問題
+                        timestamp: serverTimestamp()
+                    });
+
+                    await batch.commit(); // 提交批次寫入
+
+                    alert('提交成功！');
+                    return; // 提交成功，退出函式
+                } catch (error) {
+                    console.error('提交失敗：', error);
+                    retryCount--;
+                    if (retryCount === 0) {
+                        alert('提交失敗，請稍後再試。');
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #2e2e2e;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #status-btn {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 1000;
+        }
+
+        #status-btn:hover {
+            background-color: #45a049;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 24px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #444;
+        }
+
+        tr:nth-child(even) {
+            background-color: #333;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #555;
+        }
+
+        button {
+    background-color: #4CAF50; /* 軍事綠背景 */
+    color: white; /* 白色文字 */
+    padding: 8px 16px; /* 內邊距較小 */
+    border: 2px solid #333; /* 黑色邊框 */
+    cursor: pointer; /* 鼠標指針變為點擊手型 */
+    font-size: 14px; /* 字體較小 */
+    font-weight: bold; /* 字體加粗 */
+    text-transform: uppercase; /* 文字轉為大寫 */
+    letter-spacing: 1px; /* 增加字母間距 */
+    border-radius: 4px; /* 圓角邊框 */
+    width: auto; /* 寬度根據文字自動調整 */
+    margin: 8px 0; /* 上下邊距 */
+}
+
+button:hover {
+    background-color: #388E3C; /* 懸停顏色變為深綠色 */
+    border-color: #222; /* 懸停時邊框顏色稍微加深 */
+}
+
+.btn-danger {
+    background-color: #f44336; /* 紅色背景 */
+    border-color: #d32f2f; /* 深紅色邊框 */
+}
+
+.btn-danger:hover {
+    background-color: #d32f2f; /* 懸停顏色變為深紅色 */
+    border-color: #c62828; /* 懸停邊框顏色更深 */
+}
+
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        #modal-content {
+            background-color: #333;
+            padding: 20px;
+            max-width: 800px;
+            width: 90%;
+            overflow-y: auto;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #f44336;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            background-color: #da190b;
+        }
+
+        #loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            display: none;
+        }
+
+        #map {
+            height: 400px;
+            margin-top: 20px;
+        }

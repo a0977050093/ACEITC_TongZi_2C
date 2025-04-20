@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>MDM 安裝頁面</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/MDM.css" />
+</head>
+<body>
+  <div id="time">請先啟用 JavaScript 才能執行安裝 MDM</div>
+
+  <div class="toggle-buttons">
+    <button class="button" onclick="showSection('ios')"><i class="fab fa-apple"></i> iOS</button>
+    <button class="button" onclick="showSection('android')"><i class="fab fa-android"></i> Android</button>
+  </div>
+
+  <!-- iOS 區塊 -->
+  <div id="ios-section">
+    <div class="congrats icon-title"><i class="fab fa-apple"></i>iOS MDM V8.0 安裝網頁 (R1)</div>
+    <div id="notSafari">注意：必須使用 Safari 瀏覽器進行 App 安裝（Line 內建的瀏覽器也可以）</div>
+    <a href="itms-services://?action=download-manifest&url=https://mdm-516db1.gitlab.io/manifest.plist"
+       class="button"
+       onclick="return confirm('您確定要更新 iOS MDM 嗎？\n請確認未上鎖且相機狀態恢復後再安裝。')">安裝 iOS MDM app</a>
+    <div class="note">
+      僅限 iOS14 以上版本且 64 位元手機<br>請確認於未上鎖且相機狀態恢復後再安裝
+    </div>
+    <div class="instructions-step">
+      安裝步驟：<br>
+      1. 點選上方安裝按鈕。<br>
+      2. 出現安裝訊息後，點選「安裝」。<br>
+      3. 按 HOME 鍵回主畫面，檢查 App 是否安裝完成。
+    </div>
+  </div>
+
+  <!-- Android 區塊 -->
+  <div id="android-section" class="hidden">
+    <div class="congrats icon-title"><i class="fab fa-android"></i>Android MDM V8.0 安裝網頁 (R1)</div>
+    <div id="notSafari">注意：瀏覽器必須支援 APK 檔案下載功能（Line 內建瀏覽器不支援，請點右上角選擇「以其他應用程式開啟」）</div>
+    <a href="MDM_8.0.apk"
+       class="button"
+       onclick="return confirm('您確定要更新 Android MDM 嗎？\n請確認於未上鎖狀態再安裝。')">安裝 Android MDM app</a>
+    <div class="note">
+      僅限 Android 8 以上版本手機<br>請確認於未上鎖狀態再安裝
+    </div>
+    <div class="instructions-step">
+      安裝步驟：<br>
+      1. 點選上方安裝按鈕。<br>
+      2. 瀏覽器會下載安裝檔。<br>
+      3. 若跳出選擇應用程式，Android 5/6/7 建議選「Google 雲端硬碟」，Android 8 建議選「Chrome」。<br>
+      4. 若未自動啟動安裝，請至檔案總管 App 中手動安裝。
+    </div>
+  </div>
+
+  <script src="js/MDM.js"></script>
+</body>
+</html>

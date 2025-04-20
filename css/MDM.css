@@ -1,0 +1,72 @@
+body {
+  background: #c5ccd4;
+  font-family: Helvetica, Arial, sans-serif;
+  margin: 20px;
+}
+
+.congrats {
+  font-size: 16pt;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.note {
+  color: #FF0000;
+  font-weight: bold;
+}
+
+.instructions-step {
+  color: #FF0099;
+  font-size: 10pt;
+}
+
+.button {
+  display: inline-block;
+  font: bold 16pt Arial;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333;
+  padding: 6px 12px;
+  border: 1px solid #333;
+  border-radius: 6px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.toggle-buttons {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.toggle-buttons .button {
+  margin: 0 10px;
+}
+
+#notSafari {
+  color: red;
+  font-size: 16pt;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+#time {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.icon-title i {
+  margin-right: 8px;
+}
+
+/* 將「安裝」按鈕置中於 iOS 和 Android 區塊 */
+#ios-section, #android-section {
+  text-align: center;
+}

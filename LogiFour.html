@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>國軍裝備管理系統</title>
+    <link rel="stylesheet" href="css/LogiFour.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 頭部 -->
+        <header class="header">
+            <h1>國軍裝備管理系統</h1>
+            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        </header>
+
+        <!-- 側邊欄 -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>裝備類型</h2>
+                <button class="menu-close" onclick="toggleSidebar()">×</button>
+            </div>
+            <div class="menu-item" onclick="toggleSubMenu('wheeledMenu')">輪車</div>
+            <div class="sub-menu" id="wheeledMenu">
+                <div class="menu-item" onclick="showEquipment('輪車', '大貨車')">大貨車</div>
+                <div class="menu-item" onclick="showEquipment('輪車', '悍馬車')">悍馬車</div>
+                <div class="menu-item" onclick="showEquipment('輪車', '中型戰術輪車')">中型戰術輪車</div>
+                <div class="menu-item" onclick="showEquipment('輪車', '輕型戰術輪車')">輕型戰術輪車</div>
+            </div>
+            <div class="menu-item" onclick="toggleSubMenu('ordnanceMenu')">兵工</div>
+            <div class="sub-menu" id="ordnanceMenu">
+                <div class="menu-item" onclick="showEquipment('兵工', 'T91')">T91</div>
+            </div>
+            <div class="menu-item" onclick="toggleSubMenu('chemicalMenu')">化學</div>
+            <div class="sub-menu" id="chemicalMenu">
+                <div class="menu-item">裝備1</div>
+                <div class="menu-item">裝備2</div>
+            </div>
+            <div class="menu-item" onclick="toggleSubMenu('engineerMenu')">工兵</div>
+            <div class="sub-menu" id="engineerMenu">
+                <div class="menu-item">裝備1</div>
+                <div class="menu-item">裝備2</div>
+            </div>
+            <div class="menu-item" onclick="toggleSubMenu('communicationMenu')">通信</div>
+            <div class="sub-menu" id="communicationMenu">
+                <div class="menu-item">裝備1</div>
+                <div class="menu-item">裝備2</div>
+            </div>
+            <div class="menu-item" onclick="toggleSubMenu('managerMenu')">經理</div>
+            <div class="sub-menu" id="managerMenu">
+                <div class="menu-item">裝備1</div>
+                <div class="menu-item">裝備2</div>
+            </div>
+        </nav>
+
+        <!-- 主內容區 -->
+        <main class="content">
+            <div class="equipment-card">
+                <h2 class="card-title">裝備資料</h2>
+                <div id="equipmentDetails" class="equipment-info"></div>
+                <table id="equipmentTable" class="equipment-table">
+                    <thead>
+                        <tr>
+                            <th>序號</th>
+                            <th>現況</th>
+                            <th>備考</th>
+                            <th>填入日期</th>
+                            <th>填入人</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 這裡將動態添加序號 -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="statusDisplay" class="status-display">
+                <h2 class="card-title">最新現況</h2>
+                <div class="status-content"></div>
+            </div>
+
+            <form id="statusForm" class="status-form">
+                <h2 class="card-title">填入現況</h2>
+                <div class="form-group">
+                    <label>選擇序號</label>
+                    <select id="serialNumber" required>
+                        <option value="" disabled selected>請選擇序號</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>現況</label>
+                    <textarea id="status" placeholder="請描述裝備的現況..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>備考</label>
+                    <input type="text" id="notes" placeholder="請輸入備考...">
+                </div>
+                <div class="form-group">
+                    <label>填入日期</label>
+                    <input type="date" id="entryDate" required>
+                </div>
+                <div class="form-group">
+                    <label>填入人</label>
+                    <input type="text" id="enteredBy" placeholder="請輸入填入人..." required>
+                </div>
+                <button type="submit" class="submit-btn">提交</button>
+            </form>
+        </main>
+    </div>
+
+    <script src="js/LogiFour.js"></script>
+</body>
+</html>

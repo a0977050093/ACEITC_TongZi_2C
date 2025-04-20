@@ -1,0 +1,353 @@
+/* 基本設定 */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* 夜間模式 */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+/* 容器區域 */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+body.dark-mode .container {
+    background-color: #1e1e1e;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+/* 標題樣式 */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 32px;
+    color: inherit;
+}
+
+/* 側邊欄標題樣式 */
+.sidebar-content h4 {
+    padding-left: 20px; /* 調整左邊的內距 */
+    margin-top: 15px;   /* 調整上方的外距 */
+    margin-bottom: 10px; /* 調整下方的外距 */
+    font-size: 18px;    /* 調整字體大小 */
+    color: #ffffff;     /* 調整文字顏色 */
+    font-weight: bold;  /* 加粗文字 */
+}
+
+/* 標籤區域 */
+.tabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* 按鈕樣式 */
+.tab {
+    padding: 10px 15px;
+    background-color: #e0e0e0;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    flex: 1 1 auto;
+    text-align: center;
+    min-width: 120px;
+    color: #333;
+}
+
+.tab.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.tab:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+body.dark-mode .tab {
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+body.dark-mode .tab.active,
+body.dark-mode .tab:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* 標籤內容 */
+.tab-contents {
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-content {
+    display: none;
+    padding: 10px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* 內容區域 */
+.content-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content-wrapper iframe {
+    width: 100%;
+    height: 500px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    display: block;
+}
+
+body.dark-mode .content-wrapper iframe {
+    border-color: #555;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+}
+
+/* 全螢幕彈出視窗 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal.open {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    height: 90%;
+    position: relative;
+    border-radius: 8px;
+}
+
+body.dark-mode .modal-content {
+    background-color: #1e1e1e;
+    border-color: #555;
+}
+
+.modal-content iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* 關閉按鈕 */
+.close-button {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+body.dark-mode .close-button:hover,
+body.dark-mode .close-button:focus {
+    color: #e0e0e0;
+}
+
+/* 側邊欄 */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #333;
+    color: white;
+    padding-top: 60px;
+    transition: left 0.3s ease;
+    z-index: 1000;
+}
+
+.sidebar.open {
+    left: 0;
+}
+
+/* 側邊欄連結 */
+.sidebar-content a {
+    display: block;
+    padding: 10px 20px;
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-content a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 切換按鈕 */
+.toggle-button {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    z-index: 1001;
+    transition: background-color 0.3s;
+}
+
+.toggle-button:hover {
+    background-color: #0056b3;
+}
+
+body.dark-mode .toggle-button {
+    background-color: #007bff;
+}
+
+body.dark-mode .toggle-button:hover {
+    background-color: #0056b3;
+}
+
+/* 一般按鈕 */
+.button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+body.dark-mode .button {
+    background-color: #007bff;
+}
+
+body.dark-mode .button:hover {
+    background-color: #0056b3;
+}
+
+/* 擴展按鈕 */
+.expand-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 10px;
+}
+
+.expand-button i {
+    margin-right: 5px;
+}
+
+/* 夜間模式按鈕 */
+.dark-mode-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    transition: background-color 0.3s;
+}
+
+.dark-mode-button:hover {
+    background-color: #0056b3;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .tab {
+        min-width: 100px;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    .tab {
+        min-width: 80px;
+        padding: 6px 10px;
+    }
+}

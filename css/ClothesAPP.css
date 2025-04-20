@@ -1,0 +1,111 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e9f2e9; /* 淺軍綠背景 */
+}
+
+header {
+    background: #4b8b3b; /* 軍綠色 */
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: 100px;
+    background: #3c6a3e; /* 深軍綠色 */
+    padding: 15px;
+    height: 100vh; /* 使側邊選單填滿整個視窗高度 */
+    transition: width 0.3s; /* 減慢寬度變化 */
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    color: #fff;
+    cursor: pointer; /* 鼠標指針顯示為手型 */
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    display: block; /* 預設顯示 */
+}
+
+.sidebar ul li {
+    margin: 10px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #ffffff; /* 白色文字 */
+}
+
+.sidebar ul li a:hover {
+    color: #d1e7dd; /* 鼠標懸停顏色變化 */
+}
+
+main {
+    padding: 20px;
+    flex: 1; /* 讓主內容區域填滿剩餘空間 */
+}
+
+.product-grid {
+    margin-bottom: 40px;
+}
+
+.product-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+    background: #fff; /* 白色背景 */
+}
+
+.product-card img {
+    max-width: 100%;
+    height: auto;
+}
+
+.product-card h2 {
+    font-size: 1.2em;
+}
+
+.product-card p {
+    color: #666;
+}
+
+button {
+    background: #28a745; /* 綠色按鈕 */
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #218838; /* 按鈕懸停顏色變化 */
+}
+
+.scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #4b8b3b; /* 軍綠色 */
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none; /* 初始隱藏 */
+}
+
+.scroll-to-top:hover {
+    background: #3c6a3e; /* 懸停顏色變化 */
+}
