@@ -1,0 +1,134 @@
+.form-group {
+       margin-bottom: 1.5rem;
+     }
+
+     .form-group label {
+       color: var(--neutral-color);
+       font-weight: 500;
+     }
+
+     .form-control {
+       background-color: var(--bg-dark);
+       color: var(--neutral-color);
+       border: 1px solid var(--secondary-color);
+       border-radius: 4px;
+       padding: 10px;
+     }
+
+     .form-control:focus {
+       border-color: var(--accent-color);
+       box-shadow: 0 0 5px rgba(212, 160, 23, 0.5);
+     }
+
+     .btn-primary {
+       background-color: var(--accent-color);
+       color: var(--neutral-color);
+       border: none;
+       padding: 10px 20px;
+       border-radius: 4px;
+       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+     }
+
+     .btn-primary:hover {
+       background-color: #B88E14;
+     }
+
+     .btn {
+       background-color: var(--accent-color);
+       color: var(--neutral-color);
+       border: none;
+       padding: 10px 20px;
+       border-radius: 4px;
+       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+     }
+
+     .btn:hover {
+       background-color: #B88E14;
+     }
+
+     /* 針對 OnLiExam.js 中的特定選擇器 */
+     #auth-container {
+       background-color: var(--bg-dark);
+       border: 1px solid var(--secondary-color);
+     }
+
+     #password-error {
+       color: #ff4444;
+     }
+
+     .correct-answer {
+       color: #28a745;
+     }
+
+     .wrong-answer {
+       color: #ff4444;
+     }
+
+     .question-text {
+       color: var(--neutral-color);
+     }
+
+     .option-checkmark {
+       border-color: var(--secondary-color);
+     }
+
+     .option-text {
+       color: var(--neutral-color);
+     }
+
+     .nav-btn {
+       background-color: var(--accent-color);
+       color: var(--neutral-color);
+       border: none;
+       padding: 8px 16px;
+       border-radius: 4px;
+     }
+
+     .nav-btn:hover {
+       background-color: #B88E14;
+     }
+
+     .result-summary {
+       background-color: var(--primary-color);
+       padding: 15px;
+       border-radius: 5px;
+     }
+
+     .result-item {
+       border: 1px solid var(--secondary-color);
+       padding: 10px;
+       margin: 10px 0;
+       border-radius: 5px;
+     }
+
+     .result-item.correct {
+       background-color: rgba(40, 167, 69, 0.2);
+     }
+
+     .result-item.incorrect {
+       background-color: rgba(255, 68, 68, 0.2);
+     }
+
+     .history-item {
+       background-color: var(--primary-color);
+       padding: 15px;
+       margin: 10px 0;
+       border-radius: 5px;
+     }
+
+     .history-details {
+       display: none;
+       margin-top: 10px;
+     }
+
+     .history-details.active {
+       display: block;
+     }
+
+     .question-result.correct {
+       background-color: rgba(40, 167, 69, 0.2);
+     }
+
+     .question-result.wrong {
+       background-color: rgba(255, 68, 68, 0.2);
+     }
