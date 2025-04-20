@@ -1,2 +1,29 @@
 // 共用腳本（目前為空，後續添加功能）
          console.log('網站已載入');
+
+:root {
+       --primary-color: #2E4A3D; /* 深軍綠 */
+       --secondary-color: #6B7280; /* 金屬灰 */
+       --accent-color: #D4A017; /* 金屬金 */
+       --neutral-color: #FFFFFF; /* 純白 */
+       --text-color: #333333; /* 深灰文字 */
+       --bg-dark: #1A2521; /* 暗色背景 */
+       --bg-light: #F3F4F6; /* 亮色背景 */
+     }
+
+     body {
+       font-family: Arial, sans-serif;
+       margin: 0;
+       padding: 20px;
+       background-color: var(--bg-dark);
+       color: var(--neutral-color);
+     }
+
+     .container {
+       max-width: 1200px;
+       margin: 0 auto;
+     }
+
+     h1, h2 {
+       color: var(--accent-color);
+     }
