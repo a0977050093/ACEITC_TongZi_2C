@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>考核表驗證計算機</title>
+    <title>考核表驗證計算器</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -177,7 +177,7 @@
                 currentDate.setDate(currentDate.getDate() + 1);
             }
 
-            // 計算上下半年（以 5.10 和 10.10 為結束日期）
+            // 計算上下半年（上半年以 5.10 結束，下半年從 7.1 開始至 10.10 結束）
             const halfYear = [];
             let halfYear1Start = new Date(currentDate);
             let halfYear1EndYear = halfYear1Start.getFullYear();
@@ -188,14 +188,14 @@
             }
             halfYear.push(`上下半年上半年：${formatDate(halfYear1Start)} - ${formatDate(halfYear1End)}`);
 
-            let halfYear2Start = new Date(halfYear1End);
-            halfYear2Start.setDate(halfYear2Start.getDate() + 1);
-            let halfYear2EndYear = halfYear2Start.getFullYear();
-            let halfYear2End = new Date(halfYear2EndYear, 9, 10); // 10月10日
-            if (halfYear2Start > halfYear2End) {
-                halfYear2EndYear++;
-                halfYear2End = new Date(halfYear2EndYear, 9, 10);
+            // 下半年從 7月1日開始
+            let halfYear2StartYear = halfYear1End.getFullYear();
+            let halfYear2Start = new Date(halfYear2StartYear, 6, 1); // 7月1日
+            if (halfYear1End >= halfYear2Start) {
+                halfYear2StartYear++;
+                halfYear2Start = new Date(halfYear2StartYear, 6, 1);
             }
+            let halfYear2End = new Date(halfYear2StartYear, 9, 10); // 10月10日
             halfYear.push(`上下半年下半年：${formatDate(halfYear2Start)} - ${formatDate(halfYear2End)}`);
 
             // 顯示結果
