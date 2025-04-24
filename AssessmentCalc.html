@@ -12,10 +12,12 @@
             background-color: #f5f5f5;
         }
         h1 {
-            font-size: 20px;
+            font-size: 22px;
             text-align: center;
             margin-bottom: 20px;
             color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
         }
         .form-container {
             background-color: #fff;
@@ -40,6 +42,11 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            border-color: #007bff;
+            outline: none;
         }
         button {
             width: 100%;
@@ -78,8 +85,8 @@
             text-align: center;
         }
         .release-time {
-            background-color: #ffe6e6; /* 淺紅色背景 */
-            border: 2px solid #ff6666; /* 紅色邊框 */
+            background-color: #ffcccc;
+            border: 2px solid #ff3333;
             border-radius: 6px;
             padding: 10px;
             margin-top: 20px;
@@ -95,11 +102,11 @@
     <div class="form-container">
         <div class="form-group">
             <label for="year">民國年份：</label>
-            <input type="number" id="year" placeholder="例如 114" required>
+            <input type="number" id="year" placeholder="例如 114" required oninput="updateDayRange()">
         </div>
         <div class="form-group">
             <label for="month">月份：</label>
-            <input type="number" id="month" placeholder="1-12" min="1" max="12" required>
+            <input type="number" id="month" placeholder="1-12" min="1" max="12" required oninput="updateDayRange()">
         </div>
         <div class="form-group">
             <label for="day">日期：</label>
@@ -110,6 +117,24 @@
     <div id="result"></div>
 
     <script>
+        // 動態調整日期範圍
+        function updateDayRange() {
+            const yearInput = document.getElementById('year').value;
+            const monthInput = document.getElementById('month').value;
+            const dayInput = document.getElementById('day');
+
+            if (yearInput && monthInput) {
+                const year = parseInt(yearInput) + 1911;
+                const month = parseInt(monthInput);
+                const daysInMonth = new Date(year, month, 0).getDate();
+                dayInput.max = daysInMonth;
+
+                if (dayInput.value && parseInt(dayInput.value) > daysInMonth) {
+                    dayInput.value = daysInMonth;
+                }
+            }
+        }
+
         function calculateDateRanges() {
             const yearInput = document.getElementById('year').value;
             const monthInput = document.getElementById('month').value;
@@ -126,9 +151,12 @@
             const month = parseInt(monthInput);
             const day = parseInt(dayInput);
 
-            // 驗證日期有效性
+            // 驗證日期有效性（包含閏年檢查）
             const gregorianYear = year + 1911;
             const inputDate = new Date(gregorianYear, month - 1, day);
+            const isLeapYear = (year) => (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+            const daysInMonth = new Date(gregorianYear, month, 0).getDate();
+
             if (inputDate.getFullYear() !== gregorianYear || inputDate.getMonth() !== month - 1 || inputDate.getDate() !== day) {
                 resultDiv.innerHTML = '<p class="error">請輸入有效的日期！</p>';
                 return;
@@ -153,7 +181,7 @@
                 months.push(`連續第${i + 1}個月：${formatDate(startDate)} - ${formatDate(endDate)}`);
             }
 
-            // 計算連續四季（以 3.31, 6.30, 9.30, 12.31 為結束日期）
+            // 計算連續四季（從三個月結束日期開始）
             const quarters = [];
             const quarterEnds = [
                 { month: 2, day: 31 }, // 3月31日
