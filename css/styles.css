@@ -60,6 +60,8 @@ body {
     margin-left: 60px;
     padding: 20px;
     transition: margin-left 0.3s;
+    box-sizing: border-box;
+    min-height: 100vh;
 }
 .main-content.expanded {
     margin-left: 200px;
