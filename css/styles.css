@@ -4,6 +4,7 @@ body {
     background-color: #f5f5f5;
     transition: margin-left 0.3s;
 }
+
 .sidebar {
     position: fixed;
     top: 0;
@@ -16,24 +17,29 @@ body {
     transition: width 0.3s;
     z-index: 1000;
 }
+
 .sidebar.expanded {
     width: 200px;
 }
+
 .sidebar-header {
     padding: 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
+
 .sidebar-header .hamburger {
     font-size: 24px;
     cursor: pointer;
 }
+
 .sidebar-menu {
     list-style: none;
     padding: 0;
     margin: 0;
 }
+
 .sidebar-menu li {
     padding: 15px;
     display: flex;
@@ -41,21 +47,27 @@ body {
     cursor: pointer;
     transition: background-color 0.3s;
 }
+
 .sidebar-menu li:hover {
     background-color: #555;
 }
+
 .sidebar-menu li i {
     margin-right: 10px;
     font-size: 18px;
     width: 20px;
     text-align: center;
 }
+
 .sidebar-menu li span {
-    display: none;
+    display: none; /* 初始隱藏文字 */
+    white-space: nowrap; /* 防止文字換行 */
 }
+
 .sidebar.expanded .sidebar-menu li span {
-    display: inline;
+    display: inline; /* 展開時顯示文字 */
 }
+
 .main-content {
     margin-left: 60px;
     padding: 20px;
@@ -63,15 +75,18 @@ body {
     box-sizing: border-box;
     min-height: 100vh;
 }
+
 .main-content.expanded {
     margin-left: 200px;
 }
+
 .container {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
     text-align: center;
 }
+
 h1 {
     font-size: 22px;
     text-align: center;
@@ -80,16 +95,19 @@ h1 {
     border-bottom: 2px solid #007bff;
     padding-bottom: 5px;
 }
+
 h2 {
     font-size: 20px;
     color: #333;
     margin-bottom: 15px;
 }
+
 p {
     font-size: 16px;
     color: #666;
     margin-bottom: 20px;
 }
+
 .btn {
     display: inline-block;
     padding: 10px 20px;
@@ -101,9 +119,11 @@ p {
     font-size: 16px;
     transition: background-color 0.3s;
 }
+
 .btn:hover {
     background-color: #0056b3;
 }
+
 .form-container {
     background-color: #fff;
     padding: 20px;
@@ -111,16 +131,19 @@ p {
     margin-bottom: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 .form-group {
     margin-bottom: 15px;
     display: flex;
     align-items: center;
 }
+
 label {
     font-size: 16px;
     width: 80px;
     color: #333;
 }
+
 input {
     padding: 8px;
     width: 80px;
@@ -129,10 +152,12 @@ input {
     font-size: 16px;
     transition: border-color 0.3s;
 }
+
 input:focus {
     border-color: #007bff;
     outline: none;
 }
+
 button {
     width: 100%;
     padding: 10px;
@@ -143,32 +168,39 @@ button {
     font-size: 16px;
     cursor: pointer;
 }
+
 button:hover {
     background-color: #0056b3;
 }
+
 #result {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 #result h2 {
     font-size: 18px;
     margin-bottom: 15px;
 }
+
 #result h3 {
     font-size: 16px;
     margin: 15px 0 10px;
 }
+
 #result p {
     font-size: 14px;
     margin: 5px 0;
 }
+
 .error {
     color: red;
     font-size: 14px;
     text-align: center;
 }
+
 .release-time {
     background-color: #ffcccc;
     border: 2px solid #ff3333;
@@ -180,6 +212,7 @@ button:hover {
     font-weight: bold;
     color: #333;
 }
+
 section {
     background-color: #fff;
     padding: 20px;
@@ -188,24 +221,35 @@ section {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 @media (min-width: 768px) {
     .sidebar {
         width: 200px;
     }
+
     .sidebar.expanded {
         width: 200px;
     }
+
     .main-content {
         margin-left: 200px;
     }
+
     .main-content.expanded {
         margin-left: 200px;
     }
+
     .sidebar-header {
         display: none;
     }
+
     .container,
     section {
         max-width: 1200px;
+    }
+
+    /* 在桌面模式下，預設顯示文字 */
+    .sidebar-menu li span {
+        display: inline;
     }
 }
