@@ -181,7 +181,7 @@
                 months.push(`連續第${i + 1}個月：${formatDate(startDate)} - ${formatDate(endDate)}`);
             }
 
-            // 計算連續四季（從三個月結束日期開始）
+            // 計算連續四季（第一季從三個月結束日期的次日開始）
             const quarters = [];
             const quarterEnds = [
                 { month: 2, day: 31 }, // 3月31日
@@ -189,6 +189,9 @@
                 { month: 8, day: 30 }, // 9月30日
                 { month: 11, day: 31 } // 12月31日
             ];
+
+            // 將 currentDate 設為三個月結束日期的次日
+            currentDate.setDate(currentDate.getDate() + 1);
 
             for (let i = 0; i < 4; i++) {
                 const startDate = new Date(currentDate);
