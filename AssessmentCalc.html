@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日期範圍計算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: inline-block;
+            width: 100px;
+            font-weight: bold;
+        }
+        input {
+            padding: 8px;
+            width: 100px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>日期範圍計算器</h1>
+    <div class="form-container">
+        <div class="form-group">
+            <label for="year">民國年份：</label>
+            <input type="number" id="year" placeholder="例如 113" required>
+        </div>
+        <div class="form-group">
+            <label for="month">月份：</label>
+            <input type="number" id="month" placeholder="1-12" min="1" max="12" required>
+        </div>
+        <div class="form-group">
+            <label for="day">日期：</label>
+            <input type="number" id="day" placeholder="1-31" min="1" max="31" required>
+        </div>
+        <button onclick="calculateDateRanges()">確認</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        function calculateDateRanges() {
+            const yearInput = document.getElementById('year').value;
+            const monthInput = document.getElementById('month').value;
+            const dayInput = document.getElementById('day').value;
+            const resultDiv = document.getElementById('result');
+
+            // 驗證輸入
+            if (!yearInput || !monthInput || !dayInput) {
+                resultDiv.innerHTML = '<p class="error">請填寫所有欄位！</p>';
+                return;
+            }
+
+            const year = parseInt(yearInput);
+            const month = parseInt(monthInput);
+            const day = parseInt(dayInput);
+
+            // 驗證日期有效性
+            const gregorianYear = year + 1911;
+            const inputDate = new Date(gregorianYear, month - 1, day);
+            if (inputDate.getFullYear() !== gregorianYear || inputDate.getMonth() !== month - 1 || inputDate.getDate() !== day) {
+                resultDiv.innerHTML = '<p class="error">請輸入有效的日期！</p>';
+                return;
+            }
+
+            // 格式化日期函數
+            function formatDate(date) {
+                const gYear = date.getFullYear();
+                const mYear = gYear - 1911;
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${mYear}.${month}.${day}`;
+            }
+
+            // 計算連續三個月
+            const months = [];
+            for (let i = 0; i < 3; i++) {
+                const startDate = new Date(gregorianYear, month - 1 + i, day);
+                const endDate = new Date(gregorianYear, month - 1 + i + 1, day);
+                months.push(`連續第${i + 1}個月：${formatDate(startDate)} - ${formatDate(endDate)}`);
+            }
+
+            // 計算連續四季
+            const quarters = [];
+            const quarterStart = new Date(gregorianYear, month - 1, day);
+            const quarter1End = new Date(gregorianYear, 5, 30); // 6月30日
+            quarters.push(`連續四季第一季：${formatDate(quarterStart)} - ${formatDate(quarter1End)}`);
+            
+            const quarter2Start = new Date(gregorianYear, 6, 1); // 7月1日
+            const quarter2End = new Date(gregorianYear, 8, 30); // 9月30日
+            quarters.push(`連續四季第二季：${formatDate(quarter2Start)} - ${formatDate(quarter2End)}`);
+            
+            const quarter3Start = new Date(gregorianYear, 9, 1); // 10月1日
+            const quarter3End = new Date(gregorianYear, 11, 31); // 12月31日
+            quarters.push(`連續四季第三季：${formatDate(quarter3Start)} - ${formatDate(quarter3End)}`);
+            
+            const quarter4Start = new Date(gregorianYear + 1, 0, 1); // 次年1月1日
+            const quarter4End = new Date(gregorianYear + 1, 2, 31); // 次年3月31日
+            quarters.push(`連續四季第四季：${formatDate(quarter4Start)} - ${formatDate(quarter4End)}`);
+
+            // 計算上下半年
+            const halfYear = [];
+            const halfYear1Start = new Date(gregorianYear + 1, 3, 1); // 次年4月1日
+            const halfYear1End = new Date(gregorianYear + 1, 4, 10); // 次年5月10日
+            halfYear.push(`上下半年上半年：${formatDate(halfYear1Start)} - ${formatDate(halfYear1End)}`);
+            
+            const halfYear2Start = new Date(gregorianYear + 1, 6, 1); // 次年7月1日
+            const halfYear2End = new Date(gregorianYear + 1, 9, 10); // 次年10月10日
+            halfYear.push(`上下半年下半年：${formatDate(halfYear2Start)} - ${formatDate(halfYear2End)}`);
+
+            // 顯示結果
+            resultDiv.innerHTML = `
+                <h2>計算結果</h2>
+                <h3>連續三個月</h3>
+                <p>${months.join('<br>')}</p>
+                <h3>連續四季</h3>
+                <p>${quarters.join('<br>')}</p>
+                <h3>上下半年</h3>
+                <p>${halfYear.join('<br>')}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
