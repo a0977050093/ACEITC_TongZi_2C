@@ -1,35 +1,47 @@
 <!DOCTYPE html>
-       <html lang="zh-hant">
-       <head>
-         <meta charset="utf-8">
-         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-         <title>通訓中心數位學習與技術訓練組 - 首頁</title>
-         <meta name="description" content="提供通資電數位學習與車輛管理解決方案。">
-         <link rel="stylesheet" href="css/styles.css">
-       </head>
-
-<!-- 側邊欄 -->
-    <div class="sidebar" id="sidebar">
+<html lang="zh-hant">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="通訓中心數位學習與技術訓練組提供專業的數位學習、線上測驗與車輛管理系統解決方案。">
+    <meta name="keywords" content="數位學習, 線上測驗, 車輛管理, 通訓中心, 技術訓練">
+    <title>通訓中心數位學習與技術訓練組 - 首頁</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="sidebar" id="sidebar" role="navigation" aria-label="主要導航">
         <div class="sidebar-header">
-            <span class="hamburger" onclick="toggleSidebar()">☰</span>
+            <span class="hamburger" onclick="toggleSidebar()" aria-expanded="false" aria-controls="sidebar" aria-label="切換選單">☰ 選單</span>
         </div>
         <ul class="sidebar-menu">
-            <li onclick="scrollToSection('months-section')"><i>📅</i><span>連續三個月</span></li>
-            <li onclick="scrollToSection('quarters-section')"><i>📆</i><span>連續四季</span></li>
-            <li onclick="scrollToSection('half-year-section')"><i>🗓️</i><span>上下半年</span></li>
-            <li onclick="scrollToSection('release-time-section')"><i>⏰</i><span>解管時間</span></li>
+            <li onclick="scrollToSection('months-section')" aria-label="查看連續三個月資訊"><i>📅</i><span>連續三個月</span></li>
+            <li onclick="scrollToSection('quarters-section')" aria-label="查看連續四季資訊"><i>📆</i><span>連續四季</span></li>
+            <li onclick="scrollToSection('half-year-section')" aria-label="查看上下半年資訊"><i>🗓️</i><span>上下半年</span></li>
+            <li onclick="scrollToSection('release-time-section')" aria-label="查看解管時間資訊"><i>⏰</i><span>解管時間</span></li>
         </ul>
     </div>
-
-              
-       <body>
-         <div class="container">
-           <h1>通訓中心數位學習與技術訓練組</h1>
-           <p>歡迎體驗我們的數位學習與車輛管理系統。</p>
-           <a href="OnLiExam.html" class="btn btn-primary">題庫測驗</a>
-           <a href="CarSign.html" class="btn btn-primary">車輛管理</a>
-         </div>
-         
-         <script src="js/scripts.js"></script>
-       </body>
-       </html>
+    <div class="container">
+        <h1>通訓中心數位學習與技術訓練組</h1>
+        <p>歡迎體驗我們專業的數位學習平台與車輛管理系統，助力您的學習與管理效率提升。</p>
+        <a href="OnLiExam.html" class="btn btn-primary" aria-label="進入線上題庫測驗">線上題庫測驗</a>
+        <a href="CarSign.html" class="btn btn-primary" aria-label="進入車輛管理系統">車輛管理系統</a>
+    </div>
+    <section id="months-section">
+        <h2>連續三個月</h2>
+        <p>這裡展示連續三個月的數位學習與車輛管理相關數據與進度，具體內容可根據需求定制。</p>
+    </section>
+    <section id="quarters-section">
+        <h2>連續四季</h2>
+        <p>本區塊提供年度四季的訓練計劃與車輛調度概覽，幫助您掌握全年進度。</p>
+    </section>
+    <section id="half-year-section">
+        <h2>上下半年</h2>
+        <p>上下半年的總結與分析，涵蓋學習成果與車輛管理效率的詳細報告。</p>
+    </section>
+    <section id="release-time-section">
+        <h2>解管時間</h2>
+        <p>解管時間的安排與管理，確保訓練與車輛使用的最佳化排程。</p>
+    </section>
+    <script src="js/scriptsconstraint.js"></script>
+</body>
+</html>
