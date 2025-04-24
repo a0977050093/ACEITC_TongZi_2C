@@ -7,42 +7,48 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 800px;
+            max-width: 400px;
             margin: 20px auto;
-            padding: 20px;
-            background-color: #f4f4f4;
+            background-color: #f5f5f5;
         }
         h1 {
+            font-size: 20px;
             text-align: center;
+            margin-bottom: 20px;
             color: #333;
         }
         .form-container {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .form-group {
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
         }
         label {
-            display: inline-block;
-            width: 100px;
-            font-weight: bold;
+            font-size: 16px;
+            width: 80px;
+            color: #333;
         }
         input {
             padding: 8px;
-            width: 100px;
+            width: 80px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            font-size: 16px;
         }
         button {
-            padding: 10px 20px;
+            width: 100%;
+            padding: 10px;
             background-color: #007bff;
             color: #fff;
             border: none;
             border-radius: 4px;
+            font-size: 16px;
             cursor: pointer;
         }
         button:hover {
@@ -54,9 +60,22 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+        #result h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        #result h3 {
+            font-size: 16px;
+            margin: 15px 0 10px;
+        }
+        #result p {
+            font-size: 14px;
+            margin: 5px 0;
+        }
         .error {
             color: red;
-            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
         }
     </style>
 </head>
@@ -65,7 +84,7 @@
     <div class="form-container">
         <div class="form-group">
             <label for="year">民國年份：</label>
-            <input type="number" id="year" placeholder="例如 113" required>
+            <input type="number" id="year" placeholder="例如 114" required>
         </div>
         <div class="form-group">
             <label for="month">月份：</label>
@@ -115,43 +134,73 @@
 
             // 計算連續三個月
             const months = [];
+            let currentDate = new Date(gregorianYear, month - 1, day);
             for (let i = 0; i < 3; i++) {
-                const startDate = new Date(gregorianYear, month - 1 + i, day);
-                const endDate = new Date(gregorianYear, month - 1 + i + 1, day);
+                const startDate = new Date(currentDate);
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                const endDate = new Date(currentDate);
                 months.push(`連續第${i + 1}個月：${formatDate(startDate)} - ${formatDate(endDate)}`);
             }
 
-            // 計算連續四季
+            // 計算連續四季（以 3.31, 6.30, 9.30, 12.31 為結束日期）
             const quarters = [];
-            const quarterStart = new Date(gregorianYear, month - 1, day);
-            const quarter1End = new Date(gregorianYear, 5, 30); // 6月30日
-            quarters.push(`連續四季第一季：${formatDate(quarterStart)} - ${formatDate(quarter1End)}`);
-            
-            const quarter2Start = new Date(gregorianYear, 6, 1); // 7月1日
-            const quarter2End = new Date(gregorianYear, 8, 30); // 9月30日
-            quarters.push(`連續四季第二季：${formatDate(quarter2Start)} - ${formatDate(quarter2End)}`);
-            
-            const quarter3Start = new Date(gregorianYear, 9, 1); // 10月1日
-            const quarter3End = new Date(gregorianYear, 11, 31); // 12月31日
-            quarters.push(`連續四季第三季：${formatDate(quarter3Start)} - ${formatDate(quarter3End)}`);
-            
-            const quarter4Start = new Date(gregorianYear + 1, 0, 1); // 次年1月1日
-            const quarter4End = new Date(gregorianYear + 1, 2, 31); // 次年3月31日
-            quarters.push(`連續四季第四季：${formatDate(quarter4Start)} - ${formatDate(quarter4End)}`);
+            const quarterEnds = [
+                { month: 2, day: 31 }, // 3月31日
+                { month: 5, day: 30 }, // 6月30日
+                { month: 8, day: 30 }, // 9月30日
+                { month: 11, day: 31 } // 12月31日
+            ];
 
-            // 計算上下半年
+            for (let i = 0; i < 4; i++) {
+                const startDate = new Date(currentDate);
+
+                // 找到下一個季度的結束日期
+                let quarterIndex = 0;
+                let endYear = startDate.getFullYear();
+                for (let j = 0; j < quarterEnds.length; j++) {
+                    const qEnd = new Date(endYear, quarterEnds[j].month, quarterEnds[j].day);
+                    if (startDate < qEnd) {
+                        quarterIndex = j;
+                        break;
+                    }
+                    if (j === quarterEnds.length - 1) {
+                        quarterIndex = 0;
+                        endYear++;
+                    }
+                }
+
+                const endDate = new Date(endYear, quarterEnds[quarterIndex].month, quarterEnds[quarterIndex].day);
+                quarters.push(`連續四季第${i + 1}季：${formatDate(startDate)} - ${formatDate(endDate)}`);
+
+                // 更新 currentDate 為下一個季度的開始日期（結束日期的次日）
+                currentDate = new Date(endDate);
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+
+            // 計算上下半年（以 5.10 和 10.10 為結束日期）
             const halfYear = [];
-            const halfYear1Start = new Date(gregorianYear + 1, 3, 1); // 次年4月1日
-            const halfYear1End = new Date(gregorianYear + 1, 4, 10); // 次年5月10日
+            let halfYear1Start = new Date(currentDate);
+            let halfYear1EndYear = halfYear1Start.getFullYear();
+            let halfYear1End = new Date(halfYear1EndYear, 4, 10); // 5月10日
+            if (halfYear1Start > halfYear1End) {
+                halfYear1EndYear++;
+                halfYear1End = new Date(halfYear1EndYear, 4, 10);
+            }
             halfYear.push(`上下半年上半年：${formatDate(halfYear1Start)} - ${formatDate(halfYear1End)}`);
-            
-            const halfYear2Start = new Date(gregorianYear + 1, 6, 1); // 次年7月1日
-            const halfYear2End = new Date(gregorianYear + 1, 9, 10); // 次年10月10日
+
+            let halfYear2Start = new Date(halfYear1End);
+            halfYear2Start.setDate(halfYear2Start.getDate() + 1);
+            let halfYear2EndYear = halfYear2Start.getFullYear();
+            let halfYear2End = new Date(halfYear2EndYear, 9, 10); // 10月10日
+            if (halfYear2Start > halfYear2End) {
+                halfYear2EndYear++;
+                halfYear2End = new Date(halfYear2EndYear, 9, 10);
+            }
             halfYear.push(`上下半年下半年：${formatDate(halfYear2Start)} - ${formatDate(halfYear2End)}`);
 
             // 顯示結果
             resultDiv.innerHTML = `
-                <h2>計算結果</h2>
+                <h2>計費結果</h2>
                 <h3>連續三個月</h3>
                 <p>${months.join('<br>')}</p>
                 <h3>連續四季</h3>
