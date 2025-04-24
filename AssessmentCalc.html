@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>考核表驗證計算器</title>
+    <title>日期範圍計算器</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -77,10 +77,21 @@
             font-size: 14px;
             text-align: center;
         }
+        .release-time {
+            background-color: #ffe6e6; /* 淺紅色背景 */
+            border: 2px solid #ff6666; /* 紅色邊框 */
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
     </style>
 </head>
 <body>
-    <h1>請輸入到部日期：</h1>
+    <h1>日期範圍計算器</h1>
     <div class="form-container">
         <div class="form-group">
             <label for="year">民國年份：</label>
@@ -177,26 +188,50 @@
                 currentDate.setDate(currentDate.getDate() + 1);
             }
 
-            // 計算上下半年（上半年以 5.10 結束，下半年從 7.1 開始至 10.10 結束）
-            const halfYear = [];
-            let halfYear1Start = new Date(currentDate);
-            let halfYear1EndYear = halfYear1Start.getFullYear();
-            let halfYear1End = new Date(halfYear1EndYear, 4, 10); // 5月10日
-            if (halfYear1Start > halfYear1End) {
-                halfYear1EndYear++;
-                halfYear1End = new Date(halfYear1EndYear, 4, 10);
-            }
-            halfYear.push(`上下半年上半年：${formatDate(halfYear1Start)} - ${formatDate(halfYear1End)}`);
+            // 儲存第四季的結束日期作為解管時間
+            const quarterEndDate = new Date(currentDate);
+            quarterEndDate.setDate(quarterEndDate.getDate() - 1); // 第四季的最後一天
+            const releaseTime = formatDate(quarterEndDate);
 
-            // 下半年從 7月1日開始
-            let halfYear2StartYear = halfYear1End.getFullYear();
-            let halfYear2Start = new Date(halfYear2StartYear, 6, 1); // 7月1日
-            if (halfYear1End >= halfYear2Start) {
-                halfYear2StartYear++;
-                halfYear2Start = new Date(halfYear2StartYear, 6, 1);
+            // 計算上下半年
+            const halfYear = [];
+            let halfYear1Start, halfYear1End, halfYear2Start, halfYear2End;
+
+            // 檢查四季結束日期是否在 7 月之後
+            const isAfterJuly = quarterEndDate.getMonth() >= 6; // 7月之後 (0-11，6 表示 7月)
+
+            if (isAfterJuly) {
+                // 如果四季結束在 7 月之後，上半年從次年 1 月 1 日開始
+                const nextYear = quarterEndDate.getFullYear() + 1;
+                halfYear1Start = new Date(nextYear, 0, 1); // 次年 1月1日
+                halfYear1End = new Date(nextYear, 4, 10); // 次年 5月10日
+                halfYear.push(`上下半年上半年：${formatDate(halfYear1Start)} - ${formatDate(halfYear1End)}`);
+
+                // 下半年從次年 7 月 1 日開始
+                halfYear2Start = new Date(nextYear, 6, 1); // 次年 7月1日
+                halfYear2End = new Date(nextYear, 9, 10); // 次年 10月10日
+                halfYear.push(`上下半年下半年：${formatDate(halfYear2Start)} - ${formatDate(halfYear2End)}`);
+            } else {
+                // 如果四季結束在 7 月之前，上半年從四季結束的次日開始
+                halfYear1Start = new Date(currentDate);
+                let halfYear1EndYear = halfYear1Start.getFullYear();
+                halfYear1End = new Date(halfYear1EndYear, 4, 10); // 5月10日
+                if (halfYear1Start > halfYear1End) {
+                    halfYear1EndYear++;
+                    halfYear1End = new Date(halfYear1EndYear, 4, 10);
+                }
+                halfYear.push(`上下半年上半年：${formatDate(halfYear1Start)} - ${formatDate(halfYear1End)}`);
+
+                // 下半年從 7 月 1 日開始
+                let halfYear2StartYear = halfYear1End.getFullYear();
+                halfYear2Start = new Date(halfYear2StartYear, 6, 1); // 7月1日
+                if (halfYear1End >= halfYear2Start) {
+                    halfYear2StartYear++;
+                    halfYear2Start = new Date(halfYear2StartYear, 6, 1);
+                }
+                halfYear2End = new Date(halfYear2StartYear, 9, 10); // 10月10日
+                halfYear.push(`上下半年下半年：${formatDate(halfYear2Start)} - ${formatDate(halfYear2End)}`);
             }
-            let halfYear2End = new Date(halfYear2StartYear, 9, 10); // 10月10日
-            halfYear.push(`上下半年下半年：${formatDate(halfYear2Start)} - ${formatDate(halfYear2End)}`);
 
             // 顯示結果
             resultDiv.innerHTML = `
@@ -207,6 +242,7 @@
                 <p>${quarters.join('<br>')}</p>
                 <h3>上下半年</h3>
                 <p>${halfYear.join('<br>')}</p>
+                <div class="release-time">解管時間：${releaseTime}</div>
             `;
         }
     </script>
