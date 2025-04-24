@@ -5,9 +5,23 @@
          <meta name="viewport" content="width=device-width, initial-scale=1.0">
          <title>通訓中心數位學習與技術訓練組 - 首頁</title>
          <meta name="description" content="提供通資電數位學習與車輛管理解決方案。">
-         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
          <link rel="stylesheet" href="css/styles.css">
        </head>
+
+<!-- 側邊欄 -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="hamburger" onclick="toggleSidebar()">☰</span>
+        </div>
+        <ul class="sidebar-menu">
+            <li onclick="scrollToSection('months-section')"><i>📅</i><span>連續三個月</span></li>
+            <li onclick="scrollToSection('quarters-section')"><i>📆</i><span>連續四季</span></li>
+            <li onclick="scrollToSection('half-year-section')"><i>🗓️</i><span>上下半年</span></li>
+            <li onclick="scrollToSection('release-time-section')"><i>⏰</i><span>解管時間</span></li>
+        </ul>
+    </div>
+
+              
        <body>
          <div class="container">
            <h1>通訓中心數位學習與技術訓練組</h1>
@@ -15,8 +29,7 @@
            <a href="OnLiExam.html" class="btn btn-primary">題庫測驗</a>
            <a href="CarSign.html" class="btn btn-primary">車輛管理</a>
          </div>
-         <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+         
          <script src="js/scripts.js"></script>
        </body>
        </html>
