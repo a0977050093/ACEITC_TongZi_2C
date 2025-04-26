@@ -11,28 +11,47 @@
         <div class="container">
             <h1>汪洋裡的小書僮</h1>
             <p>沉睡的野獸</p>
-            <a href="" class="btn" aria-label=""></a>
+            <a href="#" class="btn" aria-label="查看更多">查看更多</a> <!-- 添加了連結內容 -->
         </div>
+        
         <div class="sidebar" id="sidebar" role="navigation" aria-label="主要導航">
-    <div class="sidebar-header">
-        <span class="hamburger" onclick="toggleSidebar()" aria-expanded="false" aria-controls="sidebar" aria-label="切換選單">☰</span>
-    </div>
-    <div class="sidebar-content" style="color: white;">
-        <ul class="sidebar-menu">
-            
-            <li onclick="loadPage('AssessmentCalc.html')" aria-label="測驗系統"><i>📝</i><span>測驗系統</span></li>
-
-
-
-            
-            <li onclick="window.open('AssessmentCalc.html', '_blank')" aria-label="測驗系統"><i>📝</i><span>測驗系統</span></li>
-            <li onclick="window.open('', '_blank')" aria-label="一心守護"><i>❤️</i><span>e心守護</span></li>
-            <li onclick="window.open('', '_blank')" aria-label="服裝點數"><i>👕</i><span>服裝點數</span></li>
-            
-        </ul>
-    </div>
+            <div class="sidebar-header">
+                <span class="hamburger" onclick="toggleSidebar()" aria-expanded="false" aria-controls="sidebar" aria-label="切換選單">☰</span>
+            </div>
+            <div class="sidebar-content" style="color: white;">
+                <ul class="sidebar-menu">
+                    <li onclick="loadPage('AssessmentCalc.html')" aria-label="測驗系統"><i>📝</i><span>測驗系統</span></li>
+                    <li onclick="loadPage('AnotherPage.html')" aria-label="一心守護"><i>❤️</i><span>e心守護</span></li>
+                    <li onclick="loadPage('ClothingPoints.html')" aria-label="服裝點數"><i>👕</i><span>服裝點數</span></li>
+                </ul>
+            </div>
         </div>
     </div>
+
+    <!-- 這裡可以加一個用於顯示結果或內容的區域 -->
+    <div id="result"></div>
+
     <script src="js/scripts.js"></script>
+    <script>
+        // 側邊欄展開/收起
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+            sidebar.classList.toggle('expanded');
+            mainContent.classList.toggle('expanded');
+        }
+
+        // 加載指定頁面
+        function loadPage(page) {
+            const contentFrame = document.getElementById('contentFrame');
+            if (contentFrame) {
+                contentFrame.src = page;
+            } else {
+                // 如果沒有 iframe，則顯示一個錯誤信息
+                document.getElementById('result').innerHTML = '<p class="error">無法載入頁面</p>';
+            }
+        }
+    </script>
 </body>
 </html>
+
