@@ -26,6 +26,7 @@ function updateDayRange() {
         const daysInMonth = new Date(year, month, 0).getDate();
         dayInput.max = daysInMonth;
 
+        // 檢查當前的日是否大於允許的最大小
         if (dayInput.value && parseInt(dayInput.value) > daysInMonth) {
             dayInput.value = daysInMonth;
         }
@@ -54,7 +55,11 @@ function calculateDateRanges() {
     const isLeapYear = (year) => (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
     const daysInMonth = new Date(gregorianYear, month, 0).getDate();
 
-    if (inputDate.getFullYear() !== gregorianYear || inputDate.getMonth() !== month - 1 || inputDate.getDate() !== day) {
+    if (
+        inputDate.getFullYear() !== gregorianYear || 
+        inputDate.getMonth() !== month - 1 || 
+        inputDate.getDate() !== day
+    ) {
         resultDiv.innerHTML = '<p class="error">請輸入有效的日期！</p>';
         return;
     }
@@ -78,7 +83,7 @@ function calculateDateRanges() {
         months.push(`連續第${i + 1}個月：${formatDate(startDate)} - ${formatDate(endDate)}`);
     }
 
-    // 計算連續四季（第一季從三個月結束日期的次日開始）
+    // 計算連續四季
     const quarters = [];
     const quarterEnds = [
         { month: 2, day: 31 }, // 3月31日
@@ -92,10 +97,9 @@ function calculateDateRanges() {
 
     for (let i = 0; i < 4; i++) {
         const startDate = new Date(currentDate);
-
-        // 找到下一個季度的結束日期
         let quarterIndex = 0;
         let endYear = startDate.getFullYear();
+
         for (let j = 0; j < quarterEnds.length; j++) {
             const qEnd = new Date(endYear, quarterEnds[j].month, quarterEnds[j].day);
             if (startDate < qEnd) {
@@ -110,8 +114,7 @@ function calculateDateRanges() {
 
         const endDate = new Date(endYear, quarterEnds[quarterIndex].month, quarterEnds[quarterIndex].day);
         quarters.push(`連續四季第${i + 1}季：${formatDate(startDate)} - ${formatDate(endDate)}`);
-
-        // 更新 currentDate 為下一個季度的開始日期（結束日期的次日）
+        
         currentDate = new Date(endDate);
         currentDate.setDate(currentDate.getDate() + 1);
     }
@@ -125,32 +128,28 @@ function calculateDateRanges() {
     const halfYear = [];
     let halfYear1Start, halfYear1End, halfYear2Start, halfYear2End;
 
-    // 檢查四季結束日期是否在 7 月之後
     const isAfterJuly = quarterEndDate.getMonth() >= 6; // 7月之後 (0-11，6 表示 7月)
 
     if (isAfterJuly) {
-        // 如果四季結束在 7 月之後，上半年從次年 1 月 1 日開始
         const nextYear = quarterEndDate.getFullYear() + 1;
         halfYear1Start = new Date(nextYear, 0, 1); // 次年 1月1日
         halfYear1End = new Date(nextYear, 4, 10); // 次年 5月10日
         halfYear.push(`上下半年上半年：${formatDate(halfYear1Start)} - ${formatDate(halfYear1End)}`);
 
-        // 下半年從次年 7 月 1 日開始
         halfYear2Start = new Date(nextYear, 6, 1); // 次年 7月1日
         halfYear2End = new Date(nextYear, 9, 10); // 次年 10月10日
         halfYear.push(`上下半年下半年：${formatDate(halfYear2Start)} - ${formatDate(halfYear2End)}`);
     } else {
-        // 如果四季結束在 7 月之前，上半年從四季結束的次日開始
         halfYear1Start = new Date(currentDate);
         let halfYear1EndYear = halfYear1Start.getFullYear();
         halfYear1End = new Date(halfYear1EndYear, 4, 10); // 5月10日
+
         if (halfYear1Start > halfYear1End) {
             halfYear1EndYear++;
             halfYear1End = new Date(halfYear1EndYear, 4, 10);
         }
         halfYear.push(`上下半年上半年：${formatDate(halfYear1Start)} - ${formatDate(halfYear1End)}`);
 
-        // 下半年從 7 月 1 日開始
         let halfYear2StartYear = halfYear1End.getFullYear();
         halfYear2Start = new Date(halfYear2StartYear, 6, 1); // 7月1日
         if (halfYear1End >= halfYear2Start) {
@@ -174,6 +173,16 @@ function calculateDateRanges() {
     `;
 }
 
-    function loadPage(page) {
-        document.getElementById('contentFrame').src = page;
+// 加載指定頁面
+function loadPage(page) {
+    const contentFrame = document.getElementById('contentFrame');
+    if (contentFrame) {
+        contentFrame.src = page;
     }
+}
+
+// 事件監聽器
+document.addEventListener("DOMContentLoaded", function() {
+    // 可以在這裡加載初始數據或設定事件處理程序
+});
+
