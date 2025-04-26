@@ -11,8 +11,16 @@
         <div class="container">
             <h1>汪洋裡的小書僮</h1>
             <p>沉睡的野獸</p>
-            <a href="#" class="btn" aria-label="查看更多">查看更多</a> <!-- 添加了連結內容 -->
         </div>
+
+    <!-- Iframe 用於顯示內容 -->
+    <iframe id="contentFrame" src="AssessmentCalc.html" frameborder="0" style="width: 100%; height: 600px; border: none;"></iframe> 
+        
+        
+        <!-- 添加iframe -->
+
+    <div id="result"></div> <!-- 顯示結果或錯誤信息 -->
+
         
         <div class="sidebar" id="sidebar" role="navigation" aria-label="主要導航">
             <div class="sidebar-header">
@@ -27,11 +35,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Iframe 用於顯示內容 -->
-    <iframe id="contentFrame" src="AssessmentCalc.html" frameborder="0" style="width: 100%; height: 600px; border: none;"></iframe> <!-- 添加iframe -->
-
-    <div id="result"></div> <!-- 顯示結果或錯誤信息 -->
 
     <script src="js/scripts.js"></script>
     <script>
