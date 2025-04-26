@@ -28,8 +28,10 @@
         </div>
     </div>
 
-    <!-- 這裡可以加一個用於顯示結果或內容的區域 -->
-    <div id="result"></div>
+    <!-- Iframe 用於顯示內容 -->
+    <iframe id="contentFrame" src="AssessmentCalc.html" frameborder="0" style="width: 100%; height: 600px; border: none;"></iframe> <!-- 添加iframe -->
+
+    <div id="result"></div> <!-- 顯示結果或錯誤信息 -->
 
     <script src="js/scripts.js"></script>
     <script>
@@ -45,9 +47,8 @@
         function loadPage(page) {
             const contentFrame = document.getElementById('contentFrame');
             if (contentFrame) {
-                contentFrame.src = page;
+                contentFrame.src = page; // 應用指定頁面
             } else {
-                // 如果沒有 iframe，則顯示一個錯誤信息
                 document.getElementById('result').innerHTML = '<p class="error">無法載入頁面</p>';
             }
         }
