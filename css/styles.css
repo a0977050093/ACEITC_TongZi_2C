@@ -79,11 +79,15 @@ body {
 }
 
 .main-content {
+    display: flex;
+    flex-direction: column; /* 使子元素垂直排列 */
+    align-items: center;     /* 在主軸上對齊元素，實現水平置中 */
+    justify-content: center; /* 在交叉軸上對齊元素 */
     margin-left: 60px; /* 初始的主內容邊距 */
     padding: 20px;
     transition: margin-left 0.3s;
     box-sizing: border-box;
-    min-height: 100vh; /* 保持內容區域最小高度 */
+    min-height: 100vh; /* 確保內容區域最小高度 */
 }
 
 .main-content.expanded {
