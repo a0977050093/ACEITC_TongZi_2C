@@ -1,7 +1,17 @@
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #0056b3;
+    --light-background: #f5f5f5;
+    --dark-background: #333;
+    --text-color: #333;
+    --white-color: #fff;
+    --error-color: red;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    background-color: #f5f5f5;
+    background-color: var(--light-background);
     transition: margin-left 0.3s;
 }
 
@@ -10,16 +20,16 @@ body {
     top: 0;
     left: 0;
     height: 100%;
-    width: 60px;
-    background-color: #333;
-    color: white;
+    width: 60px; /* 初始寬度 */
+    background-color: var(--dark-background);
+    color: var(--white-color);
     overflow-x: hidden;
     transition: width 0.3s;
     z-index: 1000;
 }
 
 .sidebar.expanded {
-    width: 200px;
+    width: 200px; /* 展開寬度 */
 }
 
 .sidebar-header {
@@ -49,7 +59,7 @@ body {
 }
 
 .sidebar-menu li:hover {
-    background-color: #555;
+    background-color: #555; /* 滑鼠懸停時的背景色 */
 }
 
 .sidebar-menu li i {
@@ -69,15 +79,15 @@ body {
 }
 
 .main-content {
-    margin-left: 60px;
+    margin-left: 60px; /* 初始的主內容邊距 */
     padding: 20px;
     transition: margin-left 0.3s;
     box-sizing: border-box;
-    min-height: 100vh;
+    min-height: 100vh; /* 保持內容區域最小高度 */
 }
 
 .main-content.expanded {
-    margin-left: 200px;
+    margin-left: 200px; /* 展開時的邊距 */
 }
 
 .container {
@@ -91,14 +101,14 @@ h1 {
     font-size: 22px;
     text-align: center;
     margin-bottom: 20px;
-    color: #333;
-    border-bottom: 2px solid #007bff;
+    color: var(--text-color);
+    border-bottom: 2px solid var(--primary-color);
     padding-bottom: 5px;
 }
 
 h2 {
     font-size: 20px;
-    color: #333;
+    color: var(--text-color);
     margin-bottom: 15px;
 }
 
@@ -112,8 +122,8 @@ p {
     display: inline-block;
     padding: 10px 20px;
     margin: 10px;
-    background-color: #007bff;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--white-color);
     text-decoration: none;
     border-radius: 4px;
     font-size: 16px;
@@ -121,11 +131,11 @@ p {
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: var(--secondary-color); /* 滑鼠懸停時的背景色 */
 }
 
 .form-container {
-    background-color: #fff;
+    background-color: var(--white-color);
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 20px;
@@ -140,13 +150,13 @@ p {
 
 label {
     font-size: 16px;
-    width: 80px;
-    color: #333;
+    width: 80px; /* 標籤寬度 */
+    color: var(--text-color);
 }
 
 input {
     padding: 8px;
-    width: 80px;
+    width: calc(100% - 90px); /* 根據標籤位置調整 */
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
@@ -154,15 +164,15 @@ input {
 }
 
 input:focus {
-    border-color: #007bff;
-    outline: none;
+    border-color: var(--primary-color);
+    outline: none; /* 將焦點樣式設為無 */
 }
 
 button {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--primary-color);
+    color: var(--white-color);
     border: none;
     border-radius: 4px;
     font-size: 16px;
@@ -170,11 +180,11 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: var(--secondary-color);
 }
 
 #result {
-    background-color: #fff;
+    background-color: var(--white-color);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -196,13 +206,13 @@ button:hover {
 }
 
 .error {
-    color: red;
+    color: var(--error-color);
     font-size: 14px;
     text-align: center;
 }
 
 .release-time {
-    background-color: #ffcccc;
+    background-color: #ffcccc; /* 輔助樣式 */
     border: 2px solid #ff3333;
     border-radius: 6px;
     padding: 10px;
@@ -210,11 +220,11 @@ button:hover {
     text-align: center;
     font-size: 16px;
     font-weight: bold;
-    color: #333;
+    color: var(--text-color);
 }
 
 section {
-    background-color: #fff;
+    background-color: var(--white-color);
     padding: 20px;
     margin: 20px auto;
     max-width: 400px;
@@ -224,32 +234,33 @@ section {
 
 @media (min-width: 768px) {
     .sidebar {
-        width: 200px;
+        width: 200px; /* 桌面模式下的側邊欄寬度 */
     }
 
     .sidebar.expanded {
-        width: 200px;
+        width: 200px; /* 再次確認展開時的邊距 */
     }
 
     .main-content {
-        margin-left: 200px;
+        margin-left: 200px; /* 更新主內容邊距 */
     }
 
     .main-content.expanded {
-        margin-left: 200px;
+        margin-left: 200px; /* 展開時的邊距 */
     }
 
     .sidebar-header {
-        display: none;
+        display: none; /* 隱藏漢堡選單 */
     }
 
     .container,
     section {
-        max-width: 1200px;
+        max-width: 1200px; /* 在桌面上設置容器的寬度 */
     }
 
-    /* 在桌面模式下，預設顯示文字 */
+    /* 桌面模式下預設顯示文字 */
     .sidebar-menu li span {
-        display: inline;
+        display: inline; 
     }
 }
+
