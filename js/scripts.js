@@ -173,3 +173,7 @@ function calculateDateRanges() {
         <div id="release-time-section" class="release-time">解管時間：${releaseTime}</div>
     `;
 }
+
+    function loadPage(page) {
+        document.getElementById('contentFrame').src = page;
+    }
