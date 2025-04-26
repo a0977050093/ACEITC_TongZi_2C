@@ -1,61 +1,116 @@
 <!DOCTYPE html>
-<html lang="zh-hant">
+<html lang="zh-TW">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>突然的靈光一閃之作</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>微波一排大秘寶</title>
+    <link rel="stylesheet" href="css/PersonWork.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="main-content" id="main-content">
-        <div class="container">
-            <h1>汪洋裡的小書僮</h1>
-            <p>沉睡的野獸</p>
+    <div class="container">
+        <h1>微波一排大秘寶</h1>
+
+        <!-- 標籤切換區 -->
+        <nav class="tabs">
+            <button class="tab active" data-tab="1"><i class="fas fa-calendar-check"></i> 提早放假</button>
+            <button class="tab" data-tab="2"><i class="fas fa-tools"></i> 保養編組</button>
+            <button class="tab" data-tab="3"><i class="fas fa-calendar-alt"></i> 休假假表</button>
+            <button class="tab" data-tab="4"><i class="fas fa-gem"></i> 年度三寶</button>
+            <button class="tab" data-tab="5"><i class="fas fa-tshirt"></i> 慰勞服裝</button>
+            <button class="tab" data-tab="6"><i class="fas fa-shield-alt"></i> 衛哨輪值</button>
+            <button class="tab" data-tab="7"><i class="fas fa-user-shield"></i> 軍職專長</button>
+        </nav>
+
+        <!-- 標籤內容區 -->
+        <div class="tab-contents">
+            <!-- Tab 1 -->
+            <div class="tab-content active" id="tab-1">
+                <div class="content-wrapper">
+                    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSjbB1aemn--nVrSMINmHeSWJCyVlN4bF-CNkdGhceg_KyZb04BNg7uyArO3DgmORvuqcGmSm-fRO0S/pubhtml?gid=188349276&single=true"></iframe>
+                    <button class="expand-button"><i class="fas fa-expand"></i> 全螢幕觀看</button>
+                </div>
+            </div>
+
+            <!-- Tab 2 -->
+            <div class="tab-content" id="tab-2">
+                <div class="content-wrapper">
+                    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSjbB1aemn--nVrSMINmHeSWJCyVlN4bF-CNkdGhceg_KyZb04BNg7uyArO3DgmORvuqcGmSm-fRO0S/pubhtml?gid=1117875532&single=true"></iframe>
+                    <button class="expand-button"><i class="fas fa-expand"></i> 全螢幕觀看</button>
+                </div>
+            </div>
+
+            <!-- Tab 3 -->
+            <div class="tab-content" id="tab-3">
+                <div class="content-wrapper">
+                    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSjbB1aemn--nVrSMINmHeSWJCyVlN4bF-CNkdGhceg_KyZb04BNg7uyArO3DgmORvuqcGmSm-fRO0S/pubhtml?gid=980374360&single=true"></iframe>
+                    <button class="expand-button"><i class="fas fa-expand"></i> 全螢幕觀看</button>
+                </div>
+            </div>
+
+            <!-- Tab 4 -->
+            <div class="tab-content" id="tab-4">
+                <div class="content-wrapper">
+                    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT7lMjt7GXFmoftR8YwssRS9467I5uRdq64amyYrdZ94iGYbhE5NPeSzJcBVcTfEDUVEWJw1aGObpaE/pubhtml?gid=865756627&single=true"></iframe>
+                    <button class="expand-button"><i class="fas fa-expand"></i> 全螢幕觀看</button>
+                </div>
+            </div>
+
+            <!-- Tab 5 -->
+            <div class="tab-content" id="tab-5">
+                <div class="content-wrapper">
+                    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT7lMjt7GXFmoftR8YwssRS9467I5uRdq64amyYrdZ94iGYbhE5NPeSzJcBVcTfEDUVEWJw1aGObpaE/pubhtml?gid=982598890&single=true"></iframe>
+                    <button class="expand-button"><i class="fas fa-expand"></i> 全螢幕觀看</button>
+                </div>
+            </div>
+
+            <!-- Tab 6 -->
+            <div class="tab-content" id="tab-6">
+                <div class="content-wrapper">
+                    <iframe src="https://docs.google.com/spreadsheets/d/1NHDp--kWtR9d8AmBwQCIdlDAHDRRUINz5GytAY_rzoI/edit?usp=drivesdk"></iframe>
+                    <button class="expand-button"><i class="fas fa-expand"></i> 全螢幕觀看</button>
+                </div>
+            </div>
+
+            <!-- Tab 7 -->
+            <div class="tab-content" id="tab-7">
+                <div class="content-wrapper">
+                    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT7lMjt7GXFmoftR8YwssRS9467I5uRdq64amyYrdZ94iGYbhE5NPeSzJcBVcTfEDUVEWJw1aGObpaE/pubhtml?gid=58296593&single=true"></iframe>
+                    <button class="expand-button"><i class="fas fa-expand"></i> 全螢幕觀看</button>
+                </div>
+            </div>
         </div>
 
-    <!-- Iframe 用於顯示內容 -->
-    <iframe id="contentFrame" src="AssessmentCalc.html" frameborder="0" style="width: 100%; height: 600px; border: none;"></iframe> 
-        
-        
-        <!-- 添加iframe -->
+        <!-- 其他按鈕 -->
+        <button class="button" onclick="window.location.href='https://line.me/ti/g2/dBA4pHk1zV_2QpeI30FK8OUsqQ-RzXksCa1L8Q?utm_source=invitation&utm_medium=link_copy&utm_campaign=default'">加入我們</button>
+        <button id="darkModeToggle" class="dark-mode-button"><i class="fas fa-moon"></i> 護瞳</button>
+    </div>
 
-    <div id="result"></div> <!-- 顯示結果或錯誤信息 -->
-
-        
-        <div class="sidebar" id="sidebar" role="navigation" aria-label="主要導航">
-            <div class="sidebar-header">
-                <span class="hamburger" onclick="toggleSidebar()" aria-expanded="false" aria-controls="sidebar" aria-label="切換選單">☰</span>
-            </div>
-            <div class="sidebar-content" style="color: white;">
-                <ul class="sidebar-menu">
-                    <li onclick="loadPage('AssessmentCalc.html')" aria-label="測驗系統"><i>📝</i><span>測驗系統</span></li>
-                    <li onclick="loadPage('AnotherPage.html')" aria-label="一心守護"><i>❤️</i><span>e心守護</span></li>
-                    <li onclick="loadPage('ClothingPoints.html')" aria-label="服裝點數"><i>👕</i><span>服裝點數</span></li>
-                </ul>
-            </div>
+    <!-- 全螢幕彈出視窗 -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <iframe id="modal-iframe" src="" frameborder="0"></iframe>
         </div>
     </div>
 
-    <script src="js/scripts.js"></script>
-    <script>
-        // 側邊欄展開/收起
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('main-content');
-            sidebar.classList.toggle('expanded');
-            mainContent.classList.toggle('expanded');
-        }
+    <!-- 側邊欄 -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <h4>    使用專區</h4>
+            <a href="https://a0977050093.github.io/518andSNG/CarSign" target="_blank">軍車位置</a>
+            <a href="https://a0977050093.github.io/Examination/" target="_blank">測驗系統</a>
 
-        // 加載指定頁面
-        function loadPage(page) {
-            const contentFrame = document.getElementById('contentFrame');
-            if (contentFrame) {
-                contentFrame.src = page; // 應用指定頁面
-            } else {
-                document.getElementById('result').innerHTML = '<p class="error">無法載入頁面</p>';
-            }
-        }
-    </script>
+
+            <h4>    回報相關</h4>
+            <a href="https://a0977050093.github.io/518andSNG/reciprocation.html" target="_blank">e心守護</a>
+            <a href="https://script.google.com/macros/s/AKfycbyAvhGLK3tzYX7Wl1JhOcxpgQXchu04sX3KL-pqxRSRu0dr5Tz32cDjkobFt77e1IuMgg/exec" target="_blank">服裝點數</a>
+        </div>
+    </div>
+
+    <!-- 側邊欄切換按鈕 -->
+    <button class="toggle-button" id="toggleButton">珍典 <i class="fas fa-bars"></i></button>
+
+    <script src="js/PersonWork.js"></script>
 </body>
 </html>
-
