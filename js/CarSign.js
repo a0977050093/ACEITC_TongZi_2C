@@ -26,18 +26,21 @@ let currentPage = 1;
 const itemsPerPage = 10;
 let sortColumn = 'location';
 let sortDirection = 'asc';
+const defaultCenter = { lat: 24.8940207, lng: 121.2095940 };
+const defaultZoom = 17;
 
 // Submit car location
 function submitCarLocation() {
     const carNumber = document.getElementById('carNumbers').value;
     const location = document.getElementById('locations').value;
     const loading = document.getElementById('loading');
+    const notification = document.getElementById('notification');
 
     const password = prompt("請輸入密碼，系統測試中348362");
     const correctPassword = "348362";
 
     if (password !== correctPassword) {
-        alert("密碼錯誤，無法提交車輛位置。");
+        showNotification("密碼錯誤，無法提交車輛位置。", "error");
         return;
     }
 
@@ -54,7 +57,7 @@ function submitCarLocation() {
 
     const carLocation = locations[location];
     if (!carLocation) {
-        alert("指定位置無效。");
+        showNotification("指定位置無效。", "error");
         return;
     }
 
@@ -67,14 +70,14 @@ function submitCarLocation() {
         lng: carLocation.lng
     })
         .then(() => {
-            alert("車號位置已儲存");
+            showNotification("車號位置已儲存", "success");
             cachedCarLocations = null; // Clear cache
             addMarker(carLocation.lat, carLocation.lng, carNumber, location);
             showStatus();
             loading.style.display = "none";
         })
         .catch(error => {
-            alert("無法儲存車號資料");
+            showNotification("無法儲存車號資料", "error");
             console.error(error);
             loading.style.display = "none";
         });
@@ -113,7 +116,7 @@ function showStatus() {
             loading.style.display = "none";
         })
         .catch(error => {
-            alert("無法讀取車輛資料");
+            showNotification("無法讀取車輛資料", "error");
             console.error(error);
             loading.style.display = "none";
         });
@@ -212,9 +215,10 @@ function clearCarNumbers() {
     const password = prompt("請輸入密碼以清除所有車號");
     const correctPassword = "348362";
     const loading = document.getElementById("loading");
+    const notification = document.getElementById("notification");
 
     if (password !== correctPassword) {
-        alert("密碼錯誤，無法清除車號。");
+        showNotification("密碼錯誤，無法清除車號。", "error");
         return;
     }
 
@@ -235,12 +239,12 @@ function clearCarNumbers() {
             return batch.commit();
         })
         .then(() => {
-            alert("所有車號已清除");
+            showNotification("所有車號已清除", "success");
             updateStatusTable();
             loading.style.display = "none";
         })
         .catch(error => {
-            alert("清除失敗");
+            showNotification("清除失敗", "error");
             console.error(error);
             loading.style.display = "none";
         });
@@ -312,12 +316,54 @@ function updateMarkers() {
         markers.push(marker);
         markerCluster.addMarker(marker);
     });
+
+    // Add default center marker if no other markers exist
+    if (markers.length === 0) {
+        const centerMarker = new google.maps.Marker({
+            position: defaultCenter,
+            map: map,
+            title: "軍事基地中心"
+        });
+        centerMarker.addListener('click', () => {
+            infoWindow.setContent(`
+                <div style="color: black;">
+                    <h3>軍事基地中心</h3>
+                    <p>經度: ${defaultCenter.lng}, 緯度: ${defaultCenter.lat}</p>
+                </div>
+            `);
+            infoWindow.open(map, centerMarker);
+        });
+        markers.push(centerMarker);
+        markerCluster.addMarker(centerMarker);
+    }
+}
+
+// Reset map view to default center and zoom
+function resetMapView() {
+    map.setCenter(defaultCenter);
+    map.setZoom(defaultZoom);
+}
+
+// Show notification
+function showNotification(message, type) {
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.className = `notification ${type}`;
+    notification.style.display = 'block';
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 3000);
 }
 
 // Modal click event to close when clicking outside
-document.getElementById("modal").addEventListener("click", function (event) {
-    if (event.target === document.getElementById("modal")) {
-        closeModal();
+document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("modal");
+    if (modal) {
+        modal.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
     }
 });
 
@@ -329,3 +375,4 @@ window.clearCarNumbers = clearCarNumbers;
 window.sortTable = sortTable;
 window.prevPage = prevPage;
 window.nextPage = nextPage;
+window.resetMapView = resetMapView;
