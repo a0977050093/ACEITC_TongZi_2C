@@ -26,7 +26,7 @@ function updateDayRange() {
         const daysInMonth = new Date(year, month, 0).getDate();
         dayInput.max = daysInMonth;
 
-        // 檢查當前的日是否大於允許的最大小
+        // 檢查當前的日是否大於允許的最大值
         if (dayInput.value && parseInt(dayInput.value) > daysInMonth) {
             dayInput.value = daysInMonth;
         }
@@ -181,19 +181,6 @@ function loadPage(page) {
     }
 }
 
-// 事件監聽器
-document.addEventListener("DOMContentLoaded", function() {
-    // 可以在這裡加載初始數據或設定事件處理程序
-});
-
-
-
-
-
-
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
     const tabs = document.querySelectorAll('.tab');
     const tabContents = document.querySelectorAll('.tab-content');
@@ -209,10 +196,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const applyDarkMode = () => {
         if (isDarkMode) {
             document.body.classList.add('dark-mode');
-            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i> 護瞳'; // 更新按鈕圖標
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i> 護瞳';
         } else {
             document.body.classList.remove('dark-mode');
-            darkModeToggle.innerHTML = '<i class="fas fa-moon"></i> 護瞳'; // 更新按鈕圖標
+            darkModeToggle.innerHTML = '<i class="fas fa-moon"></i> 護瞳';
         }
     };
     applyDarkMode();
@@ -240,27 +227,37 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', () => {
             const iframe = button.parentElement.querySelector('iframe');
             modalIframe.src = iframe.src;
-            modal.style.display = 'block'; // 顯示模態框
+            modal.style.display = 'block';
         });
     });
 
     // 關閉模態框
     closeButton.addEventListener('click', () => {
         modal.style.display = 'none';
-        modalIframe.src = ''; // 清空 iframe
+        modalIframe.src = '';
     });
 
     // 點擊外部關閉模態框
     window.addEventListener('click', (event) => {
         if (event.target === modal) {
             modal.style.display = 'none';
-            modalIframe.src = ''; // 清空 iframe
+            modalIframe.src = '';
         }
     });
 
     // 側邊欄切換
     toggleButton.addEventListener('click', () => {
-        sidebar.classList.toggle('open');
+        const isOpen = sidebar.classList.toggle('open');
+        toggleButton.setAttribute('aria-expanded', isOpen);
+    });
+
+    // 可折疊側邊欄功能
+    document.querySelectorAll('.collapsible-header').forEach(header => {
+        header.addEventListener('click', () => {
+            const content = header.nextElementSibling;
+            const isActive = content.classList.toggle('active');
+            header.classList.toggle('active');
+            header.setAttribute('aria-expanded', isActive);
+        });
     });
 });
-
