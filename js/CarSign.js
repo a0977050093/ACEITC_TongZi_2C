@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore, doc, setDoc, collection, getDocs, writeBatch } from "firebase/firestore";
 
+// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBv-DYm4c4l9Dn-o7ME4TnI92YsCpss1nM",
     authDomain: "carsign-423fc.firebaseapp.com",
@@ -13,14 +14,12 @@ const firebaseConfig = {
     measurementId: "G-7FRW6JPXBJ"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore(app);
 
-let map;
-let markers = [];
-let markerCluster;
-let infoWindow;
+// Global variables
 let carLocations = {};
 let cachedCarLocations = null;
 let currentPage = 1;
@@ -28,16 +27,7 @@ const itemsPerPage = 10;
 let sortColumn = 'location';
 let sortDirection = 'asc';
 
-function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 24.8940207, lng: 121.2095940 },
-        zoom: 17,
-        mapTypeId: google.maps.MapTypeId.SATELLITE
-    });
-    infoWindow = new google.maps.InfoWindow();
-    markerCluster = new MarkerClusterer({ map, markers });
-}
-
+// Submit car location
 function submitCarLocation() {
     const carNumber = document.getElementById('carNumbers').value;
     const location = document.getElementById('locations').value;
@@ -78,7 +68,7 @@ function submitCarLocation() {
     })
         .then(() => {
             alert("車號位置已儲存");
-            cachedCarLocations = null; // 清除快取
+            cachedCarLocations = null; // Clear cache
             addMarker(carLocation.lat, carLocation.lng, carNumber, location);
             showStatus();
             loading.style.display = "none";
@@ -90,6 +80,7 @@ function submitCarLocation() {
         });
 }
 
+// Show status modal
 function showStatus() {
     const modal = document.getElementById("modal");
     const loading = document.getElementById("loading");
@@ -99,6 +90,7 @@ function showStatus() {
     if (cachedCarLocations) {
         carLocations = cachedCarLocations;
         updateStatusTable();
+        updateMarkers();
         loading.style.display = "none";
         return;
     }
@@ -127,6 +119,7 @@ function showStatus() {
         });
 }
 
+// Update status table with sorting and pagination
 function updateStatusTable() {
     const tableBody = document.getElementById("statusTable");
     const pageInfo = document.getElementById("pageInfo");
@@ -182,6 +175,7 @@ function updateStatusTable() {
     pageInfo.textContent = `第 ${currentPage} 頁 / 共 ${totalPages} 頁`;
 }
 
+// Sort table by column
 function sortTable(column) {
     if (sortColumn === column) {
         sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
@@ -192,6 +186,7 @@ function sortTable(column) {
     updateStatusTable();
 }
 
+// Pagination controls
 function prevPage() {
     if (currentPage > 1) {
         currentPage--;
@@ -207,10 +202,12 @@ function nextPage() {
     }
 }
 
+// Close modal
 function closeModal() {
     document.getElementById("modal").classList.remove("show");
 }
 
+// Clear all car numbers
 function clearCarNumbers() {
     const password = prompt("請輸入密碼以清除所有車號");
     const correctPassword = "348362";
@@ -249,6 +246,7 @@ function clearCarNumbers() {
         });
 }
 
+// Add marker to map
 function addMarker(lat, lng, carNumber, locationName) {
     const existingMarkers = markers.filter(m => m.position.lat() === lat && m.position.lng() === lng);
     const carNumbers = existingMarkers.map(m => m.title).concat([carNumber]);
@@ -278,6 +276,7 @@ function addMarker(lat, lng, carNumber, locationName) {
     markerCluster.addMarker(marker);
 }
 
+// Update all markers on map
 function updateMarkers() {
     markers.forEach(marker => marker.setMap(null));
     markers = [];
@@ -315,16 +314,14 @@ function updateMarkers() {
     });
 }
 
-document.getElementById("modal  initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 24.8940207, lng: 121.2095940 },
-        zoom: 17,
-        mapTypeId: google.maps.MapTypeId.SATELLITE
-    });
-    infoWindow = new google.maps.InfoWindow();
-    markerCluster = new MarkerClusterer({ map, markers });
-}
+// Modal click event to close when clicking outside
+document.getElementById("modal").addEventListener("click", function (event) {
+    if (event.target === document.getElementById("modal")) {
+        closeModal();
+    }
+});
 
+// Expose functions to global scope
 window.submitCarLocation = submitCarLocation;
 window.showStatus = showStatus;
 window.closeModal = closeModal;
