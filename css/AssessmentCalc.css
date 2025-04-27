@@ -1,37 +1,46 @@
+/* 軍事風格 CSS - 適用於考核表驗證器，移除側邊欄，內容置中 */
 
-/* 軍事風格全局 CSS - 適用於考核表驗證器，優化手機體驗，採用亮版面設計 */
-
-/* 基礎變數 */
-:root {
-    --primary-color: #2E4A3D; /* 深軍綠 - 用於主要元素 */
-    --secondary-color: #6B7280; /* 金屬灰 - 用於邊框和次要元素 */
-    --accent-color: #D4A017; /* 金屬金 - 用於強調元素 */
-    --neutral-color: #333333; /* 深灰 - 用於文字 */
-    --text-color: #333333; /* 深灰文字 */
-    --bg-dark: #E9F2E9; /* 淺軍綠背景 */
-    --bg-light: #FFFFFF; /* 純白 - 用於容器 */
-    --error-color: #f44336; /* 危險紅 - 用於錯誤 */
-    --success-color: #4CAF50; /* 成功綠 - 用於正確狀態 */
-    --shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 微弱陰影 */
-    --transition: all 0.3s ease; /* 統一過渡動畫 */
-}
-
-/* 重置與全局樣式 */
+/* 基礎重置與字體設定 */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Arial', 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+    font-family: 'Microsoft JhengHei', 'Noto Sans TC', Arial, sans-serif;
+}
+
+:root {
+    /* 軍事風格主色調 */
+    --primary-color: #2E4A3D; /* 深軍綠 */
+    --primary-hover: #1e3a2f; /* 懸停深軍綠 */
+    --primary-light: #E9F2E9; /* 淺軍綠 */
+    /* 次要色調 */
+    --secondary-color: #6B7280; /* 金屬灰 */
+    --secondary-hover: #5a6268;
+    /* 狀態色 */
+    --correct-color: #34a853; /* 成功綠 */
+    --wrong-color: #ea4335; /* 錯誤紅 */
+    /* 文字色 */
+    --text-dark: #2c3e50;
+    --text-medium: #5f6368;
+    /* 背景色 */
+    --bg-primary: #E9F2E9; /* 淺軍綠背景 */
+    --bg-card: white;
+    /* 邊框與陰影 */
+    --border-color: #e0e0e0;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 5px 15px rgba(0, 0, 0, 0.15);
+    /* 動畫 */
+    --transition: all 0.3s ease;
 }
 
 body {
-    background-color: var(--bg-dark);
-    color: var(--neutral-color);
+    background-color: var(--bg-primary);
+    color: var(--text-dark);
     line-height: 1.6;
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    font-size: 16px;
+    justify-content: center;
+    align-items: center;
 }
 
 /* 夜間模式 */
@@ -39,107 +48,49 @@ body.dark-mode {
     background-color: #121212;
     color: #e0e0e0;
 }
-
-/* 側邊欄 */
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 60px; /* 初始收縮寬度 */
-    background-color: var(--primary-color);
-    color: var(--bg-light);
-    overflow-x: hidden;
-    transition: width var(--transition);
-    z-index: 1000;
+body.dark-mode .container,
+body.dark-mode .form-container,
+body.dark-mode #result {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
 }
-
-.sidebar.expanded {
-    width: 250px; /* 展開寬度 */
+body.dark-mode input {
+    background-color: #2a2a2a;
+    border-color: #888;
+    color: #e0e0e0;
 }
-
-.sidebar-header {
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.sidebar-header .hamburger {
-    font-size: 24px;
-    cursor: pointer;
-    color: var(--bg-light);
-}
-
-.sidebar-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sidebar-menu li {
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.sidebar-menu li:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.sidebar-menu li i {
-    margin-right: 10px;
-    font-size: 18px;
-    width: 20px;
-    text-align: center;
-}
-
-.sidebar-menu li span {
-    display: none;
-    white-space: nowrap;
-}
-
-.sidebar.expanded .sidebar-menu li span {
-    display: inline;
+body.dark-mode .form-group label {
+    color: #e0e0e0;
 }
 
 /* 主內容 */
 .main-content {
-    margin-left: 60px; /* 初始邊距 */
+    width: 100%;
     padding: 20px;
-    transition: margin-left var(--transition);
-    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
-}
-
-.main-content.expanded {
-    margin-left: 250px; /* 展開時邊距 */
 }
 
 /* 容器 */
 .container {
+    max-width: 600px; /* 縮減寬度以強化置中感 */
     width: 90%;
-    max-width: 1200px;
-    margin: 30px auto;
-    padding: 20px;
-    background-color: var(--bg-light);
-    border-radius: 8px;
+    margin: 20px auto;
+    padding: 25px;
+    background: var(--bg-card);
+    border-radius: 10px;
     box-shadow: var(--shadow);
-}
-
-body.dark-mode .container {
-    background-color: #1e1e1e;
+    text-align: center;
 }
 
 /* 標題 */
 h1 {
     font-size: 28px;
-    text-align: center;
     margin-bottom: 20px;
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--accent-color);
+    color: var(--text-dark);
+    border-bottom: 2px solid #D4A017; /* 金屬金 */
     padding-bottom: 5px;
 }
 
@@ -149,81 +100,63 @@ h1 {
     flex-wrap: wrap;
     gap: 15px;
     justify-content: center;
-    margin-bottom: 20px;
-    background-color: var(--bg-light);
+    margin-bottom: 25px;
     padding: 20px;
+    background: var(--bg-card);
     border-radius: 8px;
     box-shadow: var(--shadow);
-}
-
-body.dark-mode .form-container {
-    background-color: #1e1e1e;
 }
 
 /* 表單組 */
 .form-group {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    width: 100%;
 }
-
 .form-group label {
-    font-size: 16px;
     width: 80px;
-    color: var(--neutral-color);
     font-weight: 500;
+    color: var(--text-dark);
+    margin-right: 10px;
 }
-
 .form-group input {
-    padding: 8px;
-    width: calc(100% - 90px);
-    border: 1px solid var(--secondary-color);
-    border-radius: 4px;
+    flex: 1;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
     font-size: 16px;
-    background-color: var(--bg-light);
-    color: var(--neutral-color);
-    transition: border-color var(--transition);
+    background-color: var(--bg-card);
+    transition: var(--transition);
 }
-
 .form-group input:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 5px rgba(212, 160, 23, 0.5);
+    border-color: #D4A017; /* 金屬金 */
+    box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.2);
     outline: none;
 }
 
-body.dark-mode .form-group input {
-    background-color: #2a2a2a;
-    border-color: #888;
-    color: #e0e0e0;
-}
-
 /* 按鈕 */
-button, .btn, .toggle-button, .dark-mode-button {
-    background-color: var(--accent-color);
-    color: var(--bg-light);
-    border: 2px solid var(--secondary-color);
-    padding: 10px 20px;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+button, .btn, .dark-mode-button {
+    background: #D4A017; /* 金屬金 */
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
     transition: var(--transition);
 }
-
-button:hover, .btn:hover, .toggle-button:hover, .dark-mode-button:hover {
-    background-color: #B88E14;
-    border-color: var(--primary-color);
+button:hover, .btn:hover, .dark-mode-button:hover {
+    background: #B88E14;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
-
-.toggle-button {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    z-index: 1001;
+button:active, .btn:active, .dark-mode-button:active {
+    transform: translateY(0);
 }
-
 .dark-mode-button {
     position: fixed;
     top: 10px;
@@ -233,106 +166,71 @@ button:hover, .btn:hover, .toggle-button:hover, .dark-mode-button:hover {
 
 /* 結果區域 */
 #result {
-    margin-top: 20px;
+    margin: 25px 0;
     padding: 20px;
-    background-color: var(--bg-light);
+    background: var(--bg-card);
     border-radius: 8px;
     box-shadow: var(--shadow);
 }
-
-body.dark-mode #result {
-    background-color: #1e1e1e;
+#result .result-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 6px;
+    background: var(--bg-card);
+    transition: var(--transition);
 }
-
-#result h2 {
-    font-size: 18px;
-    margin-bottom: 15px;
-    color: var(--primary-color);
+#result .result-item:hover {
+    transform: translateX(5px);
 }
-
-#result h3 {
-    font-size: 16px;
-    margin: 15px 0 10px;
-    color: var(--primary-color);
+#result .result-item.correct {
+    border-left: 4px solid var(--correct-color);
 }
-
-#result p {
-    font-size: 14px;
-    margin: 5px 0;
-    color: var(--neutral-color);
+#result .result-item.incorrect {
+    border-left: 4px solid var(--wrong-color);
 }
-
-.error {
-    color: var(--error-color);
+#result .error {
+    color: var(--wrong-color);
     font-size: 14px;
     text-align: center;
 }
-
-.release-time {
-    background-color: #ffcccc;
-    border: 2px solid var(--error-color);
+#result .release-time {
+    background: #ffcccc;
+    border: 2px solid var(--wrong-color);
     border-radius: 6px;
     padding: 10px;
     margin-top: 20px;
     text-align: center;
     font-size: 16px;
     font-weight: bold;
-    color: var(--text-color);
+    color: var(--text-dark);
 }
 
 /* 響應式設計 */
-@media (min-width: 768px) {
-    .sidebar {
-        width: 250px; /* 桌面模式預設展開 */
-    }
-
-    .main-content {
-        margin-left: 250px;
-    }
-
-    .sidebar-header {
-        display: none; /* 隱藏漢堡圖標 */
-    }
-
-    .sidebar-menu li span {
-        display: inline; /* 預設顯示文字 */
-    }
-
-    .container {
-        max-width: 1200px;
-    }
-}
-
 @media (max-width: 768px) {
     body {
         font-size: 14px;
     }
-
     .container {
         width: 95%;
-        padding: 15px;
-        margin: 20px auto;
+        padding: 20px;
     }
-
     .form-container {
         padding: 15px;
     }
-
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
     .form-group label {
-        width: 70px;
+        width: 100%;
+        margin-bottom: 8px;
     }
-
     .form-group input {
-        width: calc(100% - 80px);
+        width: 100%;
     }
-
-    button, .btn, .toggle-button, .dark-mode-button {
-        padding: 8px 16px;
-        font-size: 12px;
-    }
-
-    .main-content.expanded {
-        margin-left: 200px;
+    button, .btn, .dark-mode-button {
+        padding: 10px 20px;
+        font-size: 15px;
     }
 }
 
@@ -340,22 +238,7 @@ body.dark-mode #result {
     h1 {
         font-size: 24px;
     }
-
-    .form-group {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .form-group label {
-        width: 100%;
-        margin-bottom: 5px;
-    }
-
-    .form-group input {
-        width: 100%;
-    }
-
-    .main-content.expanded {
-        margin-left: 0; /* 小螢幕下不調整邊距 */
+    .container {
+        padding: 15px;
     }
 }
