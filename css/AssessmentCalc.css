@@ -1,0 +1,361 @@
+
+/* 軍事風格全局 CSS - 適用於考核表驗證器，優化手機體驗，採用亮版面設計 */
+
+/* 基礎變數 */
+:root {
+    --primary-color: #2E4A3D; /* 深軍綠 - 用於主要元素 */
+    --secondary-color: #6B7280; /* 金屬灰 - 用於邊框和次要元素 */
+    --accent-color: #D4A017; /* 金屬金 - 用於強調元素 */
+    --neutral-color: #333333; /* 深灰 - 用於文字 */
+    --text-color: #333333; /* 深灰文字 */
+    --bg-dark: #E9F2E9; /* 淺軍綠背景 */
+    --bg-light: #FFFFFF; /* 純白 - 用於容器 */
+    --error-color: #f44336; /* 危險紅 - 用於錯誤 */
+    --success-color: #4CAF50; /* 成功綠 - 用於正確狀態 */
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 微弱陰影 */
+    --transition: all 0.3s ease; /* 統一過渡動畫 */
+}
+
+/* 重置與全局樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--neutral-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+}
+
+/* 夜間模式 */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+/* 側邊欄 */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 60px; /* 初始收縮寬度 */
+    background-color: var(--primary-color);
+    color: var(--bg-light);
+    overflow-x: hidden;
+    transition: width var(--transition);
+    z-index: 1000;
+}
+
+.sidebar.expanded {
+    width: 250px; /* 展開寬度 */
+}
+
+.sidebar-header {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sidebar-header .hamburger {
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--bg-light);
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sidebar-menu li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-menu li i {
+    margin-right: 10px;
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar-menu li span {
+    display: none;
+    white-space: nowrap;
+}
+
+.sidebar.expanded .sidebar-menu li span {
+    display: inline;
+}
+
+/* 主內容 */
+.main-content {
+    margin-left: 60px; /* 初始邊距 */
+    padding: 20px;
+    transition: margin-left var(--transition);
+    box-sizing: border-box;
+    min-height: 100vh;
+}
+
+.main-content.expanded {
+    margin-left: 250px; /* 展開時邊距 */
+}
+
+/* 容器 */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: var(--bg-light);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+body.dark-mode .container {
+    background-color: #1e1e1e;
+}
+
+/* 標題 */
+h1 {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 5px;
+}
+
+/* 表單容器 */
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 20px;
+    background-color: var(--bg-light);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+body.dark-mode .form-container {
+    background-color: #1e1e1e;
+}
+
+/* 表單組 */
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-size: 16px;
+    width: 80px;
+    color: var(--neutral-color);
+    font-weight: 500;
+}
+
+.form-group input {
+    padding: 8px;
+    width: calc(100% - 90px);
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: var(--bg-light);
+    color: var(--neutral-color);
+    transition: border-color var(--transition);
+}
+
+.form-group input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 5px rgba(212, 160, 23, 0.5);
+    outline: none;
+}
+
+body.dark-mode .form-group input {
+    background-color: #2a2a2a;
+    border-color: #888;
+    color: #e0e0e0;
+}
+
+/* 按鈕 */
+button, .btn, .toggle-button, .dark-mode-button {
+    background-color: var(--accent-color);
+    color: var(--bg-light);
+    border: 2px solid var(--secondary-color);
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+button:hover, .btn:hover, .toggle-button:hover, .dark-mode-button:hover {
+    background-color: #B88E14;
+    border-color: var(--primary-color);
+}
+
+.toggle-button {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1001;
+}
+
+.dark-mode-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1001;
+}
+
+/* 結果區域 */
+#result {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: var(--bg-light);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+body.dark-mode #result {
+    background-color: #1e1e1e;
+}
+
+#result h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+#result h3 {
+    font-size: 16px;
+    margin: 15px 0 10px;
+    color: var(--primary-color);
+}
+
+#result p {
+    font-size: 14px;
+    margin: 5px 0;
+    color: var(--neutral-color);
+}
+
+.error {
+    color: var(--error-color);
+    font-size: 14px;
+    text-align: center;
+}
+
+.release-time {
+    background-color: #ffcccc;
+    border: 2px solid var(--error-color);
+    border-radius: 6px;
+    padding: 10px;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+/* 響應式設計 */
+@media (min-width: 768px) {
+    .sidebar {
+        width: 250px; /* 桌面模式預設展開 */
+    }
+
+    .main-content {
+        margin-left: 250px;
+    }
+
+    .sidebar-header {
+        display: none; /* 隱藏漢堡圖標 */
+    }
+
+    .sidebar-menu li span {
+        display: inline; /* 預設顯示文字 */
+    }
+
+    .container {
+        max-width: 1200px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    .container {
+        width: 95%;
+        padding: 15px;
+        margin: 20px auto;
+    }
+
+    .form-container {
+        padding: 15px;
+    }
+
+    .form-group label {
+        width: 70px;
+    }
+
+    .form-group input {
+        width: calc(100% - 80px);
+    }
+
+    button, .btn, .toggle-button, .dark-mode-button {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+
+    .main-content.expanded {
+        margin-left: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-group label {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .form-group input {
+        width: 100%;
+    }
+
+    .main-content.expanded {
+        margin-left: 0; /* 小螢幕下不調整邊距 */
+    }
+}
