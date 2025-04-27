@@ -20,34 +20,42 @@
         <form>
             <label for="carNumbers">選擇車號:</label>
             <select id="carNumbers">
-                <option value="軍E-21137">軍E-21137</option>
-                <option value="軍E-21188">軍E-21188</option>
-                <option value="軍2-20004">軍2-20004</option>
-                <option value="軍2-26681">軍2-26681</option>
-                <option value="軍2-20094">軍2-20094</option>
-                <option value="軍2-20096">軍2-20096</option>
-                <option value="軍2-20097">軍2-20097</option>
-                <option value="軍2-20895">軍2-20895</option>
-                <option value="軍2-23113">軍2-23113</option>
-                <option value="軍2-20001">軍2-20001</option>
-                <option value="軍2-20002">軍2-20002</option>
-                <option value="軍2-20009">軍2-20009</option>
-                <option value="軍2-20010">軍2-20010</option>
-                <option value="軍2-20090">軍2-20090</option>
-                <option value="軍2-20092">軍2-20092</option>
-                <option value="軍2-22705">軍2-22705</option>
-                <option value="軍2-22717">軍2-22717</option>
-                <option value="軍2-22740">軍2-22740</option>
-                <option value="軍2-22834">軍2-22834</option>
-                <option value="軍2-23836">軍2-23836</option>
-                <option value="軍2-24507">軍2-24507</option>
-                <option value="軍2-24629">軍2-24629</option>
-                <option value="軍2-24630">軍2-24630</option>
-                <option value="軍2-24631">軍2-24631</option>
-                <option value="軍3-25088">軍3-25088</option>
-                <option value="軍3-24053">軍3-24053</option>
-                <option value="軍1-23534">軍1-23534</option>
-                <option value="軍K-20456">軍K-20456</option>
+                <optgroup label="軍E 車輛">
+                    <option value="軍E-21137">軍E-21137</option>
+                    <option value="軍E-21188">軍E-21188</option>
+                </optgroup>
+                <optgroup label="軍2 車輛">
+                    <option value="軍2-20004">軍2-20004</option>
+                    <option value="軍2-26681">軍2-26681</option>
+                    <option value="軍2-20094">軍2-20094</option>
+                    <option value="軍2-20096">軍2-20096</option>
+                    <option value="軍2-20097">軍2-20097</option>
+                    <option value="軍2-20895">軍2-20895</option>
+                    <option value="軍2-23113">軍2-23113</option>
+                    <option value="軍2-20001">軍2-20001</option>
+                    <option value="軍2-20002">軍2-20002</option>
+                    <option value="軍2-20009">軍2-20009</option>
+                    <option value="軍2-20010">軍2-20010</option>
+                    <option value="軍2-20090">軍2-20090</option>
+                    <option value="軍2-20092">軍2-20092</option>
+                    <option value="軍2-22705">軍2-22705</option>
+                    <option value="軍2-22717">軍2-22717</option>
+                    <option value="軍2-22740">軍2-22740</option>
+                    <option value="軍2-22834">軍2-22834</option>
+                    <option value="軍2-23836">軍2-23836</option>
+                    <option value="軍2-24507">軍2-24507</option>
+                    <option value="軍2-24629">軍2-24629</option>
+                    <option value="軍2-24630">軍2-24630</option>
+                    <option value="軍2-24631">軍2-24631</option>
+                </optgroup>
+                <optgroup label="軍3 車輛">
+                    <option value="軍3-25088">軍3-25088</option>
+                    <option value="軍3-24053">軍3-24053</option>
+                </optgroup>
+                <optgroup label="其他車輛">
+                    <option value="軍1-23534">軍1-23534</option>
+                    <option value="軍K-20456">軍K-20456</option>
+                </optgroup>
             </select>
 
             <label for="locations">選擇位置:</label>
@@ -62,8 +70,10 @@
                 <option value="待安置車號">待安置車號</option>
             </select>
 
-            <button type="button" onclick="submitCarLocation()">提交車號</button>
-            <button type="button" id="status-btn" onclick="showStatus()">車況顯示</button>
+            <div class="button-group">
+                <button type="button" onclick="submitCarLocation()">提交車號</button>
+                <button type="button" id="status-btn" onclick="showStatus()">車況顯示</button>
+            </div>
         </form>
 
         <div id="modal">
@@ -89,28 +99,56 @@
             </div>
         </div>
 
-        <div id="map"></div>
+        <div id="map-container">
+            <div id="map"></div>
+            <button id="reset-map-btn" onclick="resetMapView()">重置地圖視圖</button>
+        </div>
         <div id="loading">正在載入...</div>
+        <div id="notification" class="notification"></div>
     </div>
 
-    <!-- Google Maps API with async and defer -->
+    <!-- Load MarkerClusterer before Google Maps API -->
+    <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js" async defer></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhce6akuYMjY1U1qOraSCdZQKXQ9yRMQA&callback=initMap" async defer></script>
-    <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
     <!-- Define initMap in global scope -->
     <script>
         let map;
         let markers = [];
         let markerCluster;
         let infoWindow;
+        const defaultCenter = { lat: 24.8940207, lng: 121.2095940 };
+        const defaultZoom = 17;
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: 24.8940207, lng: 121.2095940 },
-                zoom: 17,
-                mapTypeId: google.maps.MapTypeId.SATELLITE
+                center: defaultCenter,
+                zoom: defaultZoom,
+                mapTypeId: google.maps.MapTypeId.SATELLITE,
+                zoomControl: true,
+                mapTypeControl: true,
+                streetViewControl: false,
+                fullscreenControl: false
             });
             infoWindow = new google.maps.InfoWindow();
             markerCluster = new MarkerClusterer({ map, markers });
+
+            // Add a default marker at the center
+            const centerMarker = new google.maps.Marker({
+                position: defaultCenter,
+                map: map,
+                title: "軍事基地中心"
+            });
+            centerMarker.addListener('click', () => {
+                infoWindow.setContent(`
+                    <div style="color: black;">
+                        <h3>軍事基地中心</h3>
+                        <p>經度: ${defaultCenter.lng}, 緯度: ${defaultCenter.lat}</p>
+                    </div>
+                `);
+                infoWindow.open(map, centerMarker);
+            });
+            markers.push(centerMarker);
+            markerCluster.addMarker(centerMarker);
         }
     </script>
     <script src="js/CarSign.js" type="module"></script>
