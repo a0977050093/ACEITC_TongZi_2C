@@ -47,12 +47,12 @@ h1 {
 
 /* 側邊欄標題樣式 */
 .sidebar-content h4 {
-    padding-left: 20px; /* 調整左邊的內距 */
-    margin-top: 15px;   /* 調整上方的外距 */
-    margin-bottom: 10px; /* 調整下方的外距 */
-    font-size: 18px;    /* 調整字體大小 */
-    color: #ffffff;     /* 調整文字顏色 */
-    font-weight: bold;  /* 加粗文字 */
+    padding-left: 20px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #ffffff;
+    font-weight: bold;
 }
 
 /* 標籤區域 */
@@ -212,6 +212,8 @@ body.dark-mode .close-button:focus {
     padding-top: 60px;
     transition: left 0.3s ease;
     z-index: 1000;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
 .sidebar.open {
@@ -229,6 +231,72 @@ body.dark-mode .close-button:focus {
 
 .sidebar-content a:hover {
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 可折疊標頭 */
+.collapsible-header {
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #444;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s;
+    position: relative;
+}
+
+.collapsible-header:hover {
+    background-color: #555;
+}
+
+.collapsible-header::before {
+    content: '▶';
+    display: inline-block;
+    margin-right: 10px;
+    transition: transform 0.3s;
+}
+
+.collapsible-header.active::before {
+    transform: rotate(90deg);
+}
+
+body.dark-mode .collapsible-header {
+    background-color: #444;
+}
+
+body.dark-mode .collapsible-header:hover {
+    background-color: #555;
+}
+
+/* 可折疊內容 */
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    background-color: #3a3a3a;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.collapsible-content.active {
+    max-height: 500px; /* 根據內容調整 */
+    padding: 10px 20px;
+}
+
+.collapsible-content p {
+    margin: 5px 0;
+    color: inherit;
+}
+
+.collapsible-content a {
+    padding: 5px 0;
+    border-bottom: none;
+}
+
+.collapsible-content a:hover {
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+body.dark-mode .collapsible-content {
+    background-color: #3a3a3a;
 }
 
 /* 切換按鈕 */
