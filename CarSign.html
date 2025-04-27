@@ -93,8 +93,26 @@
         <div id="loading">正在載入...</div>
     </div>
 
+    <!-- Google Maps API with async and defer -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhce6akuYMjY1U1qOraSCdZQKXQ9yRMQA&callback=initMap" async defer></script>
     <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+    <!-- Define initMap in global scope -->
+    <script>
+        let map;
+        let markers = [];
+        let markerCluster;
+        let infoWindow;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 24.8940207, lng: 121.2095940 },
+                zoom: 17,
+                mapTypeId: google.maps.MapTypeId.SATELLITE
+            });
+            infoWindow = new google.maps.InfoWindow();
+            markerCluster = new MarkerClusterer({ map, markers });
+        }
+    </script>
     <script src="js/CarSign.js" type="module"></script>
 </body>
 </html>
