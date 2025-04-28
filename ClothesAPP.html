@@ -1,30 +1,30 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/ClothesAPP.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>軍裝購物平台</title>
 </head>
-
 <body>
     <header>
         <h1>義務役及軍事訓練役</h1>
         <h1>購買品項大平台</h1>
     </header>
     <div class="container">
-        <nav class="sidebar" id="sidebar" width="100">
-            <h2 id="toggle-btn">商品分類</h2>
-            <ul id="sidebar-menu">
-                <li><a href="#tops">上裝</a></li>
-                <li><a href="#bottoms">下裝</a></li>
-                <li><a href="#hats">帽類</a></li>
-                <li><a href="#shoes">鞋類</a></li>
-                <li><a href="#consumables">消耗品</a></li>
-                <li><a href="#sports">運動裝</a></li>
-                <li><a href="#accessories">配件與其他</a></li>
-            </ul>
+        <!-- 下拉選單導航 -->
+        <nav class="dropdown-nav">
+            <select id="category-select" aria-label="選擇商品分類以顯示對應商品">
+                <option value="">選擇商品分類</option>
+                <option value="tops" data-icon="fa-shirt">上裝</option>
+                <option value="bottoms" data-icon="fa-person-walking">下裝</option>
+                <option value="hats" data-icon="fa-hat-cowboy">帽類</option>
+                <option value="shoes" data-icon="fa-shoe-prints">鞋類</option>
+                <option value="consumables" data-icon="fa-box-open">消耗品</option>
+                <option value="sports" data-icon="fa-dumbbell">運動裝</option>
+                <option value="accessories" data-icon="fa-gear">配件與其他</option>
+            </select>
         </nav>
         <main>
             <div id="tops" class="product-grid">
@@ -33,72 +33,83 @@
                     <img src="1.jpg" alt="陸軍士官兵大盤帽">
                     <h5>陸軍士官兵大盤帽</h5>
                     <p>價格：$400</p>
+                    <button data-item="陸軍士官兵大盤帽">加入購物車</button>
+                </div>
+                <div class="product-card">
                     <img src="1.jpg" alt="上裝範例">
-                    <h2>範例上裝</h2>
+                    <h5>範例上裝</h5>
                     <p>價格：$XXX</p>
-                    <button>加入購物車</button>
+                    <button data-item="範例上裝">加入購物車</button>
                 </div>
             </div>
             <div id="bottoms" class="product-grid">
                 <h2>下裝</h2>
                 <div class="product-card">
                     <img src="11.jpg" alt="下裝範例">
-                    <h2>範例下裝</h2>
+                    <h5>範例下裝</h5>
                     <p>價格：$XXX</p>
-                    <button>加入購物車</button>
+                    <button data-item="範例下裝">加入購物車</button>
                 </div>
             </div>
             <div id="hats" class="product-grid">
                 <h2>帽類</h2>
                 <div class="product-card">
                     <img src="21.jpg" alt="帽類範例">
-                    <h2>範例帽子</h2>
+                    <h5>範例帽子</h5>
                     <p>價格：$XXX</p>
-                    <button>加入購物車</button>
+                    <button data-item="範例帽子">加入購物車</button>
                 </div>
             </div>
             <div id="shoes" class="product-grid">
                 <h2>鞋類</h2>
                 <div class="product-card">
                     <img src="31.jpg" alt="鞋類範例">
-                    <h2>範例鞋子</h2>
+                    <h5>範例鞋子</h5>
                     <p>價格：$XXX</p>
-                    <button>加入購物車</button>
+                    <button data-item="範例鞋子">加入購物車</button>
                 </div>
             </div>
             <div id="consumables" class="product-grid">
                 <h2>消耗品</h2>
                 <div class="product-card">
                     <img src="41.jpg" alt="消耗品範例">
-                    <h2>範例消耗品</h2>
+                    <h5>範例消耗品</h5>
                     <p>價格：$XXX</p>
-                    <button>加入購物車</button>
+                    <button data-item="範例消耗品">加入購物車</button>
                 </div>
             </div>
             <div id="sports" class="product-grid">
                 <h2>運動裝</h2>
                 <div class="product-card">
                     <img src="51.jpg" alt="運動裝範例">
-                    <h2>範例運動裝</h2>
+                    <h5>範例運動裝</h5>
                     <p>價格：$XXX</p>
-                    <button>加入購物車</button>
+                    <button data-item="範例運動裝">加入購物車</button>
                 </div>
             </div>
             <div id="accessories" class="product-grid">
                 <h2>配件與其他</h2>
                 <div class="product-card">
                     <img src="61.jpg" alt="配件範例">
-                    <h2>範例配件</h2>
+                    <h5>範例配件</h5>
                     <p>價格：$XXX</p>
-                    <button>加入購物車</button>
+                    <button data-item="範例配件">加入購物車</button>
                 </div>
             </div>
         </main>
+    </div>
+    <!-- 購物車模態框（建議 2） -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">×</span>
+            <h2>購物車</h2>
+            <p id="cart-message"></p>
+            <button onclick="closeCartModal()">繼續購物</button>
+        </div>
     </div>
     <button class="scroll-to-top" onclick="scrollToTop()">
         <img src="arrow-up-drop-circle.svg" alt="返回頂部">
     </button>
     <script src="js/ClothesAPP.js"></script>
 </body>
-
 </html>
