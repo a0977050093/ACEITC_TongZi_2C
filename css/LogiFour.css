@@ -35,18 +35,51 @@ body {
     font-size: 1.2rem;
 }
 
-/* 下拉選單導航 */
-.dropdown-nav {
+/* 搜尋式導航 */
+.search-nav {
     background-color: #f8f9fa;
     padding: 10px;
     margin-bottom: 15px;
     display: block;
 }
 
-.select-group {
+.search-group {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    align-items: center;
+}
+
+.search-input {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+}
+
+.search-input i {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #4b8c2a;
+    font-size: 14px;
+}
+
+#equipment-search {
+    width: 100%;
+    padding: 8px 8px 8px 30px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #333;
+}
+
+.filter-group {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+    min-width: 200px;
 }
 
 #main-category, #sub-category {
@@ -59,7 +92,7 @@ body {
     color: #333;
     border: 1px solid #ddd;
     appearance: none;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234b8b3b"><path d="M7 10l5 5 5-5H7z"/></svg>'); /* 自訂箭頭（建議 3） */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234b8b3b"><path d="M7 10l5 5 5-5H7z"/></svg>');
     background-repeat: no-repeat;
     background-position: right 10px center;
     background-size: 16px;
@@ -70,7 +103,7 @@ body {
     cursor: not-allowed;
 }
 
-#main-category:focus, #sub-category:focus {
+#equipment-search:focus, #main-category:focus, #sub-category:focus {
     outline: 2px solid #4b8c2a;
     outline-offset: 2px;
 }
@@ -238,17 +271,30 @@ body {
 
 /* 響應式設計 */
 @media (max-width: 768px) {
-    .dropdown-nav {
+    .search-nav {
         display: none;
     }
 
-    .dropdown-nav.active {
+    .search-nav.active {
         display: block;
     }
 
-    .select-group {
+    .search-group {
         flex-direction: column;
         gap: 5px;
+    }
+
+    .search-input, .filter-group {
+        min-width: 100%;
+    }
+
+    #equipment-search {
+        padding: 10px 10px 10px 35px;
+        font-size: 16px;
+    }
+
+    .search-input i {
+        font-size: 16px;
     }
 
     #main-category, #sub-category {
@@ -280,6 +326,12 @@ body {
 
     .menu-toggle {
         padding: 0.4rem 0.8rem;
+    }
+
+    #equipment-search {
+        font-size: 14px;
+        padding: 8px 8px 8px 30px;
+        background-size: 16px;
     }
 
     #main-category, #sub-category {
