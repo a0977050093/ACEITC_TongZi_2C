@@ -383,9 +383,7 @@ function calculateAll() {
     }
 
     const age = calculateAge(birthDate, leaveYear);
-    if (age < 19 || age
-
-> 59) {
+    if (age < 19 || age > 59) {
         resultDiv.innerHTML = '<p class="error">年齡必須在 19 至 59 歲之間！</p>';
         return;
     }
@@ -409,8 +407,9 @@ function calculateAll() {
     }
 
     if (calculateAssessment) {
-        resultHTML += '<div class="result-section">';
-        resultHTML += '<h3>考核表計算結果</h3>';
+        resultHTML += '<div class="card">';
+        resultHTML += '<div class="card-header">考核表計算結果</div>';
+        resultHTML += '<div class="card-body">';
         const months = [];
         let currentDate = new Date(assessmentDate);
         for (let i = 0; i < 3; i++) {
@@ -491,11 +490,11 @@ function calculateAll() {
                 <tr><th style="color: red;">解管時間</th><td style="color: red;">${releaseTime}</td></tr>
             </table>
         `;
-        resultHTML += '</div>';
+        resultHTML += '</div></div>';
     }
 
     if (useVolunteerDate) {
-        resultHTML += '<div class="result-section"><h3>慰勞假計算結果</h3>';
+        resultHTML += '<div class="card"><div class="card-header">慰勞假計算結果</div><div class="card-body">';
 
         let totalSeniority = 0;
         if (isReenlist) {
@@ -517,6 +516,7 @@ function calculateAll() {
         let leaveDays = getLeaveDays(totalSeniority);
 
         const isFirstYear = leaveYear === parseInt(volunteerYear) + 1 && parseInt(volunteerMonth) > 1;
+        const prevYear = gregorianLeaveYear - 1; // 計算前一年度（113年）
         const adat = Array(13).fill().map(() => Array(32).fill({ status: 1, reason: '' }));
 
         if (isFirstYear) {
@@ -536,9 +536,9 @@ function calculateAll() {
 
         if (isReenlist) {
             for (let i = 1; i <= 12; i++) {
-                const daysInMonth = new Date(gregorianLeaveYear, i, 0).getDate();
+                const daysInMonth = new Date(prevYear, i, 0).getDate();
                 for (let j = 1; j <= daysInMonth; j++) {
-                    const currentDate = new Date(gregorianLeaveYear, i - 1, j);
+                    const currentDate = new Date(prevYear, i - 1, j);
                     const retireDate = firstRetireDate;
                     const reenlistDate = reenlistDate;
                     if (currentDate >= retireDate && currentDate < reenlistDate) {
@@ -549,7 +549,8 @@ function calculateAll() {
         }
 
         trainingDates.forEach(record => {
-            if (record.start.getFullYear() === gregorianLeaveYear) {
+            // 檢查受訓紀錄是否在 113 年（前一年度）
+            if (record.start.getFullYear() === prevYear) {
                 if (record.start.getMonth() === record.end.getMonth()) {
                     for (let j = record.start.getDate(); j <= record.end.getDate(); j++) {
                         adat[record.start.getMonth() + 1][j] = { status: 0, reason: '受訓' };
@@ -557,7 +558,7 @@ function calculateAll() {
                 } else {
                     for (let i = record.start.getMonth() + 1; i <= record.end.getMonth() + 1; i++) {
                         const startDay = i === record.start.getMonth() + 1 ? record.start.getDate() : 1;
-                        const endDay = i === record.end.getMonth() + 1 ? record.end.getDate() : new Date(gregorianLeaveYear, i, 0).getDate();
+                        const endDay = i === record.end.getMonth() + 1 ? record.end.getDate() : new Date(prevYear, i, 0).getDate();
                         for (let j = startDay; j <= endDay; j++) {
                             adat[i][j] = { status: 0, reason: '受訓' };
                         }
@@ -571,9 +572,9 @@ function calculateAll() {
         for (let i = 1; i <= 12; i++) {
             let isInService = false;
             let monthReason = '';
-            const daysInMonth = new Date(gregorianLeaveYear, i, 0).getDate();
+            const daysInMonth = new Date(prevYear, i, 0).getDate();
             let inServiceDays = 0;
-            
+
             for (let j = 1; j <= daysInMonth; j++) {
                 if (adat[i][j].status === 1) {
                     inServiceDays++;
@@ -582,7 +583,7 @@ function calculateAll() {
                 }
             }
 
-            // 如果該月至少有一天在職，則計為在職月
+            // 當月份只要有一天在營（非受訓日），該月就算在職
             if (inServiceDays > 0) {
                 isInService = true;
                 inServiceMonths++;
@@ -611,47 +612,69 @@ function calculateAll() {
         const clothingPoints = getClothingPoints(totalSeniority);
 
         resultHTML += `
-            <div class="result-subsection">
-                <h4>基本資料</h4>
-                <table class="result-table">
-                    <tr><th>出生日期</th><td>${formatDate(birthDate)}</td></tr>
-                    <tr><th>年齡</th><td>${age} 歲</td></tr>
-                    <tr><th>性別</th><td>${gender === 'male' ? '男' : '女'}</td></tr>
-                    <tr><th>志願役生效日期</th><td>${formatDate(volunteerDate)}</td></tr>
-                    ${isReenlist ? `
-                        <tr><th>再入營/復職日期</th><td>${formatDate(reenlistDate)}</td></tr>
-                        <tr><th>第一次退伍/育嬰生效日期</th><td>${formatDate(firstRetireDate)}</td></tr>
-                    ` : ''}
-                </table>
+            <div class="card-content">
+                <div class="card-row">
+                    <span class="card-label">總年資</span>
+                    <span class="card-value">${(totalSeniority / 12).toFixed(2)} 年（${totalSeniority} 個月）</span>
+                </div>
+                <div class="card-row">
+                    <span class="card-label">應得慰勞假</span>
+                    <span class="card-value">${leaveDays} 天</span>
+                </div>
+                <div class="card-row">
+                    <span class="card-label">在職月數（113年）</span>
+                    <span class="card-value">${inServiceMonths} 個月</span>
+                </div>
+                <div class="card-row">
+                    <span class="card-label">實際慰勞假</span>
+                    <span class="card-value">${actualLeaveDays} 天</span>
+                </div>
+                <div class="card-row">
+                    <span class="card-label">休假補助費</span>
+                    <span class="card-value">${allowance} 元（${allowanceChinese}）</span>
+                </div>
+                <div class="card-row">
+                    <span class="card-label">應繳發票金額</span>
+                    <span class="card-value">${invoiceAmount} 元（${invoiceAmountChinese}）</span>
+                </div>
+                <div class="card-row">
+                    <span class="card-label">服裝APP年度核配點數</span>
+                    <span class="card-value">${clothingPoints} 點</span>
+                </div>
+                <div class="card-row">
+                    <span class="card-label">出生日期</span>
+                    <span class="card-value">${formatDate(birthDate)}</span>
+                </div>
+                <div class="card-row">
+                    <span class="card-label">年齡</span>
+                    <span class="card-value">${age} 歲</span>
+                </div>
+                <div class="card-row">
+                    <span class="card-label">性別</span>
+                    <span class="card-value">${gender === 'male' ? '男' : '女'}</span>
+                </div>
+                <div class="card-row">
+                    <span class="card-label">志願役生效日期</span>
+                    <span class="card-value">${formatDate(volunteerDate)}</span>
+                </div>
+                ${isReenlist ? `
+                    <div class="card-row">
+                        <span class="card-label">再入營/復職日期</span>
+                        <span class="card-value">${formatDate(reenlistDate)}</span>
+                    </div>
+                    <div class="card-row">
+                        <span class="card-label">第一次退伍/育嬰生效日期</span>
+                        <span class="card-value">${formatDate(firstRetireDate)}</span>
+                    </div>
+                ` : ''}
             </div>
         `;
 
         resultHTML += `
-            <div class="result-subsection">
-                <h4>年資與休假</h4>
-                <table class="result-table">
-                    <tr><th>總年資</th><td>${(totalSeniority / 12).toFixed(2)} 年（${totalSeniority} 個月）</td></tr>
-                    <tr><th>應得慰勞假</th><td>${leaveDays} 天</td></tr>
-                    <tr><th>在職月數</th><td>${inServiceMonths} 個月</td></tr>
-                    <tr><th>實際慰勞假</th><td>${actualLeaveDays} 天</td></tr>
-                </table>
-            </div>
-        `;
-
-        resultHTML += `
-            <div class="result-subsection">
-                <h4>補助與服裝點數</h4>
-                <table class="result-table">
-                    <tr><th>休假補助費</th><td>${allowance} 元（${allowanceChinese}）</td></tr>
-                    <tr><th>應繳發票金額</th><td>${invoiceAmount} 元（${invoiceAmountChinese}）</td></tr>
-                    <tr><th>服裝APP年度核配點數</th><td>${clothingPoints} 點</td></tr>
-                </table>
-            </div>
-        `;
-
-        resultHTML += `
-            <div class="result-subsection">
-                <h4>每月在職狀態</h4>
+            <div class="card-content">
+                <div class="card-row">
+                    <span class="card-label">每月在職狀態（113年）</span>
+                </div>
                 <div class="status-list">
         `;
         monthlyStatus.forEach(status => {
@@ -675,61 +698,67 @@ function calculateAll() {
 
         if (hasTraining && trainingDates.length > 0) {
             resultHTML += `
-                <div class="result-subsection">
-                    <h4>受訓記錄</h4>
+                <div class="card-content">
+                    <div class="card-row">
+                        <span class="card-label">受訓記錄</span>
+                    </div>
                     <div class="training-list">
             `;
             trainingDates.forEach(record => {
-                resultHTML += `<div class="training-item">${formatDate(record.start)} 至 ${formatDate(record.end)}</div>`;
+                if (record.start.getFullYear() === prevYear) {
+                    resultHTML += `<div class="training-item">${formatDate(record.start)} 至 ${formatDate(record.end)}</div>`;
+                }
             });
             resultHTML += '</div></div>';
         }
 
-        resultHTML += '</div>';
+        resultHTML += '</div></div>';
     }
 
     resultHTML += `
-        <div class="result-section">
-            <h3>體能多元標準（${age} 歲，${gender === 'male' ? '上肢肌力（男）' : '腹部核心肌力（女）'}）</h3>
-    `;
-
-    resultHTML += `
-        <div class="fitness-group">
-            <h4>上肢肌群</h4>
-            <ul>
+        <div class="card">
+            <div class="card-header">體能多元標準（${age} 歲，${gender === 'male' ? '上肢肌力（男）' : '腹部核心肌力（女）'}）</div>
+            <div class="card-body">
+                <div class="card-content">
+                    <div class="card-row">
+                        <span class="card-label">上肢肌群</span>
+                    </div>
+                    <div class="fitness-list">
     `;
     for (let test in fitnessStandards) {
         if (test.includes('上肢肌群')) {
-            resultHTML += `<li>${test.split(' - ')[1]}：${fitnessStandards[test].pass}</li>`;
+            resultHTML += `<div class="fitness-item">${test.split(' - ')[1]}：${fitnessStandards[test].pass}</div>`;
         }
     }
-    resultHTML += '</ul></div>';
+    resultHTML += '</div></div>';
 
     resultHTML += `
-        <div class="fitness-group">
-            <h4>腹部核心肌群</h4>
-            <ul>
+        <div class="card-content">
+            <div class="card-row">
+                <span class="card-label">腹部核心肌群</span>
+            </div>
+            <div class="fitness-list">
     `;
     for (let test in fitnessStandards) {
         if (test.includes('腹部核心肌群')) {
-            resultHTML += `<li>${test.split(' - ')[1]}：${fitnessStandards[test].pass}</li>`;
+            resultHTML += `<div class="fitness-item">${test.split(' - ')[1]}：${fitnessStandards[test].pass}</div>`;
         }
     }
-    resultHTML += '</ul></div>';
+    resultHTML += '</div></div>';
 
     resultHTML += `
-        <div class="fitness-group">
-            <h4>下肢肌力</h4>
-            <ul>
+        <div class="card-content">
+            <div class="card-row">
+                <span class="card-label">下肢肌力</span>
+            </div>
+            <div class="fitness-list">
     `;
     for (let test in fitnessStandards) {
         if (test.includes('下肢肌力')) {
-            resultHTML += `<li>${test.split(' - ')[1]}：${fitnessStandards[test].pass}</li>`;
+            resultHTML += `<div class="fitness-item">${test.split(' - ')[1]}：${fitnessStandards[test].pass}</div>`;
         }
     }
-    resultHTML += '</ul></div>';
-
-    resultHTML += '</div>';
+    resultHTML += '</div></div></div></div>';
 
     resultDiv.innerHTML = resultHTML;
 }
