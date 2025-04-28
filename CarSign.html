@@ -92,157 +92,6 @@
   </div>
 
 <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyBv-DYm4c4l9Dn-o7ME4TnI92YsCpss1nM",
-    authDomain: "carsign-423fc.firebaseapp.com",
-    databaseURL: "https://carsign-423fc-default-rtdb.firebaseio.com",
-    projectId: "carsign-423fc",
-    storageBucket: "carsign-423fc.firebasestorage.app",
-    messagingSenderId: "219688439999",
-    appId: "1:219688439999:web:2d4f8646c98bcb76e4360a",
-    measurementId: "G-7FRW6JPXBJ"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
-
-<script>
-// 地圖與標記儲存
-let map;
-let markers = {};  // 儲存地圖標記
-const carLocations = {}; // 儲存車輛位置
-
-// 初始化地圖
-window.initMap = function() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: { lat: 24.8940584, lng: 121.2097559 },
-    zoom: 16,
-    mapTypeId: google.maps.MapTypeId.SATELLITE
-  });
-}
-
-// 提交車輛位置
-function submitCarLocation() {
-  const carNumber = document.getElementById('carNumbers').value;
-  const location = document.getElementById('locations').value;
-
-  const password = prompt("請輸入密碼以提交車號(六碼軍線)");
-  const correctPassword = "348362";
-
-  if (password !== correctPassword) {
-    alert("密碼錯誤，無法提交車輛位置。");
-    return;
-  }
-
-  const locations = {
-    "二級廠": { lat: 24.8953731, lng: 121.2110354 },
-    "OK鋼棚": { lat: 24.8955410, lng: 121.2094455 },
-    "連側鋼棚": { lat: 24.8955352, lng: 121.2088128 },
-    "無線電鋼棚": { lat: 24.8942494, lng: 121.2084913 },
-    "陸區鋼棚": { lat: 24.8936913, lng: 121.2085201 },
-    "玄捷鋼棚": { lat: 24.8933285, lng: 121.2084722 },
-    "風雨走廊": { lat: 24.8926953, lng: 121.2099437 },
-    "待安置車號": { lat: 24.8950000, lng: 121.2090000 }
-  };
-
-  const carLocation = locations[location];
-  if (!carLocation) {
-    alert("指定位置無效。");
-    return;
-  }
-
-  // 儲存車號資料到 Firestore
-  const carRef = doc(db, "carLocations", carNumber);
-  setDoc(carRef, {
-    carNumber: carNumber,
-    locationName: location,
-    lat: carLocation.lat,
-    lng: carLocation.lng
-  })
-    .then(() => {
-      alert("車號位置已儲存");
-      // 添加標記到地圖
-      addMarker(carLocation.lat, carLocation.lng, carNumber);
-      updateStatusTable();
-    })
-    .catch((error) => {
-      alert("無法儲存車號資料");
-      console.error(error);
-    });
-}
-
-// 顯示車況
-async function showStatus() {
-    const modal = document.getElementById("modal");
-    modal.style.display = "block"; // 顯示模態框
-
-    try {
-        const carRef = collection(db, "carLocations"); // Firestore 集合名稱
-        const snapshot = await getDocs(carRef);
-
-        let carLocations = {}; // 用來儲存每個位置的車號和數量
-
-        snapshot.forEach(doc => {
-            const data = doc.data();
-            const locationName = data.locationName;
-            const carNumber = data.carNumber; // 取出車號
-
-            if (!carLocations[locationName]) {
-                carLocations[locationName] = {
-                    carNumbers: [],  // 儲存車號的陣列
-                    count: 0          // 儲存車輛數量
-                };
-            }
-            carLocations[locationName].carNumbers.push(carNumber); // 加入車號
-            carLocations[locationName].count++;  // 車輛數量 +1
-        });
-
-        // 更新車況表格
-        updateStatusTable(carLocations);
-
-    } catch (error) {
-        alert("無法讀取車輛資料，請檢查 Firebase 配置。");
-        console.error(error);
-    }
-}
-
-// 更新車況顯示表格
-function updateStatusTable(data) {
-  const tableBody = document.getElementById('statusTable');
-  tableBody.innerHTML = ''; // 清空表格
-
-  if (!tableBody) return;
-
-  for (const locationName in data) {
-    const locationData = data[locationName];
-    if (!locationData || !locationData.carNumbers) return;
-
-    const row = document.createElement('tr');
-
-    // 位置欄
-    const locationCell = document.createElement('th');
-    locationCell.textContent = locationName;
-    row.appendChild(locationCell);
-
-    // 車號欄
-    const carNumbersCell = document.createElement('td');
-    carNumbersCell.textContent = Array.isArray(locationData.carNumbers)
-      ? locationData.carNumbers.join(', ')
-      : locationData.carNumbers;
-    row.appendChild(carNumbersCell);
-
-    // 總數欄
-<script type="module">
   // 導入 Firebase 模組
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
@@ -250,7 +99,7 @@ function updateStatusTable(data) {
 
   // Firebase 配置
   const firebaseConfig = {
-    apiKey: "AIzaSyBv-DYm4c4l9Dn-o7ME4TnI92YsCpss1nM",
+    apiKey: "AIzaSyBv-D4l9Dn-o7ME4TnI92YsCpss1nM",
     authDomain: "carsign-423fc.firebaseapp.com",
     databaseURL: "https://carsign-423fc-default-rtdb.firebaseio.com",
     projectId: "carsign-423fc",
@@ -263,7 +112,20 @@ function updateStatusTable(data) {
   // 初始化 Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
-  const db = getFirestore(app); // 初始化 Firestore
+  const db = getFirestore(app);
+
+  // 加載 Google 地圖 API
+  document.addEventListener("DOMContentLoaded", () => {
+    const script = document.createElement("script");
+    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDhce6akuYMjY1U1qOraSCdZQKXQ9yRMQA&callback=initMap";
+    script.async = true;
+    script.defer = true;
+    script.onerror = () => {
+      console.error("無法加載 Google Maps API");
+      alert("地圖加載失敗，請檢查網路或 API 金鑰。");
+    };
+    document.body.appendChild(script);
+  });
 </script>
 
 <script>
@@ -319,13 +181,11 @@ function updateStatusTable(data) {
     })
       .then(() => {
         alert("車號位置已儲存");
-
         carLocations[carNumber] = {
           locationName: location,
           lat: carLocation.lat,
           lng: carLocation.lng
         };
-
         addMarker(carLocation.lat, carLocation.lng, carNumber);
         showStatus();
       })
@@ -362,7 +222,6 @@ function updateStatusTable(data) {
       const snapshot = await getDocs(carRef);
 
       carLocations = {};
-
       const locationSummary = {};
 
       snapshot.forEach(doc => {
