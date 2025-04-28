@@ -1,3 +1,4 @@
+/* 基本設定 */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -5,6 +6,7 @@ body {
     background-color: #e9f2e9; /* 淺軍綠背景 */
 }
 
+/* 標頭 */
 header {
     background: #4b8b3b; /* 軍綠色 */
     color: #fff;
@@ -12,50 +14,58 @@ header {
     text-align: center;
 }
 
-.container {
-    display: flex;
-}
-
-.sidebar {
-    width: 100px;
-    background: #3c6a3e; /* 深軍綠色 */
-    padding: 15px;
-    height: 100vh; /* 使側邊選單填滿整個視窗高度 */
-    transition: width 0.3s; /* 減慢寬度變化 */
-}
-
-.sidebar h2 {
-    margin-top: 0;
-    color: #fff;
-    cursor: pointer; /* 鼠標指針顯示為手型 */
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-    display: block; /* 預設顯示 */
-}
-
-.sidebar ul li {
+header h1 {
     margin: 10px 0;
+    font-size: 28px;
 }
 
-.sidebar ul li a {
-    text-decoration: none;
-    color: #ffffff; /* 白色文字 */
+/* 容器 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
-.sidebar ul li a:hover {
-    color: #d1e7dd; /* 鼠標懸停顏色變化 */
+/* 下拉選單導航 */
+.dropdown-nav {
+    background: #3c6a3e; /* 深軍綠色 */
+    padding: 10px;
+    margin-bottom: 15px;
 }
 
+#category-select {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    background: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    appearance: none; /* 移除瀏覽器預設樣式 */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234b8b3b"><path d="M7 10l5 5 5-5H7z"/></svg>'); /* 自訂下拉箭頭（建議 3） */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+
+#category-select:focus {
+    outline: 2px solid #4b8b3b;
+    outline-offset: 2px;
+}
+
+/* 主內容 */
 main {
-    padding: 20px;
-    flex: 1; /* 讓主內容區域填滿剩餘空間 */
+    padding: 10px 0;
 }
 
 .product-grid {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
+}
+
+.product-grid h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #4b8b3b;
 }
 
 .product-card {
@@ -63,49 +73,165 @@ main {
     border-radius: 5px;
     padding: 10px;
     text-align: center;
-    margin-bottom: 20px;
-    background: #fff; /* 白色背景 */
+    margin-bottom: 15px;
+    background: #fff;
 }
 
 .product-card img {
     max-width: 100%;
     height: auto;
+    border-radius: 4px;
 }
 
-.product-card h2 {
-    font-size: 1.2em;
+.product-card h5 {
+    font-size: 1.1em;
+    margin: 8px 0;
 }
 
 .product-card p {
     color: #666;
+    margin: 5px 0;
 }
 
-button {
-    background: #28a745; /* 綠色按鈕 */
+.product-card button {
+    background: #28a745;
     color: white;
     border: none;
-    padding: 10px;
+    padding: 8px;
     cursor: pointer;
     border-radius: 5px;
+    font-size: 14px;
 }
 
-button:hover {
-    background: #218838; /* 按鈕懸停顏色變化 */
+.product-card button:hover {
+    background: #218838;
 }
 
+/* 購物車模態框（建議 2） */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 15px;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    color: #4b8b3b;
+    font-size: 18px;
+}
+
+.modal-content p {
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.modal-content button {
+    background: #4b8b3b;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.modal-content button:hover {
+    background: #3c6a3e;
+}
+
+.close-button {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #666;
+}
+
+.close-button:hover {
+    color: #333;
+}
+
+/* 返回頂部按鈕 */
 .scroll-to-top {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #4b8b3b; /* 軍綠色 */
+    bottom: 15px;
+    right: 15px;
+    background: #4b8b3b;
     color: white;
     border: none;
-    padding: 10px;
+    padding: 8px;
     border-radius: 5px;
     cursor: pointer;
-    display: none; /* 初始隱藏 */
+    display: none;
 }
 
 .scroll-to-top:hover {
-    background: #3c6a3e; /* 懸停顏色變化 */
+    background: #3c6a3e;
+}
+
+.scroll-to-top img {
+    width: 20px;
+    height: 20px;
+}
+
+/* 行動裝置響應式設計（建議 2） */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 22px;
+    }
+
+    .dropdown-nav {
+        padding: 5px;
+    }
+
+    #category-select {
+        font-size: 16px;
+        padding: 10px;
+        background-size: 18px;
+    }
+
+    .product-grid h2 {
+        font-size: 18px;
+    }
+
+    .product-card {
+        margin-bottom: 10px;
+    }
+
+    .product-card h5 {
+        font-size: 1em;
+    }
+
+    .product-card button {
+        padding: 6px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 10px;
+    }
+
+    #category-select {
+        font-size: 14px;
+        padding: 8px;
+        background-size: 16px;
+    }
 }
