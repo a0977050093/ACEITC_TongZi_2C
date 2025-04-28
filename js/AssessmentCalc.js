@@ -1,26 +1,20 @@
 function populateDateOptions(yearSelect, monthSelect, daySelect, minYear, maxYear) {
-    // 填充年份選項
     for (let year = minYear; year <= maxYear; year++) {
         const option = document.createElement('option');
         option.value = year;
         option.textContent = year;
         yearSelect.appendChild(option);
     }
-
-    // 填充月份選項
     for (let month = 1; month <= 12; month++) {
         const option = document.createElement('option');
         option.value = month;
         option.textContent = month;
         monthSelect.appendChild(option);
     }
-
-    // 動態更新日期選項
     function updateDays() {
         const year = parseInt(yearSelect.value);
         const month = parseInt(monthSelect.value);
-        daySelect.innerHTML = '<option value="">日</option>'; // 清空日期選項
-
+        daySelect.innerHTML = '<option value="">日</option>';
         if (year && month) {
             const gregorianYear = year + 1911;
             const daysInMonth = new Date(gregorianYear, month, 0).getDate();
@@ -32,7 +26,6 @@ function populateDateOptions(yearSelect, monthSelect, daySelect, minYear, maxYea
             }
         }
     }
-
     yearSelect.addEventListener('change', updateDays);
     monthSelect.addEventListener('change', updateDays);
 }
@@ -41,8 +34,6 @@ function addTrainingRecord() {
     const trainingList = document.getElementById('training-list');
     const recordDiv = document.createElement('div');
     recordDiv.className = 'training-record';
-
-    // 為每個受訓記錄生成唯一的 ID
     const uniqueId = Date.now();
     recordDiv.innerHTML = `
         <div class="date-input">
@@ -72,15 +63,12 @@ function addTrainingRecord() {
         <small>年份範圍：80-118</small>
     `;
     trainingList.appendChild(recordDiv);
-
-    // 初始化新受訓記錄的日期選項
     const startYearSelect = recordDiv.querySelector(`#training-start-year-${uniqueId}`);
     const startMonthSelect = recordDiv.querySelector(`#training-start-month-${uniqueId}`);
     const startDaySelect = recordDiv.querySelector(`#training-start-day-${uniqueId}`);
     const endYearSelect = recordDiv.querySelector(`#training-end-year-${uniqueId}`);
     const endMonthSelect = recordDiv.querySelector(`#training-end-month-${uniqueId}`);
     const endDaySelect = recordDiv.querySelector(`#training-end-day-${uniqueId}`);
-
     populateDateOptions(startYearSelect, startMonthSelect, startDaySelect, 80, 118);
     populateDateOptions(endYearSelect, endMonthSelect, endDaySelect, 80, 118);
 }
@@ -88,13 +76,10 @@ function addTrainingRecord() {
 function numberToChinese(num) {
     const chineseNumbers = ['零', '壹', '貳', '參', '肆', '伍', '陸', '柒', '捌', '玖'];
     const units = ['', '拾', '佰', '仟', '萬', '拾萬', '佰萬', '仟萬'];
-    
     if (num === 0) return '零元整';
-    
     let str = '';
     let numStr = num.toString();
     let len = numStr.length;
-    
     for (let i = 0; i < len; i++) {
         let digit = parseInt(numStr[i]);
         let unit = units[len - 1 - i];
@@ -104,10 +89,8 @@ function numberToChinese(num) {
             str += chineseNumbers[digit] + unit;
         }
     }
-    
     str = str.replace(/零+/g, '零').replace(/零$/, '');
     if (str.endsWith('萬')) str = str.replace('萬', '');
-    
     return str + '元整';
 }
 
@@ -131,11 +114,9 @@ function calculateAge(birthDate, leaveYear) {
     const birthMonth = birthDate.getMonth() + 1;
     const birthDay = birthDate.getDate();
     const leaveGregorianYear = leaveYear + 1911;
-    
     let age = leaveGregorianYear - birthGregorianYear;
     const today = new Date(leaveGregorianYear, 11, 31);
     const birthThisYear = new Date(leaveGregorianYear, birthMonth - 1, birthDay);
-    
     if (today < birthThisYear) {
         age--;
     }
@@ -152,56 +133,78 @@ function getFitnessStandards(age, gender) {
     const standards = {
         male: {
             '19-29': {
-                '男子仰臥起坐': { pass: '40 下', good: '21 下', excellent: '5 下' },
-                '大字跳': { pass: '55 下', good: '35 下', excellent: '20" 下' },
-                '平板撐體': { pass: "1'50\"", good: "1'40\"", excellent: '20" 下' },
-                '平板撐': { pass: '3000 公尺', good: '5 分鐘', excellent: '5 公里' },
-                '跑跳': { pass: '800 公尺', good: '20 公尺', excellent: '8-11 公尺' },
-                '跳躍': { pass: '7-2 公尺', good: '', excellent: '' }
+                '上肢肌群 - 伏地挺身': { pass: '40 下', good: '', excellent: '' },
+                '上肢肌群 - 壺鈴平舉': { pass: '55 下', good: '', excellent: '' },
+                '上肢肌群 - 引體向上': { pass: '5 下', good: '', excellent: '' },
+                '腹部核心肌群 - 平板撐體': { pass: "1'50\"", good: '', excellent: '' },
+                '腹部核心肌群 - 仰臥捲腹': { pass: '20 下', good: '', excellent: '' },
+                '下肢肌力 - 3000 公尺跑步': { pass: "14'45\"", good: '', excellent: '' },
+                '下肢肌力 - 5000 公尺健走': { pass: "40'20\"", good: '', excellent: '' },
+                '下肢肌力 - 800 公尺游走': { pass: "25'30\"", good: '', excellent: '' },
+                '下肢肌力 - 20 公尺折返跑': { pass: '72 趟', good: '', excellent: '' },
+                '下肢肌力 - 5 分鐘跳繩': { pass: '530 下', good: '', excellent: '' }
             },
             '30-44': {
-                '男子仰臥起坐': { pass: '30 下', good: '15 下', excellent: '3 下' },
-                '大字跳': { pass: '45 下', good: '30 下', excellent: '14" 下' },
-                '平板撐體': { pass: "1'40\"", good: "1'20\"", excellent: '17" 下' },
-                '平板撐': { pass: '16 分', good: '30 秒', excellent: '19\'00"' },
-                '跑跳': { pass: '499 公尺', good: '399 公尺', excellent: "41'40\"" },
-                '跳躍': { pass: "45'50\"", good: '27\'00"', excellent: '7-10 公尺' },
-                '跳躍2': { pass: '6-4 公尺', good: '', excellent: '' }
+                '上肢肌群 - 伏地挺身': { pass: '30 下', good: '', excellent: '' },
+                '上肢肌群 - 壺鈴平舉': { pass: '45 下', good: '', excellent: '' },
+                '上肢肌群 - 引體向上': { pass: '3 下', good: '', excellent: '' },
+                '腹部核心肌群 - 平板撐體': { pass: "1'40\"", good: '', excellent: '' },
+                '腹部核心肌群 - 仰臥捲腹': { pass: '17 下', good: '', excellent: '' },
+                '下肢肌力 - 3000 公尺跑步': { pass: "16'30\"", good: '', excellent: '' },
+                '下肢肌力 - 5000 公尺健走': { pass: "41'40\"", good: '', excellent: '' },
+                '下肢肌力 - 800 公尺游走': { pass: "27'00\"", good: '', excellent: '' },
+                '下肢肌力 - 20 公尺折返跑': { pass: '61 趟', good: '', excellent: '' },
+                '下肢肌力 - 5 分鐘跳繩': { pass: '499 下', good: '', excellent: '' }
             },
             '45-59': {
-                '男子仰臥起坐': { pass: '20 下', good: '8 下', excellent: '2 下' },
-                '大字跳': { pass: '30 下', good: '20 下', excellent: '8" 下' },
-                '平板撐體': { pass: "1'20\"", good: "1'15\"", excellent: '15" 下' },
-                '平板撐': { pass: "18'00\"", good: "21'00\"", excellent: '462 公尺' },
-                '跑跳': { pass: '362 公尺', good: "45'00\"", excellent: "49'00\"" },
-                '跳躍': { pass: "28'30\"", good: '31\'30"', excellent: '5-8 公尺' },
-                '跳躍2': { pass: '4-7 公尺', good: '', excellent: '' }
+                '上肢肌群 - 伏地挺身': { pass: '20 下', good: '', excellent: '' },
+                '上肢肌群 - 壺鈴平舉': { pass: '30 下', good: '', excellent: '' },
+                '上肢肌群 - 引體向上': { pass: '2 下', good: '', excellent: '' },
+                '腹部核心肌群 - 平板撐體': { pass: "1'20\"", good: '', excellent: '' },
+                '腹部核心肌群 - 仰臥捲腹': { pass: '15 下', good: '', excellent: '' },
+                '下肢肌力 - 3000 公尺跑步': { pass: "18'00\"", good: '', excellent: '' },
+                '下肢肌力 - 5000 公尺健走': { pass: "45'00\"", good: '', excellent: '' },
+                '下肢肌力 - 800 公尺游走': { pass: "28'30\"", good: '', excellent: '' },
+                '下肢肌力 - 20 公尺折返跑': { pass: '40 趟', good: '', excellent: '' },
+                '下肢肌力 - 5 分鐘跳繩': { pass: '462 下', good: '', excellent: '' }
             }
         },
         female: {
             '19-29': {
-                '女子仰臥起坐': { pass: '20 下', good: '12 下', excellent: '8 下' },
-                '仰臥抬腿': { pass: "14'45\"", good: "16'30\"", excellent: "18'00\"" },
-                '平板撐體': { pass: "1'50\"", good: "1'40\"", excellent: "1'20\"" },
-                '5 分鐘 跳繩': { pass: '530 下', good: '430 下', excellent: '330 下' },
-                '5 分鐘 跑步': { pass: "40'20\"", good: "44'20\"", excellent: "25'30\"" },
-                '2000 公尺 衝刺': { pass: '72 趟', good: '53 趟', excellent: '30 趟' }
+                '上肢肌群 - 伏地挺身': { pass: '21 下', good: '', excellent: '' },
+                '上肢肌群 - 壺鈴平舉': { pass: '35 下', good: '', excellent: '' },
+                '上肢肌群 - 屈臂懸垂': { pass: '20 秒', good: '', excellent: '' },
+                '腹部核心肌群 - 平板撐體': { pass: "1'40\"", good: '', excellent: '' },
+                '腹部核心肌群 - 仰臥捲腹': { pass: '12 下', good: '', excellent: '' },
+                '下肢肌力 - 3000 公尺跑步': { pass: "17'35\"", good: '', excellent: '' },
+                '下肢肌力 - 5000 公尺健走': { pass: "44'20\"", good: '', excellent: '' },
+                '下肢肌力 - 800 公尺游走': { pass: "28'30\"", good: '', excellent: '' },
+                '下肢肌力 - 20 公尺折返跑': { pass: '53 趟', good: '', excellent: '' },
+                '下肢肌力 - 5 分鐘跳繩': { pass: '430 下', good: '', excellent: '' }
             },
             '30-44': {
-                '女子仰臥起坐': { pass: '17 下', good: '10 下', excellent: '6 下' },
-                '仰臥抬腿': { pass: "19'00\"", good: "21'00\"", excellent: "22'00\"" },
-                '平板撐體': { pass: "1'40\"", good: "1'20\"", excellent: "1'15\"" },
-                '5 分鐘 跳繩': { pass: '499 下', good: '399 下', excellent: '299 下' },
-                '5 分鐘 跑步': { pass: "41'40\"", good: "45'50\"", excellent: "27'00\"" },
-                '2000 公尺 衝刺': { pass: '61 趟', good: '45 趟', excellent: '25 趟' }
+                '上肢肌群 - 伏地挺身': { pass: '15 下', good: '', excellent: '' },
+                '上肢肌群 - 壺鈴平舉': { pass: '30 下', good: '', excellent: '' },
+                '上肢肌群 - 屈臂懸垂': { pass: '14 秒', good: '', excellent: '' },
+                '腹部核心肌群 - 平板撐體': { pass: "1'20\"", good: '', excellent: '' },
+                '腹部核心肌群 - 仰臥捲腹': { pass: '10 下', good: '', excellent: '' },
+                '下肢肌力 - 3000 公尺跑步': { pass: "19'00\"", good: '', excellent: '' },
+                '下肢肌力 - 5000 公尺健走': { pass: "45'50\"", good: '', excellent: '' },
+                '下肢肌力 - 800 公尺游走': { pass: "30'00\"", good: '', excellent: '' },
+                '下肢肌力 - 20 公尺折返跑': { pass: '45 趟', good: '', excellent: '' },
+                '下肢肌力 - 5 分鐘跳繩': { pass: '399 下', good: '', excellent: '' }
             },
             '45-59': {
-                '女子仰臥起坐': { pass: '15 下', good: '8 下', excellent: '4 下' },
-                '仰臥抬腿': { pass: "21'00\"", good: "22'00\"", excellent: "23'00\"" },
-                '平板撐體': { pass: "1'20\"", good: "1'15\"", excellent: "1'10\"" },
-                '5 分鐘 跳繩': { pass: '462 下', good: '362 下', excellent: '262 下' },
-                '5 分鐘 跑步': { pass: "45'00\"", good: "49'00\"", excellent: "28'30\"" },
-                '2000 公尺 衝刺': { pass: '40 趟', good: '30 趟', excellent: '20 趟' }
+                '上肢肌群 - 伏地挺身': { pass: '8 下', good: '', excellent: '' },
+                '上肢肌群 - 壺鈴平舉': { pass: '20 下', good: '', excellent: '' },
+                '上肢肌群 - 屈臂懸垂': { pass: '8 秒', good: '', excellent: '' },
+                '腹部核心肌群 - 平板撐體': { pass: "1'15\"", good: '', excellent: '' },
+                '腹部核心肌群 - 仰臥捲腹': { pass: '8 下', good: '', excellent: '' },
+                '下肢肌力 - 3000 公尺跑步': { pass: "21'00\"", good: '', excellent: '' },
+                '下肢肌力 - 5000 公尺健走': { pass: "49'00\"", good: '', excellent: '' },
+                '下肢肌力 - 800 公尺游走': { pass: "31'30\"", good: '', excellent: '' },
+                '下肢肌力 - 20 公尺折返跑': { pass: '30 趟', good: '', excellent: '' },
+                '下肢肌力 - 5 分鐘跳繩': { pass: '362 下', good: '', excellent: '' }
             }
         }
     };
@@ -218,7 +221,6 @@ function getClothingPoints(seniority) {
 }
 
 function calculateAllowance(days) {
-    // 若實際慰勞假超過10天，則最多按10天計算
     const effectiveDays = Math.min(days, 10);
     const allowance = effectiveDays * 1600;
     const invoiceAmount = effectiveDays * 800;
@@ -253,7 +255,6 @@ function clearAll() {
         const trainingList = document.getElementById('training-list');
         trainingList.innerHTML = '';
         addTrainingRecord();
-
         document.getElementById('result').innerHTML = '';
     }
 }
@@ -290,37 +291,26 @@ function calculateAll() {
     })) : [];
     const resultDiv = document.getElementById('result');
 
-    // 驗證基本資料必填欄位
     if (!leaveYear || !birthYear || !birthMonth || !birthDay || !gender) {
         resultDiv.innerHTML = '<p class="error">請填寫所有基本資料必填欄位！</p>';
         return;
     }
-
-    // 至少需要勾選一個日期選項
     if (!useVolunteerDate && !useTransferDate) {
         resultDiv.innerHTML = '<p class="error">請至少勾選一個日期選項（志願役生效日期或調任職報到日期）！</p>';
         return;
     }
-
-    // 驗證志願役生效日期（若勾選則必須填寫）
     if (useVolunteerDate && (!volunteerYear || !volunteerMonth || !volunteerDay)) {
         resultDiv.innerHTML = '<p class="error">請填寫志願役生效日期！</p>';
         return;
     }
-
-    // 驗證調任職報到日期（若勾選則必須填寫）
     if (useTransferDate && (!transferYear || !transferMonth || !transferDay)) {
         resultDiv.innerHTML = '<p class="error">請填寫調任職報到日期！</p>';
         return;
     }
-
-    // 驗證再入營/育嬰資料（僅在勾選時檢查）
     if (isReenlist && (!reenlistYear || !reenlistMonth || !reenlistDay || !firstRetireYear || !firstRetireMonth || !firstRetireDay)) {
         resultDiv.innerHTML = '<p class="error">請填寫所有再入營相關欄位！</p>';
         return;
     }
-
-    // 驗證受訓記錄（選填，但若填寫則必須完整）
     if (hasTraining) {
         for (let i = 0; i < trainingRecords.length; i++) {
             const record = trainingRecords[i];
@@ -333,7 +323,6 @@ function calculateAll() {
         }
     }
 
-    // 解析日期
     const birthDate = parseDate(birthYear, birthMonth, birthDay);
     const volunteerDate = useVolunteerDate ? parseDate(volunteerYear, volunteerMonth, volunteerDay) : null;
     const transferDate = useTransferDate ? parseDate(transferYear, transferMonth, transferDay) : null;
@@ -349,7 +338,6 @@ function calculateAll() {
     const gregorianLeaveYear = leaveYear + 1911;
     const leaveYearEnd = new Date(gregorianLeaveYear, 11, 31);
 
-    // 進階日期驗證
     if (useVolunteerDate) {
         if (birthDate > volunteerDate) {
             resultDiv.innerHTML = '<p class="error">出生日期應早於志願役生效日期！</p>';
@@ -360,7 +348,6 @@ function calculateAll() {
             return;
         }
     }
-
     if (useTransferDate) {
         if (birthDate > transferDate) {
             resultDiv.innerHTML = '<p class="error">出生日期應早於調任職報到日期！</p>';
@@ -371,12 +358,10 @@ function calculateAll() {
             return;
         }
     }
-
     if (useVolunteerDate && useTransferDate && volunteerDate > transferDate) {
         resultDiv.innerHTML = '<p class="error">志願役生效日期應早於調任職報到日期！</p>';
         return;
     }
-
     if (isReenlist && firstRetireDate >= reenlistDate) {
         resultDiv.innerHTML = '<p class="error">再入營/復職日期應晚於第一次退伍/育嬰生效日期！</p>';
         return;
@@ -385,7 +370,6 @@ function calculateAll() {
         resultDiv.innerHTML = '<p class="error">再入營相關日期不得晚於慰休年度的 12 月 31 日！</p>';
         return;
     }
-
     for (let i = 0; i < trainingDates.length; i++) {
         const record = trainingDates[i];
         if (record.start > record.end) {
@@ -398,14 +382,12 @@ function calculateAll() {
         }
     }
 
-    // 計算年齡
     const age = calculateAge(birthDate, leaveYear);
     if (age < 19 || age > 59) {
         resultDiv.innerHTML = '<p class="error">年齡必須在 19 至 59 歲之間！</p>';
         return;
     }
 
-    // 獲取體能標準
     const fitnessStandards = getFitnessStandards(age, gender);
     if (!fitnessStandards) {
         resultDiv.innerHTML = '<p class="error">無法獲取體能標準，年齡不在範圍內！</p>';
@@ -414,7 +396,6 @@ function calculateAll() {
 
     let resultHTML = '';
 
-    // 根據勾選決定是否計算考核表
     let calculateAssessment = false;
     let assessmentDate;
     if (useTransferDate) {
@@ -425,7 +406,6 @@ function calculateAll() {
         assessmentDate = volunteerDate;
     }
 
-    // 考核表計算（若需要）
     if (calculateAssessment) {
         resultHTML += '<h3>考核表計算結果</h3>';
         const months = [];
@@ -439,10 +419,10 @@ function calculateAll() {
 
         const quarters = [];
         const quarterEnds = [
-            { month: 2, day: 31 }, // 3月31日
-            { month: 5, day: 30 }, // 6月30日
-            { month: 8, day: 30 }, // 9月30日
-            { month: 11, day: 31 } // 12月31日
+            { month: 2, day: 31 },
+            { month: 5, day: 30 },
+            { month: 8, day: 30 },
+            { month: 11, day: 31 }
         ];
 
         currentDate.setDate(currentDate.getDate() + 1);
@@ -510,9 +490,7 @@ function calculateAll() {
         `;
     }
 
-    // 慰勞假和服裝APP計算（僅在勾選志願役生效日期時計算）
     if (useVolunteerDate) {
-        // 慰勞假計算
         resultHTML += '<h3>慰勞假計算結果</h3>';
         let totalSeniority = 0;
         if (isReenlist) {
@@ -612,15 +590,14 @@ function calculateAll() {
         }
         actualLeaveDays = roundHalfDay(actualLeaveDays);
 
-        // 計算慰勞補助費和應繳發票金額
         const { allowance, invoiceAmount } = calculateAllowance(actualLeaveDays);
         const allowanceChinese = numberToChinese(allowance);
         const invoiceAmountChinese = numberToChinese(invoiceAmount);
 
-        // 計算服裝APP核配點數
         const clothingPoints = getClothingPoints(totalSeniority);
 
         resultHTML += `
+            <h3>慰勞假計算結果</h3>
             <table class="result-table">
                 <tr><th>總年資</th><td>${(totalSeniority / 12).toFixed(2)} 年（${totalSeniority} 個月）</td></tr>
                 <tr><th>應得慰勞假</th><td>${leaveDays} 天</td></tr>
@@ -660,30 +637,19 @@ function calculateAll() {
         }
     }
 
-    // 體能標準結果（始終顯示）
     resultHTML += `
         <h3>體能多元標準（${age} 歲，${gender === 'male' ? '上肢肌力（男）' : '腹部核心肌力（女）'}）</h3>
-        <table class="result-table">
-            <tr><th>項目</th><th>合格</th><th>優秀</th><th>傑出</th></tr>
+        <ul>
     `;
     for (let test in fitnessStandards) {
-        resultHTML += `
-            <tr>
-                <td>${test}</td>
-                <td>${fitnessStandards[test].pass}</td>
-                <td>${fitnessStandards[test].good}</td>
-                <td>${fitnessStandards[test].excellent}</td>
-            </tr>
-        `;
+        resultHTML += `<li>${test}：${fitnessStandards[test].pass}</li>`;
     }
-    resultHTML += '</table>';
+    resultHTML += '</ul>';
 
     resultDiv.innerHTML = resultHTML;
 }
 
-// 初始化日期選項和一筆受訓記錄
 document.addEventListener('DOMContentLoaded', () => {
-    // 初始化慰休年度下拉選單（民國 112-118，對應西元 2023-2029）
     const leaveYearSelect = document.getElementById('leave-year');
     for (let year = 112; year <= 118; year++) {
         const option = document.createElement('option');
@@ -691,8 +657,6 @@ document.addEventListener('DOMContentLoaded', () => {
         option.textContent = year;
         leaveYearSelect.appendChild(option);
     }
-
-    // 初始化日期選項
     populateDateOptions(
         document.getElementById('birth-year'),
         document.getElementById('birth-month'),
@@ -723,24 +687,18 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('first-retire-day'),
         80, 118
     );
-
-    // 初始化一筆受訓記錄
     addTrainingRecord();
-
-    // 確保計算按鈕的事件監聽器正確綁定
     const calculateButton = document.querySelector('.button-group button[onclick="calculateAll()"]');
     if (calculateButton) {
         calculateButton.addEventListener('click', calculateAll);
     }
 });
 
-// 動態顯示再入營輸入欄位
 document.getElementById('is-reenlist').addEventListener('change', function() {
     const reenlistDetails = document.getElementById('reenlist-details');
     reenlistDetails.style.display = this.checked ? 'block' : 'none';
 });
 
-// 動態顯示受訓記錄輸入欄位
 document.getElementById('has-training').addEventListener('change', function() {
     const trainingSection = document.getElementById('training-section');
     trainingSection.style.display = this.checked ? 'block' : 'none';
