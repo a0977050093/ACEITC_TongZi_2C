@@ -49,17 +49,18 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="arrival-year">到部日期（民國年）：</label>
+                        <input type="checkbox" id="use-volunteer-date" checked>
+                        <label for="use-volunteer-date">志願役生效日期（新進及初任考核表、慰勞假、APP計算）（民國年）：</label>
                         <div class="date-input">
-                            <select id="arrival-year" required>
+                            <select id="volunteer-year" required>
                                 <option value="">年</option>
                                 <!-- 動態生成選項 -->
                             </select>
-                            <select id="arrival-month" required>
+                            <select id="volunteer-month" required>
                                 <option value="">月</option>
                                 <!-- 動態生成選項 -->
                             </select>
-                            <select id="arrival-day" required>
+                            <select id="volunteer-day" required>
                                 <option value="">日</option>
                                 <!-- 動態生成選項 -->
                             </select>
@@ -67,17 +68,18 @@
                         <small>年份範圍：80-118</small>
                     </div>
                     <div class="form-group">
-                        <label for="appoint-year">任官日期（民國年）：</label>
+                        <input type="checkbox" id="use-transfer-date">
+                        <label for="use-transfer-date">調任職報到日期（考核表計算）（民國年）：</label>
                         <div class="date-input">
-                            <select id="appoint-year" required>
+                            <select id="transfer-year">
                                 <option value="">年</option>
                                 <!-- 動態生成選項 -->
                             </select>
-                            <select id="appoint-month" required>
+                            <select id="transfer-month">
                                 <option value="">月</option>
                                 <!-- 動態生成選項 -->
                             </select>
-                            <select id="appoint-day" required>
+                            <select id="transfer-day">
                                 <option value="">日</option>
                                 <!-- 動態生成選項 -->
                             </select>
@@ -88,11 +90,7 @@
 
                 <!-- 再入營/育嬰資料 -->
                 <div class="form-section">
-                    <h3>再入營/育嬰資料</h3>
-                    <div class="form-group">
-                        <label for="is-reenlist">是否為再入營/育嬰人員：</label>
-                        <input type="checkbox" id="is-reenlist">
-                    </div>
+                    <h3><input type="checkbox" id="is-reenlist"> 再入營/育嬰資料</h3>
                     <div id="reenlist-details" style="display: none;">
                         <div class="form-group">
                             <label for="reenlist-year">再入營/復職日期（民國年）：</label>
@@ -135,9 +133,11 @@
 
                 <!-- 受訓記錄 -->
                 <div class="form-section">
-                    <h3>受訓記錄</h3>
-                    <div id="training-list"></div>
-                    <button type="button" onclick="addTrainingRecord()">新增受訓記錄</button>
+                    <h3><input type="checkbox" id="has-training"> 受訓記錄</h3>
+                    <div id="training-section" style="display: none;">
+                        <div id="training-list"></div>
+                        <button type="button" onclick="addTrainingRecord()">新增受訓記錄</button>
+                    </div>
                 </div>
 
                 <div class="button-group">
