@@ -97,15 +97,15 @@
                         <div class="form-group">
                             <label for="reenlist-year">再入營/復職日期（民國年）：</label>
                             <div class="date-input">
-                                <select id="reenlist-year" required>
+                                <select id="reenlist-year">
                                     <option value="">年</option>
                                     <!-- 動態生成選項 -->
                                 </select>
-                                <select id="reenlist-month" required>
+                                <select id="reenlist-month">
                                     <option value="">月</option>
                                     <!-- 動態生成選項 -->
                                 </select>
-                                <select id="reenlist-day" required>
+                                <select id="reenlist-day">
                                     <option value="">日</option>
                                     <!-- 動態生成選項 -->
                                 </select>
@@ -115,15 +115,15 @@
                         <div class="form-group">
                             <label for="first-retire-year">第一次退伍/育嬰生效日期（民國年）：</label>
                             <div class="date-input">
-                                <select id="first-retire-year" required>
+                                <select id="first-retire-year">
                                     <option value="">年</option>
                                     <!-- 動態生成選項 -->
                                 </select>
-                                <select id="first-retire-month" required>
+                                <select id="first-retire-month">
                                     <option value="">月</option>
                                     <!-- 動態生成選項 -->
                                 </select>
-                                <select id="first-retire-day" required>
+                                <select id="first-retire-day">
                                     <option value="">日</option>
                                     <!-- 動態生成選項 -->
                                 </select>
@@ -169,6 +169,31 @@
         // 監聽主頁面夜間模式變化
         const observer = new MutationObserver(syncDarkMode);
         observer.observe(parent.document.body, { attributes: true, attributeFilter: ['class'] });
+
+        // 動態調整 iframe 高度
+        function sendIframeHeight() {
+            const height = document.documentElement.scrollHeight;
+            parent.postMessage({
+                type: 'iframeResize',
+                height: height,
+                url: window.location.href
+            }, '*');
+        }
+
+        // 初始調整高度
+        window.addEventListener('load', sendIframeHeight);
+        window.addEventListener('resize', sendIframeHeight);
+
+        // 監聽 DOM 變化以動態調整高度
+        const domObserver = new MutationObserver(sendIframeHeight);
+        domObserver.observe(document.body, { childList: true, subtree: true });
+
+        // 處理主頁面的高度請求
+        window.addEventListener('message', function(event) {
+            if (event.data === 'requestHeight') {
+                sendIframeHeight();
+            }
+        });
     </script>
 </body>
 </html>
