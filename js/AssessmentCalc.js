@@ -566,7 +566,8 @@ function calculateAll() {
     `;
     monthlyStatus.forEach(status => {
         const className = status.inService ? 'list-group-item-success' : 'list-group-item-danger';
-        const text = status.inService ? `${status.month}月 在職` : `${status.month}月 不在職`;
+        const hand = status.inService ? '👍' : '👎';
+        const text = status.inService ? `${status.month}月 在職 ${hand}` : `${status.month}月 不在職 ${hand}`;
         resultHTML += `<li class="list-group-item ${className}">${text}</li>`;
     });
     resultHTML += '</ul>';
