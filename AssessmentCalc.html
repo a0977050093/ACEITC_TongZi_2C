@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>📅多元計算機💻</title>
     <link rel="stylesheet" href="css/AssessmentCalc.css">
-    
 </head>
 <body>
     <!-- 主內容 -->
@@ -26,9 +25,18 @@
                     <div class="form-group">
                         <label for="birth-year">出生日期（民國年）：</label>
                         <div class="date-input">
-                            <input type="number" id="birth-year" placeholder="年，例如 80" min="65" max="118" required>
-                            <input type="number" id="birth-month" placeholder="月" min="1" max="12" required>
-                            <input type="number" id="birth-day" placeholder="日" min="1" max="31" required>
+                            <select id="birth-year" required>
+                                <option value="">年</option>
+                                <!-- 動態生成選項 -->
+                            </select>
+                            <select id="birth-month" required>
+                                <option value="">月</option>
+                                <!-- 動態生成選項 -->
+                            </select>
+                            <select id="birth-day" required>
+                                <option value="">日</option>
+                                <!-- 動態生成選項 -->
+                            </select>
                         </div>
                         <small>年份範圍：65-118</small>
                     </div>
@@ -43,18 +51,36 @@
                     <div class="form-group">
                         <label for="arrival-year">到部日期（民國年）：</label>
                         <div class="date-input">
-                            <input type="number" id="arrival-year" placeholder="年，例如 114" min="80" max="118" required>
-                            <input type="number" id="arrival-month" placeholder="月" min="1" max="12" required>
-                            <input type="number" id="arrival-day" placeholder="日" min="1" max="31" required>
+                            <select id="arrival-year" required>
+                                <option value="">年</option>
+                                <!-- 動態生成選項 -->
+                            </select>
+                            <select id="arrival-month" required>
+                                <option value="">月</option>
+                                <!-- 動態生成選項 -->
+                            </select>
+                            <select id="arrival-day" required>
+                                <option value="">日</option>
+                                <!-- 動態生成選項 -->
+                            </select>
                         </div>
                         <small>年份範圍：80-118</small>
                     </div>
                     <div class="form-group">
                         <label for="appoint-year">任官日期（民國年）：</label>
                         <div class="date-input">
-                            <input type="number" id="appoint-year" placeholder="年，例如 110" min="80" max="118" required>
-                            <input type="number" id="appoint-month" placeholder="月" min="1" max="12" required>
-                            <input type="number" id="appoint-day" placeholder="日" min="1" max="31" required>
+                            <select id="appoint-year" required>
+                                <option value="">年</option>
+                                <!-- 動態生成選項 -->
+                            </select>
+                            <select id="appoint-month" requiredbe required>
+                                <option value="">月</option>
+                                <!-- 動態生成選項 -->
+                            </select>
+                            <select id="appoint-day" required>
+                                <option value="">日</option>
+                                <!-- 動態生成選項 -->
+                            </select>
                         </div>
                         <small>年份範圍：80-118</small>
                     </div>
@@ -71,18 +97,36 @@
                         <div class="form-group">
                             <label for="reenlist-year">再入營/復職日期（民國年）：</label>
                             <div class="date-input">
-                                <input type="number" id="reenlist-year" placeholder="年，例如 112" min="80" max="118" required>
-                                <input type="number" id="reenlist-month" placeholder="月" min="1" max="12" required>
-                                <input type="number" id="reenlist-day" placeholder="日" min="1" max="31" required>
+                                <select id="reenlist-year" required>
+                                    <option value="">年</option>
+                                    <!-- 動態生成選項 -->
+                                </select>
+                                <select id="reenlist-month" required>
+                                    <option value="">月</option>
+                                    <!-- 動態生成選項 -->
+                                </select>
+                                <select id="reenlist-day" required>
+                                    <option value="">日</option>
+                                    <!-- 動態生成選項 -->
+                                </select>
                             </div>
                             <small>年份範圍：80-118</small>
                         </div>
                         <div class="form-group">
                             <label for="first-retire-year">第一次退伍/育嬰生效日期（民國年）：</label>
                             <div class="date-input">
-                                <input type="number" id="first-retire-year" placeholder="年，例如 111" min="80" max="118" required>
-                                <input type="number" id="first-retire-month" placeholder="月" min="1" max="12" required>
-                                <input type="number" id="first-retire-day" placeholder="日" min="1" max="31" required>
+                                <select id="first-retire-year" required>
+                                    <option value="">年</option>
+                                    <!-- 動態生成選項 -->
+                                </select>
+                                <select id="first-retire-month" required>
+                                    <option value="">月</option>
+                                    <!-- 動態生成選項 -->
+                                </select>
+                                <select id="first-retire-day" required>
+                                    <option value="">日</option>
+                                    <!-- 動態生成選項 -->
+                                </select>
                             </div>
                             <small>年份範圍：80-118</small>
                         </div>
@@ -107,7 +151,7 @@
         </div>
     </div>
 
-    <script src="js/scripts.js"></script>
+    
     <script src="js/AssessmentCalc.js"></script>
 </body>
 </html>
