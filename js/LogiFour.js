@@ -29,19 +29,36 @@ const equipmentData = {
 };
 
 let currentSerials = [];
+let allEquipment = [];
 
-// 導航選單顯示/隱藏（建議 2）
+// 初始化所有裝備清單（支援搜尋）
+function initializeEquipmentList() {
+    allEquipment = [];
+    Object.keys(equipmentData).forEach(mainCategory => {
+        Object.keys(equipmentData[mainCategory]).forEach(subCategory => {
+            equipmentData[mainCategory][subCategory].forEach(serial => {
+                allEquipment.push({
+                    mainCategory,
+                    subCategory,
+                    serial
+                });
+            });
+        });
+    });
+}
+
+// 導航顯示/隱藏（建議 2）
 function toggleSidebar() {
-    const nav = document.getElementById('dropdown-nav');
+    const nav = document.getElementById('search-nav');
     nav.classList.toggle('active');
 }
 
 // 更新子分類選單
 function updateSubCategoryOptions(mainCategory) {
     const subCategorySelect = document.getElementById('sub-category');
-    subCategorySelect.innerHTML = '<option value="" disabled selected>選擇子類型</option>';
+    subCategorySelect.innerHTML = '<option value="" data-icon="fa-filter">所有子類型</option>';
     subCategorySelect.disabled = !mainCategory;
-    
+
     if (mainCategory && equipmentData[mainCategory]) {
         Object.keys(equipmentData[mainCategory]).forEach(item => {
             subCategorySelect.innerHTML += `<option value="${item}">${item}</option>`;
@@ -55,7 +72,7 @@ function showEquipment(type, item) {
     currentSerials = serials;
     updateSerialSelect();
     updateEquipmentDetails(serials);
-    document.getElementById('dropdown-nav').classList.remove('active'); // 行動裝置上收起導航
+    document.getElementById('search-nav').classList.remove('active'); // 行動裝置上收起導航
 }
 
 // 更新序號選單
@@ -91,6 +108,31 @@ function updateEquipmentDetails(serials) {
 function deleteRow(button) {
     const row = button.parentElement.parentElement;
     row.remove();
+}
+
+// 搜尋裝備（建議 2）
+function searchEquipment(query, mainCategory, subCategory) {
+    let filtered = allEquipment;
+    
+    if (mainCategory) {
+        filtered = filtered.filter(item => item.mainCategory === mainCategory);
+    }
+    
+    if (subCategory) {
+        filtered = filtered.filter(item => item.subCategory === subCategory);
+    }
+    
+    if (query) {
+        query = query.toLowerCase();
+        filtered = filtered.filter(item => 
+            item.serial.toLowerCase().includes(query) || 
+            item.subCategory.toLowerCase().includes(query)
+        );
+    }
+    
+    currentSerials = filtered.map(item => item.serial);
+    updateSerialSelect();
+    updateEquipmentDetails(currentSerials);
 }
 
 // 表單提交
@@ -154,21 +196,26 @@ function closeFormModal() {
 
 document.querySelector('#form-modal .close-button').addEventListener('click', closeFormModal);
 
-// 巢狀下拉選單邏輯（建議 2）
+// 搜尋和篩選邏輯（建議 2）
+document.getElementById('equipment-search').addEventListener('input', function() {
+    const query = this.value;
+    const mainCategory = document.getElementById('main-category').value;
+    const subCategory = document.getElementById('sub-category').value;
+    searchEquipment(query, mainCategory, subCategory);
+});
+
 document.getElementById('main-category').addEventListener('change', function() {
     const mainCategory = this.value;
     updateSubCategoryOptions(mainCategory);
+    const subCategory = document.getElementById('sub-category').value;
+    searchEquipment(document.getElementById('equipment-search').value, mainCategory, subCategory);
 });
 
 document.getElementById('sub-category').addEventListener('change', function() {
     const mainCategory = document.getElementById('main-category').value;
     const subCategory = this.value;
-    if (mainCategory && subCategory) {
-        showEquipment(mainCategory, subCategory);
-    }
+    searchEquipment(document.getElementById('equipment-search').value, mainCategory, subCategory);
 });
 
-// 返回頂部（若需要）
-function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+// 初始化
+initializeEquipmentList();
