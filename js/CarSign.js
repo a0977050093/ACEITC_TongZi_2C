@@ -36,6 +36,11 @@ function submitCarLocation() {
     const loading = document.getElementById('loading');
     const notification = document.getElementById('notification');
 
+    if (!carNumber || !location) {
+        showNotification("請選擇車號和位置", "error");
+        return;
+    }
+
     const password = prompt("請輸入密碼，系統測試中348362");
     const correctPassword = "348362";
 
@@ -77,8 +82,8 @@ function submitCarLocation() {
             loading.style.display = "none";
         })
         .catch(error => {
-            showNotification("無法儲存車號資料", "error");
-            console.error(error);
+            showNotification(`無法儲存車號資料: ${error.message}`, "error");
+            console.error("提交車號失敗:", error);
             loading.style.display = "none";
         });
 }
@@ -87,6 +92,11 @@ function submitCarLocation() {
 function showStatus() {
     const modal = document.getElementById("modal");
     const loading = document.getElementById("loading");
+    if (!modal || !loading) {
+        console.error("Modal 或 Loading 元素未找到");
+        return;
+    }
+
     modal.classList.add("show");
     loading.style.display = "block";
 
@@ -116,8 +126,8 @@ function showStatus() {
             loading.style.display = "none";
         })
         .catch(error => {
-            showNotification("無法讀取車輛資料", "error");
-            console.error(error);
+            showNotification(`無法讀取車輛資料: ${error.message}`, "error");
+            console.error("讀取車輛資料失敗:", error);
             loading.style.display = "none";
         });
 }
@@ -126,7 +136,10 @@ function showStatus() {
 function updateStatusTable() {
     const tableBody = document.getElementById("statusTable");
     const pageInfo = document.getElementById("pageInfo");
-    if (!tableBody || !pageInfo) return;
+    if (!tableBody || !pageInfo) {
+        console.error("TableBody 或 PageInfo 元素未找到");
+        return;
+    }
 
     tableBody.innerHTML = "";
 
@@ -207,7 +220,10 @@ function nextPage() {
 
 // Close modal
 function closeModal() {
-    document.getElementById("modal").classList.remove("show");
+    const modal = document.getElementById("modal");
+    if (modal) {
+        modal.classList.remove("show");
+    }
 }
 
 // Clear all car numbers
@@ -244,8 +260,8 @@ function clearCarNumbers() {
             loading.style.display = "none";
         })
         .catch(error => {
-            showNotification("清除失敗", "error");
-            console.error(error);
+            showNotification(`清除失敗: ${error.message}`, "error");
+            console.error("清除車號失敗:", error);
             loading.style.display = "none";
         });
 }
@@ -347,6 +363,10 @@ function resetMapView() {
 // Show notification
 function showNotification(message, type) {
     const notification = document.getElementById('notification');
+    if (!notification) {
+        console.error("Notification 元素未找到");
+        return;
+    }
     notification.textContent = message;
     notification.className = `notification ${type}`;
     notification.style.display = 'block';
@@ -359,7 +379,7 @@ function showNotification(message, type) {
 document.addEventListener("DOMContentLoaded", () => {
     const modal = document.getElementById("modal");
     if (modal) {
-        modal.addListener("click", function (event) {
+        modal.addEventListener("click", function (event) {
             if (event.target === modal) {
                 closeModal();
             }
