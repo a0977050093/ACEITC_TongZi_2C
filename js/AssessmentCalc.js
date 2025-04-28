@@ -729,7 +729,7 @@ function calculateAll() {
 
     resultHTML += `
         <div class="card">
-            <div class="card-header">體能多元標準（${age} 歲，${gender === 'male' ? '上肢肌力（男）' : '腹部核心肌力（女）'}）</div>
+            <div class="card-header">體能多元標準（${age} 歲）</div>
             <div class="card-body">
                 <div class="card-content">
                     <div class="card-row">
@@ -760,7 +760,7 @@ function calculateAll() {
 
     resultHTML += `
         <div class="card-content">
-OPH            <div class="card-row">
+            <div class="card-row">
                 <span class="card-label">下肢肌力</span>
             </div>
             <div class="fitness-list">
