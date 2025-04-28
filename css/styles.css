@@ -281,22 +281,40 @@ body.dark-mode .collapsible-header:hover {
 }
 
 .collapsible-content p {
-    margin: 5px 0;
+    margin: 3px 0; /* 縮減間距，減少垂直擁擠 */
     color: inherit;
 }
 
 .collapsible-content a {
-    padding: 5px 0;
+    padding: 8px 0;
     border-bottom: none;
+    color: #1e90ff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s;
 }
 
 .collapsible-content a:hover {
-    background-color: transparent;
+    color: #00bfff;
     text-decoration: underline;
+}
+
+.collapsible-content a i {
+    margin-right: 6px; /* 縮小間距，減少水平擁擠 */
+    font-size: 12px; /* 縮小圖標，增加空氣感 */
 }
 
 body.dark-mode .collapsible-content {
     background-color: #3a3a3a;
+}
+
+body.dark-mode .collapsible-content a {
+    color: #87cefa;
+}
+
+body.dark-mode .collapsible-content a:hover {
+    color: #b0e0e6;
 }
 
 /* 切換按鈕 */
@@ -407,6 +425,15 @@ body.dark-mode .button:hover {
         min-width: 100px;
         padding: 8px 12px;
     }
+
+    .collapsible-content a {
+        padding: 10px 0;
+        font-size: 16px;
+    }
+
+    .collapsible-content a i {
+        font-size: 14px; /* 行動裝置上圖標稍大 */
+    }
 }
 
 @media (max-width: 480px) {
@@ -417,5 +444,14 @@ body.dark-mode .button:hover {
     .tab {
         min-width: 80px;
         padding: 6px 10px;
+    }
+
+    .collapsible-content a {
+        padding: 12px 0;
+        font-size: 14px;
+    }
+
+    .collapsible-content a i {
+        font-size: 12px;
     }
 }
