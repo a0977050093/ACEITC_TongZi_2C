@@ -1,8 +1,4 @@
-function populateDateOptions(yearSelectId, monthSelectId, daySelectId, minYear, maxYear) {
-    const yearSelect = document.getElementById(yearSelectId);
-    const monthSelect = document.getElementById(monthSelectId);
-    const daySelect = document.getElementById(daySelectId);
-
+function populateDateOptions(yearSelect, monthSelect, daySelect, minYear, maxYear) {
     // 填充年份選項
     for (let year = minYear; year <= maxYear; year++) {
         const option = document.createElement('option');
@@ -45,27 +41,30 @@ function addTrainingRecord() {
     const trainingList = document.getElementById('training-list');
     const recordDiv = document.createElement('div');
     recordDiv.className = 'training-record';
+
+    // 為每個受訓記錄生成唯一的 ID
+    const uniqueId = Date.now();
     recordDiv.innerHTML = `
         <div class="date-input">
-            <select class="training-start-year" required>
+            <select class="training-start-year" id="training-start-year-${uniqueId}" required>
                 <option value="">年</option>
             </select>
-            <select class="training-start-month" required>
+            <select class="training-start-month" id="training-start-month-${uniqueId}" required>
                 <option value="">月</option>
             </select>
-            <select class="training-start-day" required>
+            <select class="training-start-day" id="training-start-day-${uniqueId}" required>
                 <option value="">日</option>
             </select>
         </div>
         <span>至</span>
         <div class="date-input">
-            <select class="training-end-year" required>
+            <select class="training-end-year" id="training-end-year-${uniqueId}" required>
                 <option value="">年</option>
             </select>
-            <select class="training-end-month" required>
+            <select class="training-end-month" id="training-end-month-${uniqueId}" required>
                 <option value="">月</option>
             </select>
-            <select class="training-end-day" required>
+            <select class="training-end-day" id="training-end-day-${uniqueId}" required>
                 <option value="">日</option>
             </select>
         </div>
@@ -75,18 +74,15 @@ function addTrainingRecord() {
     trainingList.appendChild(recordDiv);
 
     // 初始化新受訓記錄的日期選項
-    populateDateOptions(
-        recordDiv.querySelector('.training-start-year').id = `training-start-year-${Date.now()}`,
-        recordDiv.querySelector('.training-start-month').id = `training-start-month-${Date.now()}`,
-        recordDiv.querySelector('.training-start-day').id = `training-start-day-${Date.now()}`,
-        80, 118
-    );
-    populateDateOptions(
-        recordDiv.querySelector('.training-end-year').id = `training-end-year-${Date.now()}`,
-        recordDiv.querySelector('.training-end-month').id = `training-end-month-${Date.now()}`,
-        recordDiv.querySelector('.training-end-day').id = `training-end-day-${Date.now()}`,
-        80, 118
-    );
+    const startYearSelect = recordDiv.querySelector(`#training-start-year-${uniqueId}`);
+    const startMonthSelect = recordDiv.querySelector(`#training-start-month-${uniqueId}`);
+    const startDaySelect = recordDiv.querySelector(`#training-start-day-${uniqueId}`);
+    const endYearSelect = recordDiv.querySelector(`#training-end-year-${uniqueId}`);
+    const endMonthSelect = recordDiv.querySelector(`#training-end-month-${uniqueId}`);
+    const endDaySelect = recordDiv.querySelector(`#training-end-day-${uniqueId}`);
+
+    populateDateOptions(startYearSelect, startMonthSelect, startDaySelect, 80, 118);
+    populateDateOptions(endYearSelect, endMonthSelect, endDaySelect, 80, 118);
 }
 
 function numberToChinese(num) {
@@ -618,11 +614,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 初始化日期選項
-    populateDateOptions('birth-year', 'birth-month', 'birth-day', 65, 118);
-    populateDateOptions('arrival-year', 'arrival-month', 'arrival-day', 80, 118);
-    populateDateOptions('appoint-year', 'appoint-month', 'appoint-day', 80, 118);
-    populateDateOptions('reenlist-year', 'reenlist-month', 'reenlist-day', 80, 118);
-    populateDateOptions('first-retire-year', 'first-retire-month', 'first-retire-day', 80, 118);
+    populateDateOptions(
+        document.getElementById('birth-year'),
+        document.getElementById('birth-month'),
+        document.getElementById('birth-day'),
+        65, 118
+    );
+    populateDateOptions(
+        document.getElementById('arrival-year'),
+        document.getElementById('arrival-month'),
+        document.getElementById('arrival-day'),
+        80, 118
+    );
+    populateDateOptions(
+        document.getElementById('appoint-year'),
+        document.getElementById('appoint-month'),
+        document.getElementById('appoint-day'),
+        80, 118
+    );
+    populateDateOptions(
+        document.getElementById('reenlist-year'),
+        document.getElementById('reenlist-month'),
+        document.getElementById('reenlist-day'),
+        80, 118
+    );
+    populateDateOptions(
+        document.getElementById('first-retire-year'),
+        document.getElementById('first-retire-month'),
+        document.getElementById('first-retire-day'),
+        80, 118
+    );
 
     // 初始化一筆受訓記錄
     addTrainingRecord();
