@@ -1,331 +1,163 @@
-/* 基本設定 */
 body {
-    font-family: 'Noto Sans TC', 'Arial', sans-serif;
-    margin: 0;
-    padding: 10px;
+    font-family: Arial, sans-serif;
+    margin: 20px;
     background-color: #f4f4f9;
+}
+
+h1, h2, h3, h4 {
     color: #333;
-    transition: background-color 0.3s, color 0.3s;
+    margin-bottom: 10px;
 }
 
-/* 夜間模式 */
-body.dark-mode {
-    background-color: #121212;
-    color: #e0e0e0;
+h3 {
+    font-size: 1.5em;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
 }
 
-/* 容器區域 */
-.calc-content {
-    max-width: 100%;
-    margin: 0;
+h4 {
+    font-size: 1.2em;
+    color: #555;
 }
 
-.container {
-    width: 100%;
-    padding: 10px;
+/* 區塊樣式 */
+.result-section, .result-subsection {
     background-color: #fff;
     border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-
-body.dark-mode .container {
-    background-color: #1e1e1e;
-}
-
-/* 標題樣式 */
-.center-title {
-    text-align: center;
-    color: #333;
-    font-size: 24px;
+    padding: 15px;
     margin-bottom: 20px;
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-body.dark-mode .center-title {
-    color: #e0e0e0;
+/* 表格樣式 */
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
 }
 
-/* 表單區域 */
+.result-table th, .result-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.result-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    width: 30%;
+}
+
+.result-table td {
+    background-color: #fff;
+}
+
+/* 在職狀態列表 */
+.status-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.status-item {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+.status-item-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-item-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.status-item-training {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+/* 受訓記錄列表 */
+.training-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.training-item {
+    background-color: #e9ecef;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+/* 體能標準分組 */
+.fitness-group {
+    margin-bottom: 15px;
+}
+
+.fitness-group h4 {
+    margin-bottom: 8px;
+    color: #007bff;
+}
+
+.fitness-group ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.fitness-group li {
+    padding: 5px 0;
+    font-size: 1em;
+    color: #333;
+}
+
+/* 輸入區域 */
 .form-section {
     margin-bottom: 20px;
 }
 
-h3 {
-    color: #333;
-    font-size: 18px;
-    margin: 15px 0 10px;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 5px;
-    display: flex;
-    align-items: center;
-}
-
-h3 input[type="checkbox"] {
-    margin-right: 8px;
-}
-
-body.dark-mode h3 {
-    color: #e0e0e0;
-    border-bottom-color: #555;
-}
-
-h4 {
-    color: #333;
-    font-size: 16px;
-    margin-top: 10px;
-}
-
-body.dark-mode h4 {
-    color: #e0e0e0;
-}
-
-.form-container {
-    display: grid;
-    gap: 15px;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.form-group label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #555;
-}
-
-.form-group input[type="checkbox"] {
-    margin-right: 8px;
-}
-
-body.dark-mode .form-group label {
-    color: #e0e0e0;
-}
-
-.form-group input,
-.form-group select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-}
-
-body.dark-mode .form-group input,
-body.dark-mode .form-group select {
-    background-color: #2a2a2a;
-    border-color: #555;
-    color: #e0e0e0;
-}
-
-.form-group input[type="checkbox"] {
-    width: auto;
-    margin-top: 10px;
-}
-
-.form-group select {
-    appearance: none;
-    background: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
-    background-size: 16px;
-}
-
-body.dark-mode .form-group select {
-    background: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
-}
-
 .date-input {
-    display: flex;
-    gap: 10px;
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .date-input select {
-    flex: 1;
+    padding: 5px;
+    margin-right: 5px;
 }
 
 .training-record {
-    display: flex;
-    gap: 10px;
-    align-items: center;
     margin-bottom: 10px;
 }
 
-.training-record select {
-    flex: 1;
-}
-
-.training-record button {
-    background-color: #dc3545;
-    padding: 8px 12px;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-body.dark-mode .training-record button {
-    background-color: #ff5555;
-}
-
 .button-group {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
+    margin-top: 20px;
 }
 
 button {
+    padding: 10px 20px;
+    margin-right: 10px;
     background-color: #007bff;
-    color: #fff;
-    padding: 12px 20px;
+    color: white;
     border: none;
-    border-radius: 4px;
-    font-size: 16px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
 button:hover {
     background-color: #0056b3;
 }
 
-body.dark-mode button {
-    background-color: #007bff;
-}
-
-body.dark-mode button:hover {
-    background-color: #0056b3;
-}
-
-.result-box {
-    margin-top: 20px;
-    padding: 15px;
-    background: #f8f9fa;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-body.dark-mode .result-box {
-    background: #2a2a2a;
-    border-color: #555;
-}
-
-.result-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-}
-
-.result-table th,
-.result-table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-
-body.dark-mode .result-table th,
-body.dark-mode .result-table td {
-    border-color: #555;
-}
-
-.result-table th {
-    background-color: #007bff;
-    color: #fff;
-}
-
-.result-table td {
-    background-color: #fff;
-}
-
-body.dark-mode .result-table th {
-    background-color: #007bff;
-}
-
-body.dark-mode .result-table td {
-    background-color: #2a2a2a;
-    color: #e0e0e0;
-}
-
-.list-group {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px;
-}
-
-.list-group-item {
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-body.dark-mode .list-group-item {
-    border-color: #555;
-}
-
-.list-group-item-success {
-    background-color: #dff0d8;
-    border-color: #d4edda;
-}
-
-body.dark-mode .list-group-item-success {
-    background-color: #355a3a;
-    border-color: #4a704f;
-}
-
-.list-group-item-danger {
-    background-color: #f2dede;
-    border-color: #ebccd1;
-}
-
-body.dark-mode .list-group-item-danger {
-    background-color: #5a3535;
-    border-color: #704a4a;
-}
-
 .error {
-    color: #dc3545;
+    color: red;
     font-weight: bold;
 }
 
-body.dark-mode .error {
-    color: #ff5555;
-}
-
-/* 響應式設計 */
-@media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
-
-    .center-title {
-        font-size: 20px;
-    }
-
-    .form-group select {
-        padding: 8px;
-        font-size: 14px;
-    }
-
-    button {
-        padding: 10px 15px;
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 480px) {
-    .center-title {
-        font-size: 18px;
-    }
-
-    .form-group select {
-        padding: 6px;
-        font-size: 12px;
-    }
-
-    button {
-        padding: 8px 12px;
-        font-size: 12px;
-    }
+small {
+    color: #666;
+    font-size: 0.8em;
 }
