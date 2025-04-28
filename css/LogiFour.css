@@ -28,62 +28,56 @@ body {
     padding: 0.5rem 1rem;
     cursor: pointer;
     border-radius: 4px;
+    font-size: 1rem;
 }
 
-/* 側邊欄樣式 */
-.sidebar {
-    width: 280px;
-    background-color: white;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    position: fixed;
-    height: 100vh;
-    z-index: 1000;
+.menu-toggle i {
+    font-size: 1.2rem;
 }
 
-.sidebar-header {
+/* 下拉選單導航 */
+.dropdown-nav {
+    background-color: #f8f9fa;
+    padding: 10px;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.select-group {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: #f8f9fa;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
-.menu-close {
-    background-color: #f8f9fa;
-    color: #4b8c2a;
-    border: none;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
+#main-category, #sub-category {
+    flex: 1;
+    min-width: 150px;
+    padding: 8px;
+    font-size: 14px;
     border-radius: 4px;
+    background: #fff;
+    color: #333;
+    border: 1px solid #ddd;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234b8b3b"><path d="M7 10l5 5 5-5H7z"/></svg>'); /* 自訂箭頭（建議 3） */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
 }
 
-.menu-item {
-    padding: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    border-left: 3px solid transparent;
+#sub-category:disabled {
+    background-color: #eee;
+    cursor: not-allowed;
 }
 
-.menu-item:hover {
-    background-color: #f8f9fa;
-}
-
-.menu-item.active {
-    background-color: #f8f9fa;
-    border-left: 3px solid #4b8c2a;
-}
-
-.sub-menu {
-    display: none;
-    padding-left: 1rem;
+#main-category:focus, #sub-category:focus {
+    outline: 2px solid #4b8c2a;
+    outline-offset: 2px;
 }
 
 /* 主內容區樣式 */
 .content {
-    margin-left: 280px;
     padding: 1rem;
-    transition: margin 0.3s ease;
 }
 
 /* 卡片式設計 */
@@ -182,28 +176,134 @@ body {
     background-color: #3c7a2a;
 }
 
+/* 模態框樣式（建議 2） */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 15px;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    color: #4b8c2a;
+    font-size: 18px;
+}
+
+.modal-content p {
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.modal-content button {
+    background: #4b8c2a;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.modal-content button:hover {
+    background: #3c7a2a;
+}
+
+.close-button {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #666;
+}
+
+.close-button:hover {
+    color: #333;
+}
+
 /* 響應式設計 */
 @media (max-width: 768px) {
-    .sidebar {
-        width: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        transform: translateX(-100%);
+    .dropdown-nav {
+        display: none;
+    }
+
+    .dropdown-nav.active {
+        display: block;
+    }
+
+    .select-group {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    #main-category, #sub-category {
+        min-width: 100%;
+        font-size: 16px;
+        padding: 10px;
+        background-size: 18px;
     }
 
     .content {
-        margin-left: 0;
         padding: 1rem;
+    }
+
+    .equipment-table {
+        display: block;
+        overflow-x: auto;
     }
 
     .container {
         height: 100vh;
         overflow-y: auto;
     }
+}
 
-    .equipment-table {
-        display: block;
-        overflow-x: auto;
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.2rem;
+    }
+
+    .menu-toggle {
+        padding: 0.4rem 0.8rem;
+    }
+
+    #main-category, #sub-category {
+        font-size: 14px;
+        padding: 8px;
+        background-size: 16px;
+    }
+
+    .card-title {
+        font-size: 1rem;
+    }
+
+    .equipment-table th, .equipment-table td {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    .status-form input, .status-form select, .status-form textarea {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    .status-form .submit-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
     }
 }
