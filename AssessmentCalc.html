@@ -3,35 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>考核表驗證器</title>
+    <title>考核表與慰勞假驗證器</title>
     <link rel="stylesheet" href="css/AssessmentCalc.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
-
     <!-- 主內容 -->
     <div class="main-content" id="main-content">
         <div class="container">
-            <h1>請輸入到部日期📅：</h1>
+            <h2>考核表與慰勞假計算 📅🔔</h2>
             <div class="form-container">
-                <div class="form-group">
-                    <label for="year">民國年份：</label>
-                    <input type="number" id="year" placeholder="例如 114" required oninput="updateDayRange()">
+                <!-- 基本資料 -->
+                <div class="form-section">
+                    <h3>基本資料</h3>
+                    <div class="form-group">
+                        <label for="leave-year">慰休年度（民國年）：</label>
+                        <select id="leave-year" required>
+                            <option value="">請選擇</option>
+                            <!-- 動態生成選項 -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="birth-date">出生日期（民國年）：</label>
+                        <input type="text" id="birth-date" class="date-picker" placeholder="例如 80/01/01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">性別：</label>
+                        <select id="gender" required>
+                            <option value="">請選擇</option>
+                            <option value="male">男</option>
+                            <option value="female">女</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="arrival-date">到部日期（民國年）：</label>
+                        <input type="text" id="arrival-date" class="date-picker" placeholder="例如 114/01/01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appoint-date">任官日期（民國年）：</label>
+                        <input type="text" id="appoint-date" class="date-picker" placeholder="例如 110/01/01" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="month">月份：</label>
-                    <input type="number" id="month" placeholder="1-12" min="1" max="12" required oninput="updateDayRange()">
+
+                <!-- 再入營/育嬰資料 -->
+                <div class="form-section">
+                    <h3>再入營/育嬰資料</h3>
+                    <div class="form-group">
+                        <label for="is-reenlist">是否為再入營/育嬰人員：</label>
+                        <input type="checkbox" id="is-re pushlist">
+                    </div>
+                    <div id="reenlist-details" style="display: none;">
+                        <div class="form-group">
+                            <label for="reenlist-date">再入營/復職日期（民國年）：</label>
+                            <input type="text" id="reenlist-date" class="date-picker" placeholder="例如 112/01/01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="first-retire-date">第一次退伍/育嬰生效日期（民國年）：</label>
+                            <input type="text" id="first-retire-date" class="date-picker" placeholder="例如 111/01/01" required>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="day">日期：</label>
-                    <input type="number" id="day" placeholder="1-31" min="1" max="31" required>
+
+                <!-- 受訓記錄 -->
+                <div class="form-section">
+                    <h3>受訓記錄</h3>
+                    <div id="training-list"></div>
+                    <button type="button" onclick="addTrainingRecord()">新增受訓記錄</button>
                 </div>
-                <button onclick="calculateDateRanges()">確認</button>
+
+                <button onclick="calculateAll()">計算</button>
             </div>
-            <div id="result"></div>
+
+            <!-- 結果顯示 -->
+            <div id="result" class="result-box"></div>
         </div>
     </div>
 
     <script src="js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="js/AssessmentCalc.js"></script>
 </body>
 </html>
-
