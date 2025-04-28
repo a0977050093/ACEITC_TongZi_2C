@@ -46,25 +46,25 @@ function addTrainingRecord() {
     const uniqueId = Date.now();
     recordDiv.innerHTML = `
         <div class="date-input">
-            <select class="training-start-year" id="training-start-year-${uniqueId}" required>
+            <select class="training-start-year" id="training-start-year-${uniqueId}">
                 <option value="">年</option>
             </select>
-            <select class="training-start-month" id="training-start-month-${uniqueId}" required>
+            <select class="training-start-month" id="training-start-month-${uniqueId}">
                 <option value="">月</option>
             </select>
-            <select class="training-start-day" id="training-start-day-${uniqueId}" required>
+            <select class="training-start-day" id="training-start-day-${uniqueId}">
                 <option value="">日</option>
             </select>
         </div>
         <span>至</span>
         <div class="date-input">
-            <select class="training-end-year" id="training-end-year-${uniqueId}" required>
+            <select class="training-end-year" id="training-end-year-${uniqueId}">
                 <option value="">年</option>
             </select>
-            <select class="training-end-month" id="training-end-month-${uniqueId}" required>
+            <select class="training-end-month" id="training-end-month-${uniqueId}">
                 <option value="">月</option>
             </select>
-            <select class="training-end-day" id="training-end-day-${uniqueId}" required>
+            <select class="training-end-day" id="training-end-day-${uniqueId}">
                 <option value="">日</option>
             </select>
         </div>
@@ -271,18 +271,25 @@ function calculateAll() {
     }));
     const resultDiv = document.getElementById('result');
 
-    // 驗證輸入
+    // 驗證基本資料必填欄位
     if (!leaveYear || !birthYear || !birthMonth || !birthDay || !gender || !arrivalYear || !arrivalMonth || !arrivalDay || !appointYear || !appointMonth || !appointDay) {
-        resultDiv.innerHTML = '<p class="error">請填寫所有必填欄位！</p>';
+        resultDiv.innerHTML = '<p class="error">請填寫所有基本資料必填欄位！</p>';
         return;
     }
+
+    // 驗證再入營/育嬰資料（僅在勾選時檢查）
     if (isReenlist && (!reenlistYear || !reenlistMonth || !reenlistDay || !firstRetireYear || !firstRetireMonth || !firstRetireDay)) {
         resultDiv.innerHTML = '<p class="error">請填寫所有再入營相關欄位！</p>';
         return;
     }
-    for (let record of trainingRecords) {
-        if (!record.startYear || !record.startMonth || !record.startDay || !record.endYear || !record.endMonth || !record.endDay) {
-            resultDiv.innerHTML = '<p class="error">請確保所有受訓記錄的開始和結束日期已填寫！</p>';
+
+    // 驗證受訓記錄（選填，但若填寫則必須完整）
+    for (let i = 0; i < trainingRecords.length; i++) {
+        const record = trainingRecords[i];
+        const isEmpty = !record.startYear && !record.startMonth && !record.startDay && !record.endYear && !record.endMonth && !record.endDay;
+        const isComplete = record.startYear && record.startMonth && record.startDay && record.endYear && record.endMonth && record.endDay;
+        if (!isEmpty && !isComplete) {
+            resultDiv.innerHTML = `<p class="error">請確保受訓記錄 ${i + 1} 的開始和結束日期已完整填寫！</p>`;
             return;
         }
     }
@@ -291,12 +298,14 @@ function calculateAll() {
     const birthDate = parseDate(birthYear, birthMonth, birthDay);
     const arrivalDate = parseDate(arrivalYear, arrivalMonth, arrivalDay);
     const appointDate = parseDate(appointYear, appointMonth, appointDay);
-    const reenlistDate = isReenlist ? parseDate(reenlistYear, reenlistMonth, reenlistDay) : null;
-    const firstRetireDate = isReenlist ? parseDate(firstRetireYear, firstRetireMonth, firstRetireDay) : null;
-    const trainingDates = trainingRecords.map(record => ({
-        start: parseDate(record.startYear, record.startMonth, record.startDay),
-        end: parseDate(record.endYear, record.endMonth, record.endDay)
-    }));
+    const reenlistDate = isReenlist && reenlistYear ? parseDate(reenlistYear, reenlistMonth, reenlistDay) : null;
+    const firstRetireDate = isReenlist && firstRetireYear ? parseDate(firstRetireYear, firstRetireMonth, firstRetireDay) : null;
+    const trainingDates = trainingRecords
+        .filter(record => record.startYear && record.endYear)
+        .map(record => ({
+            start: parseDate(record.startYear, record.startMonth, record.startDay),
+            end: parseDate(record.endYear, record.endMonth, record.endDay)
+        }));
 
     const gregorianLeaveYear = leaveYear + 1911;
     const leaveYearEnd = new Date(gregorianLeaveYear, 11, 31);
@@ -439,10 +448,10 @@ function calculateAll() {
     let totalSeniority = 0;
     if (isReenlist) {
         totalSeniority = 
-            ((leaveYear - 1 - reenlist.year) * 12 + 12 - reenlist.month) +
-            ((firstRetire.year - appoint.year) * 12 + (firstRetire.month - appoint.month));
+            ((leaveYear - 1 - parseInt(reenlistYear)) * 12 + 12 - parseInt(reenlistMonth)) +
+            ((parseInt(firstRetireYear) - parseInt(appointYear)) * 12 + (parseInt(firstRetireMonth) - parseInt(appointMonth)));
     } else {
-        totalSeniority = (leaveYear - 1 - appoint.year) * 12 + 12 - appoint.month;
+        totalSeniority = (leaveYear - 1 - parseInt(appointYear)) * 12 + 12 - parseInt(appointMonth);
     }
 
     function getLeaveDays(seniority) {
@@ -455,7 +464,7 @@ function calculateAll() {
     }
     let leaveDays = getLeaveDays(totalSeniority);
 
-    const isFirstYear = leaveYear === appoint.year + 1 && appoint.month > 1;
+    const isFirstYear = leaveYear === parseInt(appointYear) + 1 && parseInt(appointMonth) > 1;
     const adat = Array(13).fill().map(() => Array(32).fill(1));
     let inServiceMonths = 12;
 
@@ -463,8 +472,8 @@ function calculateAll() {
         inServiceMonths = 0;
         for (let i = 1; i <= 12; i++) {
             adat[i].fill(0);
-            if (i >= appoint.month) {
-                const startDay = i === appoint.month ? appoint.day : 1;
+            if (i >= parseInt(appointMonth)) {
+                const startDay = i === parseInt(appointMonth) ? parseInt(appointDay) : 1;
                 const daysInMonth = new Date(gregorianLeaveYear, i, 0).getDate();
                 for (let j = startDay; j <= daysInMonth; j++) {
                     adat[i][j] = 1;
@@ -648,6 +657,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 初始化一筆受訓記錄
     addTrainingRecord();
+
+    // 確保計算按鈕的事件監聽器正確綁定
+    const calculateButton = document.querySelector('.button-group button[onclick="calculateAll()"]');
+    if (calculateButton) {
+        calculateButton.addEventListener('click', calculateAll);
+    }
 });
 
 // 動態顯示再入營輸入欄位
