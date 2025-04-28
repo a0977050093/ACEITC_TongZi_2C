@@ -11,9 +11,14 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const analytics = firebase.analytics(app);
-const db = firebase.firestore(app);
+try {
+    const app = firebase.initializeApp(firebaseConfig);
+    const analytics = firebase.analytics(app);
+    const db = firebase.firestore(app);
+    console.log("Firebase 初始化成功");
+} catch (error) {
+    console.error("Firebase 初始化失敗:", error);
+}
 
 // Global variables
 let carLocations = {};
@@ -62,7 +67,14 @@ function submitCarLocation() {
         return;
     }
 
+    if (!firebase.firestore) {
+        showNotification("Firebase Firestore 未正確初始化", "error");
+        console.error("Firestore 未初始化");
+        return;
+    }
+
     loading.style.display = "block";
+    const db = firebase.firestore();
     const carRef = db.collection("carLocations").doc(carNumber);
     carRef.set({
         carNumber: carNumber,
@@ -104,6 +116,14 @@ function showStatus() {
         return;
     }
 
+    if (!firebase.firestore) {
+        showNotification("Firebase Firestore 未正確初始化", "error");
+        console.error("Firestore 未初始化");
+        loading.style.display = "none";
+        return;
+    }
+
+    const db = firebase.firestore();
     db.collection("carLocations").get()
         .then(snapshot => {
             carLocations = {};
@@ -206,7 +226,7 @@ function prevPage() {
 }
 
 function nextPage() {
-    const totalPages = Math.ceil(Object.keys(carLocations).length / itemsPerPage);
+    const totalPages = Math.ceil(Object.keys(carsendData.length / itemsPerPage);
     if (currentPage < totalPages) {
         currentPage++;
         updateStatusTable();
@@ -233,6 +253,12 @@ function clearCarNumbers() {
         return;
     }
 
+    if (!firebase.firestore) {
+        showNotification("Firebase Firestore 未正確初始化", "error");
+        console.error("Firestore 未初始化");
+        return;
+    }
+
     loading.style.display = "block";
     markers.forEach(marker => marker.setMap(null));
     markers = [];
@@ -240,6 +266,7 @@ function clearCarNumbers() {
     cachedCarLocations = null;
     markerCluster.clearMarkers();
 
+    const db = firebase.firestore();
     db.collection("carLocations").get()
         .then(snapshot => {
             const batch = db.batch();
@@ -387,7 +414,23 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Status button 未找到");
     }
 
-    // Bind modal close event
+    // Bind reset map button
+    const resetMapBtn = document.getElementById("reset-map-btn");
+    if (resetMapBtn) {
+        resetMapBtn.addEventListener("click", resetMapView);
+    } else {
+        console.error("Reset map button 未找到");
+    }
+
+    // Bind close modal button
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener("click", closeModal);
+    } else {
+        console.error("Close modal button 未找到");
+    }
+
+    // Bind modal close event (click outside)
     const modal = document.getElementById("modal");
     if (modal) {
         modal.addEventListener("click", function (event) {
@@ -397,5 +440,31 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     } else {
         console.error("Modal 元素未找到");
+    }
+
+    // Bind sort table events
+    const locationTh = document.getElementById("sort-location");
+    const carNumbersTh = document.getElementById("sort-carNumbers");
+    if (locationTh) {
+        locationTh.addEventListener("click", () => sortTable('location'));
+    }
+    if (carNumbersTh) {
+        carNumbersTh.addEventListener("click", () => sortTable('carNumbers'));
+    }
+
+    // Bind pagination buttons
+    const prevPageBtn = document.getElementById("prev-page-btn");
+    const nextPageBtn = document.getElementById("next-page-btn");
+    if (prevPageBtn) {
+        prevPageBtn.addEventListener("click", prevPage);
+    }
+    if (nextPageBtn) {
+        nextPageBtn.addEventListener("click", nextPage);
+    }
+
+    // Bind clear car numbers button
+    const clearCarNumbersBtn = document.getElementById("clear-car-numbers-btn");
+    if (clearCarNumbersBtn) {
+        clearCarNumbersBtn.addEventListener("click", clearCarNumbers);
     }
 });
