@@ -12,24 +12,29 @@
         <!-- 頭部 -->
         <header class="header">
             <h1>國軍裝備管理系統</h1>
-            <button class="menu-toggle" aria-label="開啟導航選單"><i class="fas fa-bars"></i></button>
         </header>
 
-        <!-- 巢狀下拉選單導航 -->
-        <nav class="dropdown-nav" id="dropdown-nav">
-            <div class="select-group">
-                <select id="main-category" aria-label="選擇主裝備類型">
-                    <option value="" disabled selected>選擇主類型</option>
-                    <option value="輪車" data-icon="fa-truck">輪車</option>
-                    <option value="兵工" data-icon="fa-gun">兵工</option>
-                    <option value="化學" data-icon="fa-flask">化學</option>
-                    <option value="工兵" data-icon="fa-tools">工兵</option>
-                    <option value="通信" data-icon="fa-radio">通信</option>
-                    <option value="經理" data-icon="fa-briefcase">經理</option>
-                </select>
-                <select id="sub-category" aria-label="選擇子裝備類型" disabled>
-                    <option value="" disabled selected>選擇子類型</option>
-                </select>
+        <!-- 搜尋式導航 -->
+        <nav class="search-nav" id="search-nav">
+            <div class="search-group">
+                <div class="search-input">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="equipment-search" aria-label="搜尋裝備序號或名稱" placeholder="搜尋裝備（序號或名稱）...">
+                </div>
+                <div class="filter-group">
+                    <select id="main-category" aria-label="篩選主裝備類型">
+                        <option value="" data-icon="fa-filter">所有主類型</option>
+                        <option value="輪車" data-icon="fa-truck">輪車</option>
+                        <option value="兵工" data-icon="fa-gun">兵工</option>
+                        <option value="化學" data-icon="fa-flask">化學</option>
+                        <option value="工兵" data-icon="fa-tools">工兵</option>
+                        <option value="通信" data-icon="fa-radio">通信</option>
+                        <option value="經理" data-icon="fa-briefcase">經理</option>
+                    </select>
+                    <select id="sub-category" aria-label="篩選子裝備類型" disabled>
+                        <option value="" data-icon="fa-filter">所有子類型</option>
+                    </select>
+                </div>
             </div>
         </nav>
 
