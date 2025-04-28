@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>考核表與慰勞假驗證器</title>
+    <title>📅多元計算機💻</title>
     <link rel="stylesheet" href="css/AssessmentCalc.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
     <!-- 主內容 -->
     <div class="main-content" id="main-content">
         <div class="container">
-            <h2>考核表與慰勞假計算 📅🔔</h2>
+            <h2> 📅多元計算機💻 </h2>
             <div class="form-container">
                 <!-- 基本資料 -->
                 <div class="form-section">
@@ -24,8 +23,13 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="birth-date">出生日期（民國年）：</label>
-                        <input type="text" id="birth-date" class="date-picker" placeholder="例如 80/01/01" required>
+                        <label for="birth-year">出生日期（民國年）：</label>
+                        <div class="date-input">
+                            <input type="number" id="birth-year" placeholder="年，例如 80" min="65" max="118" required>
+                            <input type="number" id="birth-month" placeholder="月" min="1" max="12" required>
+                            <input type="number" id="birth-day" placeholder="日" min="1" max="31" required>
+                        </div>
+                        <small>年份範圍：65-118</small>
                     </div>
                     <div class="form-group">
                         <label for="gender">性別：</label>
@@ -36,12 +40,22 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="arrival-date">到部日期（民國年）：</label>
-                        <input type="text" id="arrival-date" class="date-picker" placeholder="例如 114/01/01" required>
+                        <label for="arrival-year">到部日期（民國年）：</label>
+                        <div class="date-input">
+                            <input type="number" id="arrival-year" placeholder="年，例如 114" min="80" max="118" required>
+                            <input type="number" id="arrival-month" placeholder="月" min="1" max="12" required>
+                            <input type="number" id="arrival-day" placeholder="日" min="1" max="31" required>
+                        </div>
+                        <small>年份範圍：80-118</small>
                     </div>
                     <div class="form-group">
-                        <label for="appoint-date">任官日期（民國年）：</label>
-                        <input type="text" id="appoint-date" class="date-picker" placeholder="例如 110/01/01" required>
+                        <label for="appoint-year">任官日期（民國年）：</label>
+                        <div class="date-input">
+                            <input type="number" id="appoint-year" placeholder="年，例如 110" min="80" max="118" required>
+                            <input type="number" id="appoint-month" placeholder="月" min="1" max="12" required>
+                            <input type="number" id="appoint-day" placeholder="日" min="1" max="31" required>
+                        </div>
+                        <small>年份範圍：80-118</small>
                     </div>
                 </div>
 
@@ -50,16 +64,26 @@
                     <h3>再入營/育嬰資料</h3>
                     <div class="form-group">
                         <label for="is-reenlist">是否為再入營/育嬰人員：</label>
-                        <input type="checkbox" id="is-re pushlist">
+                        <input type="checkbox" id="is-reenlist">
                     </div>
                     <div id="reenlist-details" style="display: none;">
                         <div class="form-group">
-                            <label for="reenlist-date">再入營/復職日期（民國年）：</label>
-                            <input type="text" id="reenlist-date" class="date-picker" placeholder="例如 112/01/01" required>
+                            <label for="reenlist-year">再入營/復職日期（民國年）：</label>
+                            <div class="date-input">
+                                <input type="number" id="reenlist-year" placeholder="年，例如 112" min="80" max="118" required>
+                                <input type="number" id="reenlist-month" placeholder="月" min="1" max="12" required>
+                                <input type="number" id="reenlist-day" placeholder="日" min="1" max="31" required>
+                            </div>
+                            <small>年份範圍：80-118</small>
                         </div>
                         <div class="form-group">
-                            <label for="first-retire-date">第一次退伍/育嬰生效日期（民國年）：</label>
-                            <input type="text" id="first-retire-date" class="date-picker" placeholder="例如 111/01/01" required>
+                            <label for="first-retire-year">第一次退伍/育嬰生效日期（民國年）：</label>
+                            <div class="date-input">
+                                <input type="number" id="first-retire-year" placeholder="年，例如 111" min="80" max="118" required>
+                                <input type="number" id="first-retire-month" placeholder="月" min="1" max="12" required>
+                                <input type="number" id="first-retire-day" placeholder="日" min="1" max="31" required>
+                            </div>
+                            <small>年份範圍：80-118</small>
                         </div>
                     </div>
                 </div>
@@ -71,7 +95,10 @@
                     <button type="button" onclick="addTrainingRecord()">新增受訓記錄</button>
                 </div>
 
-                <button onclick="calculateAll()">計算</button>
+                <div class="button-group">
+                    <button onclick="calculateAll()">計算</button>
+                    <button type="button" onclick="clearAll()">清除內容</button>
+                </div>
             </div>
 
             <!-- 結果顯示 -->
@@ -80,7 +107,6 @@
     </div>
 
     <script src="js/scripts.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="js/AssessmentCalc.js"></script>
 </body>
 </html>
