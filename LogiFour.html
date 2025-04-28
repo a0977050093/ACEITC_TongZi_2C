@@ -12,6 +12,7 @@
         <!-- 頭部 -->
         <header class="header">
             <h1>國軍裝備管理系統</h1>
+            <button class="menu-toggle" aria-label="開啟搜尋和篩選導航"><i class="fas fa-bars"></i></button>
         </header>
 
         <!-- 搜尋式導航 -->
@@ -20,6 +21,7 @@
                 <div class="search-input">
                     <i class="fas fa-search"></i>
                     <input type="text" id="equipment-search" aria-label="搜尋裝備序號或名稱" placeholder="搜尋裝備（序號或名稱）...">
+                    <ul id="search-suggestions" class="suggestions" aria-live="polite"></ul>
                 </div>
                 <div class="filter-group">
                     <select id="main-category" aria-label="篩選主裝備類型">
@@ -58,6 +60,11 @@
                         <!-- 這裡將動態添加序號 -->
                     </tbody>
                 </table>
+                <div class="pagination">
+                    <button id="prev-page" disabled aria-label="上一頁">上一頁</button>
+                    <span id="page-info">第 1 頁 / 共 1 頁</span>
+                    <button id="next-page" disabled aria-label="下一頁">下一頁</button>
+                </div>
             </div>
 
             <div id="statusDisplay" class="status-display">
@@ -68,36 +75,55 @@
             <form id="statusForm" class="status-form">
                 <h2 class="card-title">填入現況</h2>
                 <div class="form-group">
-                    <label>選擇序號</label>
+                    <label for="serialNumber">選擇序號</label>
                     <select id="serialNumber" required>
                         <option value="" disabled selected>請選擇序號</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>現況</label>
+                    <label for="status">現況</label>
                     <textarea id="status" placeholder="請描述裝備的現況..." required></textarea>
                 </div>
                 <div class="form-group">
-                    <label>備考</label>
+                    <label for="notes">備考</label>
                     <input type="text" id="notes" placeholder="請輸入備考...">
                 </div>
                 <div class="form-group">
-                    <label>填入日期</label>
+                    <label for="entryDate">填入日期</label>
                     <input type="date" id="entryDate" required>
                 </div>
                 <div class="form-group">
-                    <label>填入人</label>
+                    <label for="enteredBy">填入人</label>
                     <input type="text" id="enteredBy" placeholder="請輸入填入人..." required>
                 </div>
                 <button type="submit" class="submit-btn">提交</button>
             </form>
+
+            <div class="equipment-form">
+                <h2 class="card-title">新增裝備</h2>
+                <form id="equipmentForm">
+                    <div class="form-group">
+                        <label for="new-main-category">主類型</label>
+                        <input type="text" id="new-main-category" placeholder="輸入主類型..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-sub-category">子類型</label>
+                        <input type="text" id="new-sub-category" placeholder="輸入子類型..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-serial">序號</label>
+                        <input type="text" id="new-serial" placeholder="輸入序號..." required>
+                    </div>
+                    <button type="submit" class="submit-btn">新增</button>
+                </form>
+            </div>
         </main>
     </div>
 
     <!-- 表單提交模態框（建議 2） -->
     <div id="form-modal" class="modal">
         <div class="modal-content">
-            <span class="close-button">×</span>
+            <span class="close-button" aria-label="關閉模態框">×</span>
             <h2>提交確認</h2>
             <p id="form-message">現況已成功提交！</p>
             <button onclick="closeFormModal()">關閉</button>
