@@ -483,12 +483,24 @@ function calculateAll() {
         }
 
         resultHTML += `
-            <table class="result-table">
-                <tr><th>連續三個月</th><td>${months.join('<br>')}</td></tr>
-                <tr><th>連續四季</th><td>${quarters.join('<br>')}</td></tr>
-                <tr><th>上下半年</th><td>${halfYear.join('<br>')}</td></tr>
-                <tr><th style="color: red;">解管時間</th><td style="color: red;">${releaseTime}</td></tr>
-            </table>
+            <div class="card-content">
+                <div class="card-row">
+                    <span class="card-label">連續三個月</span>
+                    <span class="card-value">${months.join('<br>')}</span>
+                </div>
+                <div class="card-row">
+                    <span class="card-label">連續四季</span>
+                    <span class="card-value">${quarters.join('<br>')}</span>
+                </div>
+                <div class="card-row">
+                    <span class="card-label">上下半年</span>
+                    <span class="card-value">${halfYear.join('<br>')}</span>
+                </div>
+                <div class="card-row">
+                    <span class="card-label">解管時間</span>
+                    <span class="card-value" style="color: red;">${releaseTime}</span>
+                </div>
+            </div>
         `;
         resultHTML += '</div></div>';
     }
@@ -622,7 +634,7 @@ function calculateAll() {
                     <span class="card-value">${leaveDays} 天</span>
                 </div>
                 <div class="card-row">
-                    <span class="card-label">在職月數（113年）</span>
+                    <span class="card-label">在職月數（${leaveYear - 1}年）</span>
                     <span class="card-value">${inServiceMonths} 個月</span>
                 </div>
                 <div class="card-row">
@@ -673,7 +685,7 @@ function calculateAll() {
         resultHTML += `
             <div class="card-content">
                 <div class="card-row">
-                    <span class="card-label">每月在職狀態（113年）</span>
+                    <span class="card-label">每月在職狀態（${leaveYear - 1}年）</span>
                 </div>
                 <div class="status-list">
         `;
@@ -748,7 +760,7 @@ function calculateAll() {
 
     resultHTML += `
         <div class="card-content">
-            <div class="card-row">
+OPH            <div class="card-row">
                 <span class="card-label">下肢肌力</span>
             </div>
             <div class="fitness-list">
