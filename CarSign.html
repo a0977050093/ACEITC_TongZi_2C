@@ -78,30 +78,30 @@
 
         <div id="modal">
             <div id="modal-content" class="modal-content">
-                <button class="close-btn" onclick="closeModal()">×</button>
+                <button class="close-btn" id="close-modal-btn">×</button>
                 <h3 style="text-align: center;">車輛停放狀況</h3>
                 <table>
                     <thead>
                         <tr>
-                            <th onclick="sortTable('location')">位置</th>
-                            <th onclick="sortTable('carNumbers')">車號</th>
+                            <th id="sort-location">位置</th>
+                            <th id="sort-carNumbers">車號</th>
                             <th>總數</th>
                         </tr>
                     </thead>
                     <tbody id="statusTable"></tbody>
                 </table>
                 <div class="pagination">
-                    <button onclick="prevPage()">上一頁</button>
+                    <button id="prev-page-btn">上一頁</button>
                     <span id="pageInfo"></span>
-                    <button onclick="nextPage()">下一頁</button>
+                    <button id="next-page-btn">下一頁</button>
                 </div>
-                <button type="button" class="btn-danger" onclick="clearCarNumbers()">清除所有車號</button>
+                <button type="button" class="btn-danger" id="clear-car-numbers-btn">清除所有車號</button>
             </div>
         </div>
 
         <div id="map-container">
             <div id="map"></div>
-            <button id="reset-map-btn" onclick="resetMapView()">重置地圖視圖</button>
+            <button id="reset-map-btn">重置地圖視圖</button>
         </div>
         <div id="loading">正在載入...</div>
         <div id="notification" class="notification"></div>
