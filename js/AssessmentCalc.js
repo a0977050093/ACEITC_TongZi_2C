@@ -383,7 +383,9 @@ function calculateAll() {
     }
 
     const age = calculateAge(birthDate, leaveYear);
-    if (age < 19 || age > 59) {
+    if (age < 19 || age
+
+> 59) {
         resultDiv.innerHTML = '<p class="error">年齡必須在 19 至 59 歲之間！</p>';
         return;
     }
@@ -407,6 +409,7 @@ function calculateAll() {
     }
 
     if (calculateAssessment) {
+        resultHTML += '<div class="result-section">';
         resultHTML += '<h3>考核表計算結果</h3>';
         const months = [];
         let currentDate = new Date(assessmentDate);
@@ -488,10 +491,12 @@ function calculateAll() {
                 <tr><th style="color: red;">解管時間</th><td style="color: red;">${releaseTime}</td></tr>
             </table>
         `;
+        resultHTML += '</div>';
     }
 
     if (useVolunteerDate) {
-        resultHTML += '<h3>慰勞假計算結果</h3>';
+        resultHTML += '<div class="result-section"><h3>慰勞假計算結果</h3>';
+
         let totalSeniority = 0;
         if (isReenlist) {
             totalSeniority = 
@@ -512,20 +517,19 @@ function calculateAll() {
         let leaveDays = getLeaveDays(totalSeniority);
 
         const isFirstYear = leaveYear === parseInt(volunteerYear) + 1 && parseInt(volunteerMonth) > 1;
-        const adat = Array(13).fill().map(() => Array(32).fill(1));
-        let inServiceMonths = 12;
+        const adat = Array(13).fill().map(() => Array(32).fill({ status: 1, reason: '' }));
 
         if (isFirstYear) {
-            inServiceMonths = 0;
             for (let i = 1; i <= 12; i++) {
-                adat[i].fill(0);
+                for (let j = 1; j <= 31; j++) {
+                    adat[i][j] = { status: 0, reason: '未入職' };
+                }
                 if (i >= parseInt(volunteerMonth)) {
                     const startDay = i === parseInt(volunteerMonth) ? parseInt(volunteerDay) : 1;
                     const daysInMonth = new Date(gregorianLeaveYear, i, 0).getDate();
                     for (let j = startDay; j <= daysInMonth; j++) {
-                        adat[i][j] = 1;
+                        adat[i][j] = { status: 1, reason: '' };
                     }
-                    inServiceMonths++;
                 }
             }
         }
@@ -538,7 +542,7 @@ function calculateAll() {
                     const retireDate = firstRetireDate;
                     const reenlistDate = reenlistDate;
                     if (currentDate >= retireDate && currentDate < reenlistDate) {
-                        adat[i][j] = 0;
+                        adat[i][j] = { status: 0, reason: '退伍/育嬰' };
                     }
                 }
             }
@@ -548,33 +552,43 @@ function calculateAll() {
             if (record.start.getFullYear() === gregorianLeaveYear) {
                 if (record.start.getMonth() === record.end.getMonth()) {
                     for (let j = record.start.getDate(); j <= record.end.getDate(); j++) {
-                        adat[record.start.getMonth() + 1][j] = 0;
+                        adat[record.start.getMonth() + 1][j] = { status: 0, reason: '受訓' };
                     }
                 } else {
                     for (let i = record.start.getMonth() + 1; i <= record.end.getMonth() + 1; i++) {
                         const startDay = i === record.start.getMonth() + 1 ? record.start.getDate() : 1;
                         const endDay = i === record.end.getMonth() + 1 ? record.end.getDate() : new Date(gregorianLeaveYear, i, 0).getDate();
                         for (let j = startDay; j <= endDay; j++) {
-                            adat[i][j] = 0;
+                            adat[i][j] = { status: 0, reason: '受訓' };
                         }
                     }
                 }
             }
         });
 
-        inServiceMonths = 0;
+        let inServiceMonths = 0;
         const monthlyStatus = [];
         for (let i = 1; i <= 12; i++) {
             let isInService = false;
+            let monthReason = '';
             const daysInMonth = new Date(gregorianLeaveYear, i, 0).getDate();
+            let inServiceDays = 0;
+            
             for (let j = 1; j <= daysInMonth; j++) {
-                if (adat[i][j] === 1) {
-                    isInService = true;
-                    inServiceMonths++;
-                    break;
+                if (adat[i][j].status === 1) {
+                    inServiceDays++;
+                } else if (!monthReason) {
+                    monthReason = adat[i][j].reason;
                 }
             }
-            monthlyStatus.push({ month: i, inService: isInService });
+
+            // 如果該月至少有一天在職，則計為在職月
+            if (inServiceDays > 0) {
+                isInService = true;
+                inServiceMonths++;
+            }
+
+            monthlyStatus.push({ month: i, inService: isInService, reason: monthReason });
         }
 
         let actualLeaveDays = leaveDays * (inServiceMonths / 12);
@@ -597,54 +611,125 @@ function calculateAll() {
         const clothingPoints = getClothingPoints(totalSeniority);
 
         resultHTML += `
-            <h3>慰勞假計算結果</h3>
-            <table class="result-table">
-                <tr><th>總年資</th><td>${(totalSeniority / 12).toFixed(2)} 年（${totalSeniority} 個月）</td></tr>
-                <tr><th>應得慰勞假</th><td>${leaveDays} 天</td></tr>
-                <tr><th>在職月數</th><td>${inServiceMonths} 個月</td></tr>
-                <tr><th>實際慰勞假</th><td>${actualLeaveDays} 天</td></tr>
-                <tr><th>休假補助費</th><td>${allowance} 元（${allowanceChinese}）</td></tr>
-                <tr><th>應繳發票金額</th><td>${invoiceAmount} 元（${invoiceAmountChinese}）</td></tr>
-                <tr><th>服裝APP年度核配點數</th><td>${clothingPoints} 點</td></tr>
-                <tr><th>出生日期</th><td>${formatDate(birthDate)}</td></tr>
-                <tr><th>年齡</th><td>${age} 歲</td></tr>
-                <tr><th>性別</th><td>${gender === 'male' ? '男' : '女'}</td></tr>
-                <tr><th>志願役生效日期</th><td>${formatDate(volunteerDate)}</td></tr>
-                ${isReenlist ? `
-                    <tr><th>再入營/復職日期</th><td>${formatDate(reenlistDate)}</td></tr>
-                    <tr><th>第一次退伍/育嬰生效日期</th><td>${formatDate(firstRetireDate)}</td></tr>
-                ` : ''}
-            </table>
-            <h4>每月在職狀態</h4>
-            <ul class="list-group">
+            <div class="result-subsection">
+                <h4>基本資料</h4>
+                <table class="result-table">
+                    <tr><th>出生日期</th><td>${formatDate(birthDate)}</td></tr>
+                    <tr><th>年齡</th><td>${age} 歲</td></tr>
+                    <tr><th>性別</th><td>${gender === 'male' ? '男' : '女'}</td></tr>
+                    <tr><th>志願役生效日期</th><td>${formatDate(volunteerDate)}</td></tr>
+                    ${isReenlist ? `
+                        <tr><th>再入營/復職日期</th><td>${formatDate(reenlistDate)}</td></tr>
+                        <tr><th>第一次退伍/育嬰生效日期</th><td>${formatDate(firstRetireDate)}</td></tr>
+                    ` : ''}
+                </table>
+            </div>
+        `;
+
+        resultHTML += `
+            <div class="result-subsection">
+                <h4>年資與休假</h4>
+                <table class="result-table">
+                    <tr><th>總年資</th><td>${(totalSeniority / 12).toFixed(2)} 年（${totalSeniority} 個月）</td></tr>
+                    <tr><th>應得慰勞假</th><td>${leaveDays} 天</td></tr>
+                    <tr><th>在職月數</th><td>${inServiceMonths} 個月</td></tr>
+                    <tr><th>實際慰勞假</th><td>${actualLeaveDays} 天</td></tr>
+                </table>
+            </div>
+        `;
+
+        resultHTML += `
+            <div class="result-subsection">
+                <h4>補助與服裝點數</h4>
+                <table class="result-table">
+                    <tr><th>休假補助費</th><td>${allowance} 元（${allowanceChinese}）</td></tr>
+                    <tr><th>應繳發票金額</th><td>${invoiceAmount} 元（${invoiceAmountChinese}）</td></tr>
+                    <tr><th>服裝APP年度核配點數</th><td>${clothingPoints} 點</td></tr>
+                </table>
+            </div>
+        `;
+
+        resultHTML += `
+            <div class="result-subsection">
+                <h4>每月在職狀態</h4>
+                <div class="status-list">
         `;
         monthlyStatus.forEach(status => {
-            const className = status.inService ? 'list-group-item-success' : 'list-group-item-danger';
-            const hand = status.inService ? '👍' : '👎';
-            const text = status.inService ? `${status.month}月 在職 ${hand}` : `${status.month}月 不在職 ${hand}`;
-            resultHTML += `<li class="list-group-item ${className}">${text}</li>`;
+            let className, text;
+            if (status.inService) {
+                className = 'status-item status-item-success';
+                text = `${status.month}月 在職 👍`;
+            } else {
+                className = 'status-item status-item-danger';
+                if (status.reason === '受訓') {
+                    text = `${status.month}月 受訓 📚`;
+                } else if (status.reason === '退伍/育嬰') {
+                    text = `${status.month}月 退伍/育嬰 👶`;
+                } else {
+                    text = `${status.month}月 不在職 👎`;
+                }
+            }
+            resultHTML += `<div class="${className}">${text}</div>`;
         });
-        resultHTML += '</ul>';
+        resultHTML += '</div></div>';
+
         if (hasTraining && trainingDates.length > 0) {
             resultHTML += `
-                <h4>受訓記錄</h4>
-                <ul class="list-group">
+                <div class="result-subsection">
+                    <h4>受訓記錄</h4>
+                    <div class="training-list">
             `;
             trainingDates.forEach(record => {
-                resultHTML += `<li class="list-group-item">${formatDate(record.start)} 至 ${formatDate(record.end)}</li>`;
+                resultHTML += `<div class="training-item">${formatDate(record.start)} 至 ${formatDate(record.end)}</div>`;
             });
-            resultHTML += '</ul>';
+            resultHTML += '</div></div>';
         }
+
+        resultHTML += '</div>';
     }
 
     resultHTML += `
-        <h3>體能多元標準（${age} 歲，${gender === 'male' ? '上肢肌力（男）' : '腹部核心肌力（女）'}）</h3>
-        <ul>
+        <div class="result-section">
+            <h3>體能多元標準（${age} 歲，${gender === 'male' ? '上肢肌力（男）' : '腹部核心肌力（女）'}）</h3>
+    `;
+
+    resultHTML += `
+        <div class="fitness-group">
+            <h4>上肢肌群</h4>
+            <ul>
     `;
     for (let test in fitnessStandards) {
-        resultHTML += `<li>${test}：${fitnessStandards[test].pass}</li>`;
+        if (test.includes('上肢肌群')) {
+            resultHTML += `<li>${test.split(' - ')[1]}：${fitnessStandards[test].pass}</li>`;
+        }
     }
-    resultHTML += '</ul>';
+    resultHTML += '</ul></div>';
+
+    resultHTML += `
+        <div class="fitness-group">
+            <h4>腹部核心肌群</h4>
+            <ul>
+    `;
+    for (let test in fitnessStandards) {
+        if (test.includes('腹部核心肌群')) {
+            resultHTML += `<li>${test.split(' - ')[1]}：${fitnessStandards[test].pass}</li>`;
+        }
+    }
+    resultHTML += '</ul></div>';
+
+    resultHTML += `
+        <div class="fitness-group">
+            <h4>下肢肌力</h4>
+            <ul>
+    `;
+    for (let test in fitnessStandards) {
+        if (test.includes('下肢肌力')) {
+            resultHTML += `<li>${test.split(' - ')[1]}：${fitnessStandards[test].pass}</li>`;
+        }
+    }
+    resultHTML += '</ul></div>';
+
+    resultHTML += '</div>';
 
     resultDiv.innerHTML = resultHTML;
 }
