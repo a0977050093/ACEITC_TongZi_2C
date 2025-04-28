@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📅多元計算機💻</title>
+    <title>考核計算</title>
     <link rel="stylesheet" href="css/AssessmentCalc.css">
 </head>
 <body>
     <!-- 主內容 -->
-    <div class="main-content" id="main-content">
+    <div class="calc-content">
         <div class="container">
             <h2 class="center-title">📅多元計算機💻</h2>
             <div class="form-container">
@@ -151,7 +151,24 @@
         </div>
     </div>
 
-    <script src="js/scripts.js"></script>
     <script src="js/AssessmentCalc.js"></script>
+    <script>
+        // 同步主頁面的夜間模式
+        function syncDarkMode() {
+            const isDarkMode = parent.document.body.classList.contains('dark-mode');
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+        }
+
+        // 初始同步
+        syncDarkMode();
+
+        // 監聽主頁面夜間模式變化
+        const observer = new MutationObserver(syncDarkMode);
+        observer.observe(parent.document.body, { attributes: true, attributeFilter: ['class'] });
+    </script>
 </body>
 </html>
