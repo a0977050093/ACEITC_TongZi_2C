@@ -3,58 +3,90 @@ function addTrainingRecord() {
     const recordDiv = document.createElement('div');
     recordDiv.className = 'training-record';
     recordDiv.innerHTML = `
-        <input type="text" class="date-picker training-start" placeholder="例如 114/01/01" required>
+        <div class="date-input">
+            <input type="number" class="training-start-year" placeholder="年，例如 114" min="80" max="118" required>
+            <input type="number" class="training-start-month" placeholder="月" min="1" max="12" required>
+            <input type="number" class="training-start-day" placeholder="日" min="1" max="31" required>
+        </div>
         <span>至</span>
-        <input type="text" class="date-picker training-end" placeholder="例如 114/01/01" required>
+        <div class="date-input">
+            <input type="number" class="training-end-year" placeholder="年，例如 114" min="80" max="118" required>
+            <input type="number" class="training-end-month" placeholder="月" min="1" max="12" required>
+            <input type="number" class="training-end-day" placeholder="日" min="1" max="31" required>
+        </div>
         <button type="button" onclick="this.parentElement.remove()">刪除</button>
+        <small>年份範圍：80-118</small>
     `;
     trainingList.appendChild(recordDiv);
-
-    // 初始化 flatpickr
-    flatpickr(recordDiv.querySelector('.training-start'), {
-        dateFormat: 'Z',
-        altInput: true,
-        altFormat: 'Y/m/d',
-        minDate: '2011-01-01', // 民國 100
-        maxDate: '2031-12-31', // 民國 120
-        onChange: function(selectedDates, dateStr, instance) {
-            const date = selectedDates[0];
-            if (date) {
-                const minguoYear = date.getFullYear() - 1911;
-                instance.altInput.value = `${minguoYear}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}`;
-            }
-        }
-    });
-    flatpickr(recordDiv.querySelector('.training-end'), {
-        dateFormat: 'Z',
-        altInput: true,
-        altFormat: 'Y/m/d',
-        minDate: '2011-01-01',
-        maxDate: '2031-12-31',
-        onChange: function(selectedDates, dateStr, instance) {
-            const date = selectedDates[0];
-            if (date) {
-                const minguoYear = date.getFullYear() - 1911;
-                instance.altInput.value = `${minguoYear}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}`;
-            }
-        }
-    });
 }
 
-function validateDate(dateStr) {
-    if (!dateStr) return false;
-    const date = new Date(dateStr);
-    return !isNaN(date.getTime());
+function numberToChinese(num) {
+    const chineseNumbers = ['零', '壹', '貳', '參', '肆', '伍', '陸', '柒', '捌', '玖'];
+    const units = ['', '拾', '佰', '仟', '萬', '拾萬', '佰萬', '仟萬'];
+    
+    if (num === 0) return '零元整';
+    
+    let str = '';
+    let numStr = num.toString();
+    let len = numStr.length;
+    
+    for (let i = 0; i < len; i++) {
+        let digit = parseInt(numStr[i]);
+        let unit = units[len - 1 - i];
+        if (digit === 0) {
+            if (str[str.length - 1] !== '零') str += '零';
+        } else {
+            str += chineseNumbers[digit] + unit;
+        }
+    }
+    
+    // 移除多餘的「零」
+    str = str.replace(/零+/g, '零').replace(/零$/, '');
+    if (str.endsWith('萬')) str = str.replace('萬', '');
+    
+    return str + '元整';
 }
 
-function parseDate(dateStr) {
-    const date = new Date(dateStr);
-    return {
-        year: date.getFullYear() - 1911, // 民國年份
-        month: date.getMonth() + 1,
-        day: date.getDate(),
-        gregorianYear: date.getFullYear()
-    };
+function validateDateInput(year, month, day, minYear, maxYear, errorPrefix) {
+    if (!year || !month || !day) {
+        return `${errorPrefix}：請填寫完整的年、月、日！`;
+    }
+    year = parseInt(year);
+    month = parseInt(month);
+    day = parseInt(day);
+
+    // 驗證年份範圍
+    if (year < minYear || year > maxYear) {
+        return `${errorPrefix}：年份必須在民國 ${minYear}-${maxYear} 之間！`;
+    }
+
+    // 驗證月份範圍
+    if (month < 1 || month > 12) {
+        return `${errorPrefix}：月份必須在 1-12 之間！`;
+    }
+
+    // 驗證日期範圍（考慮閏年）
+    const gregorianYear = year + 1911;
+    const daysInMonth = new Date(gregorianYear, month, 0).getDate();
+    if (day < 1 || day > daysInMonth) {
+        return `${errorPrefix}：日期必須在 1-${daysInMonth} 之間！`;
+    }
+
+    // 驗證日期有效性
+    const date = new Date(gregorianYear, month - 1, day);
+    if (date.getFullYear() !== gregorianYear || date.getMonth() !== month - 1 || date.getDate() !== day) {
+        return `${errorPrefix}：日期無效！`;
+    }
+
+    return null; // 無錯誤
+}
+
+function parseDate(year, month, day) {
+    year = parseInt(year);
+    month = parseInt(month);
+    day = parseInt(day);
+    const gregorianYear = year + 1911;
+    return new Date(gregorianYear, month - 1, day);
 }
 
 function formatDate(date) {
@@ -65,10 +97,9 @@ function formatDate(date) {
 }
 
 function calculateAge(birthDate, leaveYear) {
-    const birth = parseDate(birthDate);
-    const birthGregorianYear = birth.gregorianYear;
-    const birthMonth = birth.month;
-    const birthDay = birth.day;
+    const birthGregorianYear = birthDate.getFullYear();
+    const birthMonth = birthDate.getMonth() + 1;
+    const birthDay = birthDate.getDate();
     const leaveGregorianYear = leaveYear + 1911;
     
     let age = leaveGregorianYear - birthGregorianYear;
@@ -145,85 +176,175 @@ function getClothingPoints(seniority) {
     else return 0; // 未滿 1 年為 0 點
 }
 
+function calculateAllowance(days) {
+    // 根據新表格，補助費 = 天數 × 1600 元，發票金額 = 天數 × 800 元
+    const allowance = days * 1600;
+    const invoiceAmount = days * 800;
+    return { allowance, invoiceAmount };
+}
+
+function clearAll() {
+    if (window.confirm('確定要清除所有內容嗎？此操作將刪除所有填寫的資料和計算結果！')) {
+        // 清除輸入欄位
+        document.getElementById('leave-year').value = '';
+        document.getElementById('birth-year').value = '';
+        document.getElementById('birth-month').value = '';
+        document.getElementById('birth-day').value = '';
+        document.getElementById('gender').value = '';
+        document.getElementById('arrival-year').value = '';
+        document.getElementById('arrival-month').value = '';
+        document.getElementById('arrival-day').value = '';
+        document.getElementById('appoint-year').value = '';
+        document.getElementById('appoint-month').value = '';
+        document.getElementById('appoint-day').value = '';
+        document.getElementById('is-reenlist').checked = false;
+        document.getElementById('reenlist-details').style.display = 'none';
+        document.getElementById('reenlist-year').value = '';
+        document.getElementById('reenlist-month').value = '';
+        document.getElementById('reenlist-day').value = '';
+        document.getElementById('first-retire-year').value = '';
+        document.getElementById('first-retire-month').value = '';
+        document.getElementById('first-retire-day').value = '';
+
+        // 清除受訓記錄
+        const trainingList = document.getElementById('training-list');
+        trainingList.innerHTML = '';
+        addTrainingRecord(); // 重新添加一筆空白受訓記錄
+
+        // 清除結果顯示
+        document.getElementById('result').innerHTML = '';
+    }
+}
+
 function calculateAll() {
     const leaveYear = parseInt(document.getElementById('leave-year').value);
-    const birthDate = document.getElementById('birth-date').value;
+    const birthYear = document.getElementById('birth-year').value;
+    const birthMonth = document.getElementById('birth-month').value;
+    const birthDay = document.getElementById('birth-day').value;
     const gender = document.getElementById('gender').value;
-    const arrivalDate = document.getElementById('arrival-date').value;
-    const appointDate = document.getElementById('appoint-date').value;
+    const arrivalYear = document.getElementById('arrival-year').value;
+    const arrivalMonth = document.getElementById('arrival-month').value;
+    const arrivalDay = document.getElementById('arrival-day').value;
+    const appointYear = document.getElementById('appoint-year').value;
+    const appointMonth = document.getElementById('appoint-month').value;
+    const appointDay = document.getElementById('appoint-day').value;
     const isReenlist = document.getElementById('is-reenlist').checked;
-    const reenlistDate = isReenlist ? document.getElementById('reenlist-date').value : null;
-    const firstRetireDate = isReenlist ? document.getElementById('first-retire-date').value : null;
+    const reenlistYear = isReenlist ? document.getElementById('reenlist-year').value : null;
+    const reenlistMonth = isReenlist ? document.getElementById('reenlist-month').value : null;
+    const reenlistDay = isReenlist ? document.getElementById('reenlist-day').value : null;
+    const firstRetireYear = isReenlist ? document.getElementById('first-retire-year').value : null;
+    const firstRetireMonth = isReenlist ? document.getElementById('first-retire-month').value : null;
+    const firstRetireDay = isReenlist ? document.getElementById('first-retire-day').value : null;
     const trainingRecords = Array.from(document.querySelectorAll('.training-record')).map(record => ({
-        start: record.querySelector('.training-start').value,
-        end: record.querySelector('.training-end').value
+        startYear: record.querySelector('.training-start-year').value,
+        startMonth: record.querySelector('.training-start-month').value,
+        startDay: record.querySelector('.training-start-day').value,
+        endYear: record.querySelector('.training-end-year').value,
+        endMonth: record.querySelector('.training-end-month').value,
+        endDay: record.querySelector('.training-end-day').value
     }));
     const resultDiv = document.getElementById('result');
 
     // 驗證輸入
-    if (!leaveYear || !birthDate || !gender || !arrivalDate || !appointDate) {
+    if (!leaveYear || !birthYear || !birthMonth || !birthDay || !gender || !arrivalYear || !arrivalMonth || !arrivalDay || !appointYear || !appointMonth || !appointDay) {
         resultDiv.innerHTML = '<p class="error">請填寫所有必填欄位！</p>';
         return;
     }
-    if (isReenlist && (!reenlistDate || !firstRetireDate)) {
+    if (isReenlist && (!reenlistYear || !reenlistMonth || !reenlistDay || !firstRetireYear || !firstRetireMonth || !firstRetireDay)) {
         resultDiv.innerHTML = '<p class="error">請填寫所有再入營相關欄位！</p>';
         return;
     }
-    if (!validateDate(birthDate) || !validateDate(arrivalDate) || !validateDate(appointDate) || (isReenlist && (!validateDate(reenlistDate) || !validateDate(firstRetireDate)))) {
-        resultDiv.innerHTML = '<p class="error">請輸入有效的日期！</p>';
-        return;
-    }
     for (let record of trainingRecords) {
-        if (!record.start || !record.end || !validateDate(record.start) || !validateDate(record.end)) {
-            resultDiv.innerHTML = '<p class="error">請確保所有受訓記錄的開始和結束日期有效！</p>';
+        if (!record.startYear || !record.startMonth || !record.startDay || !record.endYear || !record.endMonth || !record.endDay) {
+            resultDiv.innerHTML = '<p class="error">請確保所有受訓記錄的開始和結束日期已填寫！</p>';
             return;
         }
     }
 
-    // 進階日期驗證
-    const leaveYearEnd = new Date(leaveYear + 1911, 11, 31);
-    const birthDateObj = new Date(birthDate);
-    const arrivalDateObj = new Date(arrivalDate);
-    const appointDateObj = new Date(appointDate);
-    const reenlistDateObj = isReenlist ? new Date(reenlistDate) : null;
-    const firstRetireDateObj = isReenlist ? new Date(firstRetireDate) : null;
-
-    if (appointDateObj > arrivalDateObj) {
-        resultDiv.innerHTML = '<p class="error">任官日期應早於到部日期！</p>';
+    // 驗證日期格式和範圍
+    let error = validateDateInput(birthYear, birthMonth, birthDay, 65, 118, '出生日期');
+    if (error) {
+        resultDiv.innerHTML = `<p class="error">${error}</p>`;
         return;
     }
-    if (isReenlist && firstRetireDateObj >= reenlistDateObj) {
-        resultDiv.innerHTML = '<p class="error">再入營/復職日期應晚於第一次退伍/育嬰生效日期！</p>';
+    error = validateDateInput(arrivalYear, arrivalMonth, arrivalDay, 80, 118, '到部日期');
+    if (error) {
+        resultDiv.innerHTML = `<p class="error">${error}</p>`;
         return;
     }
-    if (birthDateObj > appointDateObj) {
-        resultDiv.innerHTML = '<p class="error">出生日期應早於任官日期！</p>';
+    error = validateDateInput(appointYear, appointMonth, appointDay, 80, 118, '任官日期');
+    if (error) {
+        resultDiv.innerHTML = `<p class="error">${error}</p>`;
         return;
     }
-    if (arrivalDateObj > leaveYearEnd || appointDateObj > leaveYearEnd || birthDateObj > leaveYearEnd || (isReenlist && (reenlistDateObj > leaveYearEnd || firstRetireDateObj > leaveYearEnd))) {
-        resultDiv.innerHTML = '<p class="error">所有日期不得晚於慰休年度的 12 月 31 日！</p>';
-        return;
-    }
-    for (let record of trainingRecords) {
-        const startDate = new Date(record.start);
-        const endDate = new Date(record.end);
-        if (startDate > endDate) {
-            resultDiv.innerHTML = '<p class="error">受訓記錄的結束日期應晚於開始日期！</p>';
+    if (isReenlist) {
+        error = validateDateInput(reenlistYear, reenlistMonth, reenlistDay, 80, 118, '再入營/復職日期');
+        if (error) {
+            resultDiv.innerHTML = `<p class="error">${error}</p>`;
             return;
         }
-        if (startDate > leaveYearEnd || endDate > leaveYearEnd) {
-            resultDiv.innerHTML = '<p class="error">受訓記錄日期不得晚於慰休年度的 12 月 31 日！</p>';
+        error = validateDateInput(firstRetireYear, firstRetireMonth, firstRetireDay, 80, 118, '第一次退伍/育嬰生效日期');
+        if (error) {
+            resultDiv.innerHTML = `<p class="error">${error}</p>`;
+            return;
+        }
+    }
+    for (let i = 0; i < trainingRecords.length; i++) {
+        const record = trainingRecords[i];
+        error = validateDateInput(record.startYear, record.startMonth, record.startDay, 80, 118, `受訓記錄 ${i + 1} 開始日期`);
+        if (error) {
+            resultDiv.innerHTML = `<p class="error">${error}</p>`;
+            return;
+        }
+        error = validateDateInput(record.endYear, record.endMonth, record.endDay, 80, 118, `受訓記錄 ${i + 1} 結束日期`);
+        if (error) {
+            resultDiv.innerHTML = `<p class="error">${error}</p>`;
             return;
         }
     }
 
     // 解析日期
-    const birth = parseDate(birthDate);
-    const arrival = parseDate(arrivalDate);
-    const appoint = parseDate(appointDate);
-    const reenlist = isReenlist ? parseDate(reenlistDate) : null;
-    const firstRetire = isReenlist ? parseDate(firstRetireDate) : null;
+    const birthDate = parseDate(birthYear, birthMonth, birthDay);
+    const arrivalDate = parseDate(arrivalYear, arrivalMonth, arrivalDay);
+    const appointDate = parseDate(appointYear, appointMonth, appointDay);
+    const reenlistDate = isReenlist ? parseDate(reenlistYear, reenlistMonth, reenlistDay) : null;
+    const firstRetireDate = isReenlist ? parseDate(firstRetireYear, firstRetireMonth, firstRetireDay) : null;
+    const trainingDates = trainingRecords.map(record => ({
+        start: parseDate(record.startYear, record.startMonth, record.startDay),
+        end: parseDate(record.endYear, record.endMonth, record.endDay)
+    }));
+
     const gregorianLeaveYear = leaveYear + 1911;
+    const leaveYearEnd = new Date(gregorianLeaveYear, 11, 31);
+
+    // 進階日期驗證
+    if (appointDate > arrivalDate) {
+        resultDiv.innerHTML = '<p class="error">任官日期應早於到部日期！</p>';
+        return;
+    }
+    if (isReenlist && firstRetireDate >= reenlistDate) {
+        resultDiv.innerHTML = '<p class="error">再入營/復職日期應晚於第一次退伍/育嬰生效日期！</p>';
+        return;
+    }
+    if (birthDate > appointDate) {
+        resultDiv.innerHTML = '<p class="error">出生日期應早於任官日期！</p>';
+        return;
+    }
+    if (arrivalDate > leaveYearEnd || appointDate > leaveYearEnd || birthDate > leaveYearEnd || (isReenlist && (reenlistDate > leaveYearEnd || firstRetireDate > leaveYearEnd))) {
+        resultDiv.innerHTML = '<p class="error">所有日期不得晚於慰休年度的 12 月 31 日！</p>';
+        return;
+    }
+    for (let i = 0; i < trainingDates.length; i++) {
+        const record = trainingDates[i];
+        if (record.start > record.end) {
+            resultDiv.innerHTML = `<p class="error">受訓記錄 ${i + 1} 的結束日期應晚於開始日期！</p>`;
+            return;
+        }
+        if (record.start > leaveYearEnd || record.end > leaveYearEnd) {
+            resultDiv.innerHTML = `<p class="error">受訓記錄 ${i + 1} 日期不得晚於慰休年度的 12 月 31 日！</p>`;
+            return;
+        }
+    }
 
     // 計算年齡
     const age = calculateAge(birthDate, leaveYear);
@@ -241,7 +362,7 @@ function calculateAll() {
 
     // 到部日期計算
     let resultHTML = '<h3>考核表計算結果</h3>';
-    const arrivalDateObjCalc = new Date(arrival.gregorianYear, arrival.month - 1, arrival.day);
+    const arrivalDateObjCalc = arrivalDate;
 
     // 計算連續三個月
     const months = [];
@@ -374,8 +495,8 @@ function calculateAll() {
             const daysInMonth = new Date(gregorianLeaveYear, i, 0).getDate();
             for (let j = 1; j <= daysInMonth; j++) {
                 const currentDate = new Date(gregorianLeaveYear, i - 1, j);
-                const retireDate = new Date(firstRetire.gregorianYear, firstRetire.month - 1, firstRetire.day);
-                const reenlistDate = new Date(reenlist.gregorianYear, reenlist.month - 1, reenlist.day);
+                const retireDate = firstRetireDate;
+                const reenlistDate = reenlistDate;
                 if (currentDate >= retireDate && currentDate < reenlistDate) {
                     adat[i][j] = 0;
                 }
@@ -383,18 +504,16 @@ function calculateAll() {
         }
     }
 
-    trainingRecords.forEach(record => {
-        const startDate = new Date(record.start);
-        const endDate = new Date(record.end);
-        if (startDate.getFullYear() === gregorianLeaveYear) {
-            if (startDate.getMonth() === endDate.getMonth()) {
-                for (let j = startDate.getDate(); j <= endDate.getDate(); j++) {
-                    adat[startDate.getMonth() + 1][j] = 0;
+    trainingDates.forEach(record => {
+        if (record.start.getFullYear() === gregorianLeaveYear) {
+            if (record.start.getMonth() === record.end.getMonth()) {
+                for (let j = record.start.getDate(); j <= record.end.getDate(); j++) {
+                    adat[record.start.getMonth() + 1][j] = 0;
                 }
             } else {
-                for (let i = startDate.getMonth() + 1; i <= endDate.getMonth() + 1; i++) {
-                    const startDay = i === startDate.getMonth() + 1 ? startDate.getDate() : 1;
-                    const endDay = i === endDate.getMonth() + 1 ? endDate.getDate() : new Date(gregorianLeaveYear, i, 0).getDate();
+                for (let i = record.start.getMonth() + 1; i <= record.end.getMonth() + 1; i++) {
+                    const startDay = i === record.start.getMonth() + 1 ? record.start.getDate() : 1;
+                    const endDay = i === record.end.getMonth() + 1 ? record.end.getDate() : new Date(gregorianLeaveYear, i, 0).getDate();
                     for (let j = startDay; j <= endDay; j++) {
                         adat[i][j] = 0;
                     }
@@ -431,17 +550,10 @@ function calculateAll() {
     }
     actualLeaveDays = roundHalfDay(actualLeaveDays);
 
-    function calculateAllowance(days) {
-        if (days >= 14) return 16000;
-        else if (days === 10.5) return 12000;
-        else if (days === 7) return 8000;
-        else if (days === 3.5) return 4000;
-        else {
-            let money = days * 1143;
-            return Math.round(money);
-        }
-    }
-    const allowance = calculateAllowance(actualLeaveDays);
+    // 計算慰勞補助費和應繳發票金額
+    const { allowance, invoiceAmount } = calculateAllowance(actualLeaveDays);
+    const allowanceChinese = numberToChinese(allowance);
+    const invoiceAmountChinese = numberToChinese(invoiceAmount);
 
     // 計算服裝APP核配點數
     const clothingPoints = getClothingPoints(totalSeniority);
@@ -452,16 +564,17 @@ function calculateAll() {
             <tr><th>應得慰勞假</th><td>${leaveDays} 天</td></tr>
             <tr><th>在職月數</th><td>${inServiceMonths} 個月</td></tr>
             <tr><th>實際慰勞假</th><td>${actualLeaveDays} 天</td></tr>
-            <tr><th>休假補助費</th><td>${allowance} 元</td></tr>
+            <tr><th>休假補助費</th><td>${allowance} 元（${allowanceChinese}）</td></tr>
+            <tr><th>應繳發票金額</th><td>${invoiceAmount} 元（${invoiceAmountChinese}）</td></tr>
             <tr><th>服裝APP年度核配點數</th><td>${clothingPoints} 點</td></tr>
-            <tr><th>出生日期</th><td>${formatDate(new Date(birthDate))}</td></tr>
+            <tr><th>出生日期</th><td>${formatDate(birthDate)}</td></tr>
             <tr><th>年齡</th><td>${age} 歲</td></tr>
             <tr><th>性別</th><td>${gender === 'male' ? '男' : '女'}</td></tr>
-            <tr><th>到部日期</th><td>${formatDate(new Date(arrivalDate))}</td></tr>
-            <tr><th>任官日期</th><td>${formatDate(new Date(appointDate))}</td></tr>
+            <tr><th>到部日期</th><td>${formatDate(arrivalDate)}</td></tr>
+            <tr><th>任官日期</th><td>${formatDate(appointDate)}</td></tr>
             ${isReenlist ? `
-                <tr><th>再入營/復職日期</th><td>${formatDate(new Date(reenlistDate))}</td></tr>
-                <tr><th>第一次退伍/育嬰生效日期</th><td>${formatDate(new Date(firstRetireDate))}</td></tr>
+                <tr><th>再入營/復職日期</th><td>${formatDate(reenlistDate)}</td></tr>
+                <tr><th>第一次退伍/育嬰生效日期</th><td>${formatDate(firstRetireDate)}</td></tr>
             ` : ''}
         </table>
         <h4>每月在職狀態</h4>
@@ -473,13 +586,13 @@ function calculateAll() {
         resultHTML += `<li class="list-group-item ${className}">${text}</li>`;
     });
     resultHTML += '</ul>';
-    if (trainingRecords.length > 0) {
+    if (trainingDates.length > 0) {
         resultHTML += `
             <h4>受訓記錄</h4>
             <ul class="list-group">
         `;
-        trainingRecords.forEach(record => {
-            resultHTML += `<li class="list-group-item">${formatDate(new Date(record.start))} 至 ${formatDate(new Date(record.end))}</li>`;
+        trainingDates.forEach(record => {
+            resultHTML += `<li class="list-group-item">${formatDate(record.start)} 至 ${formatDate(record.end)}</li>`;
         });
         resultHTML += '</ul>';
     }
@@ -505,29 +618,11 @@ function calculateAll() {
     resultDiv.innerHTML = resultHTML;
 }
 
-// 初始化 flatpickr 和慰休年度下拉選單
+// 初始化慰休年度下拉選單和一筆受訓記錄
 document.addEventListener('DOMContentLoaded', () => {
-    // 初始化日期選擇器
-    document.querySelectorAll('.date-picker').forEach(picker => {
-        flatpickr(picker, {
-            dateFormat: 'Z',
-            altInput: true,
-            altFormat: 'Y/m/d',
-            minDate: '2011-01-01', // 民國 100
-            maxDate: '2031-12-31', // 民國 120
-            onChange: function(selectedDates, dateStr, instance) {
-                const date = selectedDates[0];
-                if (date) {
-                    const minguoYear = date.getFullYear() - 1911;
-                    instance.altInput.value = `${minguoYear}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}`;
-                }
-            }
-        });
-    });
-
-    // 初始化慰休年度下拉選單
+    // 初始化慰休年度下拉選單（民國 112-118，對應西元 2023-2029）
     const leaveYearSelect = document.getElementById('leave-year');
-    for (let year = 100; year <= 120; year++) {
+    for (let year = 112; year <= 118; year++) {
         const option = document.createElement('option');
         option.value = year;
         option.textContent = year;
@@ -542,34 +637,4 @@ document.addEventListener('DOMContentLoaded', () => {
 document.getElementById('is-reenlist').addEventListener('change', function() {
     const reenlistDetails = document.getElementById('reenlist-details');
     reenlistDetails.style.display = this.checked ? 'block' : 'none';
-    if (this.checked) {
-        flatpickr('#reenlist-date', {
-            dateFormat: 'Z',
-            altInput: true,
-            altFormat: 'Y/m/d',
-            minDate: '2011-01-01',
-            maxDate: '2031-12-31',
-            onChange: function(selectedDates, dateStr, instance) {
-                const date = selectedDates[0];
-                if (date) {
-                    const minguoYear = date.getFullYear() - 1911;
-                    instance.altInput.value = `${minguoYear}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}`;
-                }
-            }
-        });
-        flatpickr('#first-retire-date', {
-            dateFormat: 'Z',
-            altInput: true,
-            altFormat: 'Y/m/d',
-            minDate: '2011-01-01',
-            maxDate: '2031-12-31',
-            onChange: function(selectedDates, dateStr, instance) {
-                const date = selectedDates[0];
-                if (date) {
-                    const minguoYear = date.getFullYear() - 1911;
-                    instance.altInput.value = `${minguoYear}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}`;
-                }
-            }
-        });
-    }
 });
