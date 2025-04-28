@@ -5,19 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>第二連軍車管理系統</title>
   <link rel="stylesheet" href="css/CarSign.css">
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7FRW6JPXBJ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-7FRW6JPXBJ');
-</script>
+  <style>
+    #map {
+      height: 400px;
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
   <div id="app">
-    <!-- 車輛選擇表單 -->
     <h2>選擇車號與位置</h2>
     <form>
       <label for="carNumbers">選擇車號:</label>
@@ -68,8 +64,7 @@
       <button type="button" onclick="showStatus()">車況顯示</button>
     </form>
 
-    <!-- 車輛狀況表 -->
-        <div id="modal" class="modal">
+    <div id="modal" class="modal">
       <div class="modal-content">
         <h3 style="text-align: center;">車輛停放狀況</h3>
         <table>
@@ -87,34 +82,31 @@
       </div>
     </div>
 
-    <!-- 地圖顯示區域 -->
     <div id="map"></div>
   </div>
 
 <script type="module">
-  // 導入 Firebase 模組
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
   import { getFirestore, doc, setDoc, collection, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-  // Firebase 配置
   const firebaseConfig = {
-    apiKey: "AIzaSyBv-D4l9Dn-o7ME4TnI92YsCpss1nM",
+    apiKey: "AIzaSyBv-DYm4c4l9Dn-o7ME4TnI92YsCpss1nM",
     authDomain: "carsign-423fc.firebaseapp.com",
     databaseURL: "https://carsign-423fc-default-rtdb.firebaseio.com",
     projectId: "carsign-423fc",
     storageBucket: "carsign-423fc.firebasestorage.app",
     messagingSenderId: "219688439999",
-    appId: "1:219688439999:web:2d4f8646c98bcb76e4360a",
-    measurementId: "G-7FRW6JPXBJ"
+    appId: "1:219688439999:web:2d4f8646c98bcb76e4360a"
   };
 
-  // 初始化 Firebase
   const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const db = getFirestore(app);
+  window.db = getFirestore(app);
+  window.doc = doc;
+  window.setDoc = setDoc;
+  window.collection = collection;
+  window.getDocs = getDocs;
+  window.writeBatch = writeBatch;
 
-  // 加載 Google 地圖 API
   document.addEventListener("DOMContentLoaded", () => {
     const script = document.createElement("script");
     script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDhce6akuYMjY1U1qOraSCdZQKXQ9yRMQA&callback=initMap";
@@ -133,7 +125,6 @@
   let markers = {};
   let carLocations = {};
 
-  // 初始化地圖
   function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
       center: { lat: 24.8940207, lng: 121.2095940 },
@@ -142,7 +133,6 @@
     });
   }
 
-  // 提交車輛位置
   function submitCarLocation() {
     const carNumber = document.getElementById('carNumbers').value;
     const location = document.getElementById('locations').value;
@@ -195,24 +185,6 @@
       });
   }
 
-  // 添加標記
-  function addMarker(lat, lng, title) {
-    if (markers[title]) {
-      markers[title].setMap(null);
-    }
-
-    markers[title] = new google.maps.Marker({
-      position: { lat, lng },
-      map: map,
-      title: title
-    });
-
-    markers[title].addListener('click', () => {
-      alert(`車號: ${title}`);
-    });
-  }
-
-  // 顯示狀況表
   async function showStatus() {
     const modal = document.getElementById("modal");
     modal.style.display = "flex";
@@ -253,7 +225,22 @@
     }
   }
 
-  // 更新車輛狀況表
+  function addMarker(lat, lng, title) {
+    if (markers[title]) {
+      markers[title].setMap(null);
+    }
+
+    markers[title] = new google.maps.Marker({
+      position: { lat, lng },
+      map: map,
+      title: title
+    });
+
+    markers[title].addListener('click', () => {
+      alert(`車號: ${title}`);
+    });
+  }
+
   function updateStatusTable(locationSummary = {}) {
     const tableBody = document.getElementById("statusTable");
     tableBody.innerHTML = "";
@@ -279,20 +266,17 @@
     });
   }
 
-  // 關閉模態框
   function closeModal() {
     const modal = document.getElementById("modal");
     modal.style.display = "none";
   }
 
-  // 模態框點擊事件
   document.getElementById("modal").addEventListener("click", function (event) {
     if (event.target === document.getElementById("modal")) {
       closeModal();
     }
   });
 
-  // 清除所有車號
   async function clearCarNumbers() {
     const password = prompt("請輸入密碼以清除所有車號");
     const correctPassword = "348362";
@@ -329,13 +313,11 @@
     }
   }
 
-  // 掛載全域函數
   window.initMap = initMap;
   window.submitCarLocation = submitCarLocation;
   window.showStatus = showStatus;
   window.closeModal = closeModal;
   window.clearCarNumbers = clearCarNumbers;
 </script>
-
 </body>
 </html>
