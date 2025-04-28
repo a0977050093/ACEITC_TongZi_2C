@@ -1,7 +1,3 @@
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore, doc, setDoc, collection, getDocs, writeBatch } from "firebase/firestore";
-
 // Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBv-DYm4c4l9Dn-o7ME4TnI92YsCpss1nM",
@@ -15,9 +11,9 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app);
+const app = firebase.initializeApp(firebaseConfig);
+const analytics = firebase.analytics(app);
+const db = firebase.firestore(app);
 
 // Global variables
 let carLocations = {};
@@ -67,8 +63,8 @@ function submitCarLocation() {
     }
 
     loading.style.display = "block";
-    const carRef = doc(db, "carLocations", carNumber);
-    setDoc(carRef, {
+    const carRef = db.collection("carLocations").doc(carNumber);
+    carRef.set({
         carNumber: carNumber,
         locationName: location,
         lat: carLocation.lat,
@@ -108,8 +104,7 @@ function showStatus() {
         return;
     }
 
-    const carRef = collection(db, "carLocations");
-    getDocs(carRef)
+    db.collection("carLocations").get()
         .then(snapshot => {
             carLocations = {};
             snapshot.forEach(doc => {
@@ -245,10 +240,9 @@ function clearCarNumbers() {
     cachedCarLocations = null;
     markerCluster.clearMarkers();
 
-    const carRef = collection(db, "carLocations");
-    getDocs(carRef)
+    db.collection("carLocations").get()
         .then(snapshot => {
-            const batch = writeBatch(db);
+            const batch = db.batch();
             snapshot.forEach(doc => {
                 batch.delete(doc.ref);
             });
@@ -375,8 +369,25 @@ function showNotification(message, type) {
     }, 3000);
 }
 
-// Modal click event to close when clicking outside
+// Bind button events and modal click event
 document.addEventListener("DOMContentLoaded", () => {
+    // Bind submit button
+    const submitBtn = document.getElementById("submit-btn");
+    if (submitBtn) {
+        submitBtn.addEventListener("click", submitCarLocation);
+    } else {
+        console.error("Submit button 未找到");
+    }
+
+    // Bind status button
+    const statusBtn = document.getElementById("status-btn");
+    if (statusBtn) {
+        statusBtn.addEventListener("click", showStatus);
+    } else {
+        console.error("Status button 未找到");
+    }
+
+    // Bind modal close event
     const modal = document.getElementById("modal");
     if (modal) {
         modal.addEventListener("click", function (event) {
@@ -384,15 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 closeModal();
             }
         });
+    } else {
+        console.error("Modal 元素未找到");
     }
 });
-
-// Expose functions to global scope
-window.submitCarLocation = submitCarLocation;
-window.showStatus = showStatus;
-window.closeModal = closeModal;
-window.clearCarNumbers = clearCarNumbers;
-window.sortTable = sortTable;
-window.prevPage = prevPage;
-window.nextPage = nextPage;
-window.resetMapView = resetMapView;
