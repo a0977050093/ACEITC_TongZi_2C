@@ -1,23 +1,92 @@
+function populateDateOptions(yearSelectId, monthSelectId, daySelectId, minYear, maxYear) {
+    const yearSelect = document.getElementById(yearSelectId);
+    const monthSelect = document.getElementById(monthSelectId);
+    const daySelect = document.getElementById(daySelectId);
+
+    // 填充年份選項
+    for (let year = minYear; year <= maxYear; year++) {
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+        yearSelect.appendChild(option);
+    }
+
+    // 填充月份選項
+    for (let month = 1; month <= 12; month++) {
+        const option = document.createElement('option');
+        option.value = month;
+        option.textContent = month;
+        monthSelect.appendChild(option);
+    }
+
+    // 動態更新日期選項
+    function updateDays() {
+        const year = parseInt(yearSelect.value);
+        const month = parseInt(monthSelect.value);
+        daySelect.innerHTML = '<option value="">日</option>'; // 清空日期選項
+
+        if (year && month) {
+            const gregorianYear = year + 1911;
+            const daysInMonth = new Date(gregorianYear, month, 0).getDate();
+            for (let day = 1; day <= daysInMonth; day++) {
+                const option = document.createElement('option');
+                option.value = day;
+                option.textContent = day;
+                daySelect.appendChild(option);
+            }
+        }
+    }
+
+    yearSelect.addEventListener('change', updateDays);
+    monthSelect.addEventListener('change', updateDays);
+}
+
 function addTrainingRecord() {
     const trainingList = document.getElementById('training-list');
     const recordDiv = document.createElement('div');
     recordDiv.className = 'training-record';
     recordDiv.innerHTML = `
         <div class="date-input">
-            <input type="number" class="training-start-year" placeholder="年，例如 114" min="80" max="118" required>
-            <input type="number" class="training-start-month" placeholder="月" min="1" max="12" required>
-            <input type="number" class="training-start-day" placeholder="日" min="1" max="31" required>
+            <select class="training-start-year" required>
+                <option value="">年</option>
+            </select>
+            <select class="training-start-month" required>
+                <option value="">月</option>
+            </select>
+            <select class="training-start-day" required>
+                <option value="">日</option>
+            </select>
         </div>
         <span>至</span>
         <div class="date-input">
-            <input type="number" class="training-end-year" placeholder="年，例如 114" min="80" max="118" required>
-            <input type="number" class="training-end-month" placeholder="月" min="1" max="12" required>
-            <input type="number" class="training-end-day" placeholder="日" min="1" max="31" required>
+            <select class="training-end-year" required>
+                <option value="">年</option>
+            </select>
+            <select class="training-end-month" required>
+                <option value="">月</option>
+            </select>
+            <select class="training-end-day" required>
+                <option value="">日</option>
+            </select>
         </div>
         <button type="button" onclick="this.parentElement.remove()">刪除</button>
         <small>年份範圍：80-118</small>
     `;
     trainingList.appendChild(recordDiv);
+
+    // 初始化新受訓記錄的日期選項
+    populateDateOptions(
+        recordDiv.querySelector('.training-start-year').id = `training-start-year-${Date.now()}`,
+        recordDiv.querySelector('.training-start-month').id = `training-start-month-${Date.now()}`,
+        recordDiv.querySelector('.training-start-day').id = `training-start-day-${Date.now()}`,
+        80, 118
+    );
+    populateDateOptions(
+        recordDiv.querySelector('.training-end-year').id = `training-end-year-${Date.now()}`,
+        recordDiv.querySelector('.training-end-month').id = `training-end-month-${Date.now()}`,
+        recordDiv.querySelector('.training-end-day').id = `training-end-day-${Date.now()}`,
+        80, 118
+    );
 }
 
 function numberToChinese(num) {
@@ -40,45 +109,10 @@ function numberToChinese(num) {
         }
     }
     
-    // 移除多餘的「零」
     str = str.replace(/零+/g, '零').replace(/零$/, '');
     if (str.endsWith('萬')) str = str.replace('萬', '');
     
     return str + '元整';
-}
-
-function validateDateInput(year, month, day, minYear, maxYear, errorPrefix) {
-    if (!year || !month || !day) {
-        return `${errorPrefix}：請填寫完整的年、月、日！`;
-    }
-    year = parseInt(year);
-    month = parseInt(month);
-    day = parseInt(day);
-
-    // 驗證年份範圍
-    if (year < minYear || year > maxYear) {
-        return `${errorPrefix}：年份必須在民國 ${minYear}-${maxYear} 之間！`;
-    }
-
-    // 驗證月份範圍
-    if (month < 1 || month > 12) {
-        return `${errorPrefix}：月份必須在 1-12 之間！`;
-    }
-
-    // 驗證日期範圍（考慮閏年）
-    const gregorianYear = year + 1911;
-    const daysInMonth = new Date(gregorianYear, month, 0).getDate();
-    if (day < 1 || day > daysInMonth) {
-        return `${errorPrefix}：日期必須在 1-${daysInMonth} 之間！`;
-    }
-
-    // 驗證日期有效性
-    const date = new Date(gregorianYear, month - 1, day);
-    if (date.getFullYear() !== gregorianYear || date.getMonth() !== month - 1 || date.getDate() !== day) {
-        return `${errorPrefix}：日期無效！`;
-    }
-
-    return null; // 無錯誤
 }
 
 function parseDate(year, month, day) {
@@ -103,11 +137,11 @@ function calculateAge(birthDate, leaveYear) {
     const leaveGregorianYear = leaveYear + 1911;
     
     let age = leaveGregorianYear - birthGregorianYear;
-    const today = new Date(leaveGregorianYear, 11, 31); // 以慰休年度年底為基準
+    const today = new Date(leaveGregorianYear, 11, 31);
     const birthThisYear = new Date(leaveGregorianYear, birthMonth - 1, birthDay);
     
     if (today < birthThisYear) {
-        age--; // 未過生日，減 1
+        age--;
     }
     return age;
 }
@@ -117,10 +151,10 @@ function getFitnessStandards(age, gender) {
     if (age >= 19 && age <= 29) ageGroup = '19-29';
     else if (age >= 30 && age <= 44) ageGroup = '30-44';
     else if (age >= 45 && age <= 59) ageGroup = '45-59';
-    else return null; // 年齡不在範圍內
+    else return null;
 
     const standards = {
-        male: { // 上肢肌力
+        male: {
             '19-29': {
                 '俯臥撐': { pass: '40 下', good: '21 下', excellent: '5 下' },
                 '掌上壓': { pass: '55 下', good: '35 下', excellent: '5 下' },
@@ -137,7 +171,7 @@ function getFitnessStandards(age, gender) {
                 '學力訓練': { pass: '8 秒', good: '6 秒', excellent: '4 秒' }
             }
         },
-        female: { // 腹部核心肌力
+        female: {
             '19-29': {
                 '平板撐體': { pass: '1 分 50 秒', good: '1 分 40 秒', excellent: '1 分 20 秒' },
                 '仰臥起坐': { pass: '20 下', good: '12 下', excellent: '8 下' },
@@ -169,15 +203,14 @@ function getFitnessStandards(age, gender) {
 }
 
 function getClothingPoints(seniority) {
-    const years = Math.floor(seniority / 12); // 取整數年份
+    const years = Math.floor(seniority / 12);
     if (years >= 3) return 9860;
     else if (years === 2) return 6470;
     else if (years === 1) return 4134;
-    else return 0; // 未滿 1 年為 0 點
+    else return 0;
 }
 
 function calculateAllowance(days) {
-    // 根據新表格，補助費 = 天數 × 1600 元，發票金額 = 天數 × 800 元
     const allowance = days * 1600;
     const invoiceAmount = days * 800;
     return { allowance, invoiceAmount };
@@ -185,7 +218,6 @@ function calculateAllowance(days) {
 
 function clearAll() {
     if (window.confirm('確定要清除所有內容嗎？此操作將刪除所有填寫的資料和計算結果！')) {
-        // 清除輸入欄位
         document.getElementById('leave-year').value = '';
         document.getElementById('birth-year').value = '';
         document.getElementById('birth-month').value = '';
@@ -206,12 +238,10 @@ function clearAll() {
         document.getElementById('first-retire-month').value = '';
         document.getElementById('first-retire-day').value = '';
 
-        // 清除受訓記錄
         const trainingList = document.getElementById('training-list');
         trainingList.innerHTML = '';
-        addTrainingRecord(); // 重新添加一筆空白受訓記錄
+        addTrainingRecord();
 
-        // 清除結果顯示
         document.getElementById('result').innerHTML = '';
     }
 }
@@ -257,48 +287,6 @@ function calculateAll() {
     for (let record of trainingRecords) {
         if (!record.startYear || !record.startMonth || !record.startDay || !record.endYear || !record.endMonth || !record.endDay) {
             resultDiv.innerHTML = '<p class="error">請確保所有受訓記錄的開始和結束日期已填寫！</p>';
-            return;
-        }
-    }
-
-    // 驗證日期格式和範圍
-    let error = validateDateInput(birthYear, birthMonth, birthDay, 65, 118, '出生日期');
-    if (error) {
-        resultDiv.innerHTML = `<p class="error">${error}</p>`;
-        return;
-    }
-    error = validateDateInput(arrivalYear, arrivalMonth, arrivalDay, 80, 118, '到部日期');
-    if (error) {
-        resultDiv.innerHTML = `<p class="error">${error}</p>`;
-        return;
-    }
-    error = validateDateInput(appointYear, appointMonth, appointDay, 80, 118, '任官日期');
-    if (error) {
-        resultDiv.innerHTML = `<p class="error">${error}</p>`;
-        return;
-    }
-    if (isReenlist) {
-        error = validateDateInput(reenlistYear, reenlistMonth, reenlistDay, 80, 118, '再入營/復職日期');
-        if (error) {
-            resultDiv.innerHTML = `<p class="error">${error}</p>`;
-            return;
-        }
-        error = validateDateInput(firstRetireYear, firstRetireMonth, firstRetireDay, 80, 118, '第一次退伍/育嬰生效日期');
-        if (error) {
-            resultDiv.innerHTML = `<p class="error">${error}</p>`;
-            return;
-        }
-    }
-    for (let i = 0; i < trainingRecords.length; i++) {
-        const record = trainingRecords[i];
-        error = validateDateInput(record.startYear, record.startMonth, record.startDay, 80, 118, `受訓記錄 ${i + 1} 開始日期`);
-        if (error) {
-            resultDiv.innerHTML = `<p class="error">${error}</p>`;
-            return;
-        }
-        error = validateDateInput(record.endYear, record.endMonth, record.endDay, 80, 118, `受訓記錄 ${i + 1} 結束日期`);
-        if (error) {
-            resultDiv.innerHTML = `<p class="error">${error}</p>`;
             return;
         }
     }
@@ -618,7 +606,7 @@ function calculateAll() {
     resultDiv.innerHTML = resultHTML;
 }
 
-// 初始化慰休年度下拉選單和一筆受訓記錄
+// 初始化日期選項和一筆受訓記錄
 document.addEventListener('DOMContentLoaded', () => {
     // 初始化慰休年度下拉選單（民國 112-118，對應西元 2023-2029）
     const leaveYearSelect = document.getElementById('leave-year');
@@ -628,6 +616,13 @@ document.addEventListener('DOMContentLoaded', () => {
         option.textContent = year;
         leaveYearSelect.appendChild(option);
     }
+
+    // 初始化日期選項
+    populateDateOptions('birth-year', 'birth-month', 'birth-day', 65, 118);
+    populateDateOptions('arrival-year', 'arrival-month', 'arrival-day', 80, 118);
+    populateDateOptions('appoint-year', 'appoint-month', 'appoint-day', 80, 118);
+    populateDateOptions('reenlist-year', 'reenlist-month', 'reenlist-day', 80, 118);
+    populateDateOptions('first-retire-year', 'first-retire-month', 'first-retire-day', 80, 118);
 
     // 初始化一筆受訓記錄
     addTrainingRecord();
