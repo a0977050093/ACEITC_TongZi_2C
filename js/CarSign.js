@@ -359,7 +359,7 @@ function showNotification(message, type) {
 document.addEventListener("DOMContentLoaded", () => {
     const modal = document.getElementById("modal");
     if (modal) {
-        modal.addEventListener("click", function (event) {
+        modal.addListener("click", function (event) {
             if (event.target === modal) {
                 closeModal();
             }
