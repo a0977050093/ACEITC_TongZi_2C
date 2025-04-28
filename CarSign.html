@@ -10,23 +10,10 @@
       height: 400px;
       width: 100%;
     }
-    #loginForm {
-      margin-bottom: 20px;
-    }
   </style>
 </head>
 <body>
   <div id="app">
-    <!-- 登入表單 -->
-    <form id="loginForm">
-      <label for="email">電子郵件:</label>
-      <input type="email" id="email" required>
-      <label for="password">密碼:</label>
-      <input type="password" id="password" required>
-      <button type="button" onclick="login()">登入</button>
-      <button type="button" onclick="logout()">登出</button>
-    </form>
-
     <!-- 車輛選擇表單 -->
     <h2>選擇車號與位置</h2>
     <form>
@@ -78,6 +65,7 @@
       <button type="button" onclick="showStatus()">車況顯示</button>
     </form>
 
+    <!-- 車輛狀況表 -->
     <div id="modal" class="modal">
       <div class="modal-content">
         <h3 style="text-align: center;">車輛停放狀況</h3>
@@ -96,13 +84,13 @@
       </div>
     </div>
 
+    <!-- 地圖顯示區域 -->
     <div id="map"></div>
   </div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
   import { getFirestore, doc, setDoc, collection, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-  import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBv-DYm4c4l9Dn-o7ME4TnI92YsCpss1nM",
@@ -116,14 +104,11 @@
 
   const app = initializeApp(firebaseConfig);
   window.db = getFirestore(app);
-  window.auth = getAuth(app);
   window.doc = doc;
   window.setDoc = setDoc;
   window.collection = collection;
   window.getDocs = getDocs;
   window.writeBatch = writeBatch;
-  window.signInWithEmailAndPassword = signInWithEmailAndPassword;
-  window.signOut = signOut;
 
   document.addEventListener("DOMContentLoaded", () => {
     const script = document.createElement("script");
@@ -151,34 +136,7 @@
     });
   }
 
-  function login() {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        alert("登入成功");
-        document.getElementById('loginForm').style.display = 'none';
-      })
-      .catch((error) => {
-        alert("登入失敗：" + error.message);
-      });
-  }
-
-  function logout() {
-    signOut(auth).then(() => {
-      alert("已登出");
-      document.getElementById('loginForm').style.display = 'block';
-    }).catch((error) => {
-      alert("登出失敗：" + error.message);
-    });
-  }
-
   function submitCarLocation() {
-    if (!auth.currentUser) {
-      alert("請先登入");
-      return;
-    }
-
     const carNumber = document.getElementById('carNumbers').value;
     const location = document.getElementById('locations').value;
 
@@ -323,11 +281,6 @@
   });
 
   async function clearCarNumbers() {
-    if (!auth.currentUser) {
-      alert("請先登入");
-      return;
-    }
-
     const password = prompt("請輸入密碼以清除所有車號");
     const correctPassword = "348362";
 
@@ -368,8 +321,6 @@
   window.showStatus = showStatus;
   window.closeModal = closeModal;
   window.clearCarNumbers = clearCarNumbers;
-  window.login = login;
-  window.logout = logout;
 </script>
 </body>
 </html>
