@@ -17,6 +17,15 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.center-title {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+}
+
 .form-section {
     margin-bottom: 20px;
 }
@@ -78,8 +87,13 @@ h4 {
     background-size: 16px;
 }
 
-.date-picker {
-    width: 100%;
+.date-input {
+    display: flex;
+    gap: 10px;
+}
+
+.date-input input {
+    flex: 1;
 }
 
 .training-record {
@@ -96,6 +110,12 @@ h4 {
 .training-record button {
     background-color: #dc3545;
     padding: 8px 12px;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
 }
 
 button {
@@ -169,14 +189,4 @@ button:hover {
 .error {
     color: #dc3545;
     font-weight: bold;
-}
-
-/* flatpickr 樣式調整 */
-.flatpickr-calendar {
-    font-family: 'Noto Sans TC', sans-serif;
-}
-
-.flatpickr-input {
-    width: 100%;
-    box-sizing: border-box;
 }
