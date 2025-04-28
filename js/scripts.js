@@ -103,4 +103,17 @@ document.addEventListener('DOMContentLoaded', () => {
             header.setAttribute('aria-expanded', isActive);
         });
     });
+
+    // 地圖連結模態框功能（建議 2：行動裝置體驗）
+    document.querySelectorAll('#map1 a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const isMobile = window.matchMedia('(max-width: 768px)').matches;
+            if (isMobile) {
+                e.preventDefault();
+                const url = link.getAttribute('href');
+                modalIframe.src = url;
+                modal.classList.add('open');
+            }
+        });
+    });
 });
