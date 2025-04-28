@@ -14,7 +14,7 @@ body {
 .header {
     background-color: #4b8c2a;
     color: white;
-    padding: 1rem;
+    padding: 0.8rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -22,17 +22,16 @@ body {
 }
 
 .menu-toggle {
-    background-color: #4b8c2a;
+    background-color: transparent;
     color: white;
     border: none;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem;
     cursor: pointer;
-    border-radius: 4px;
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 .menu-toggle i {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
 }
 
 /* 搜尋式導航 */
@@ -67,12 +66,54 @@ body {
 
 #equipment-search {
     width: 100%;
-    padding: 8px 8px 8px 30px;
+    padding: 8px 8px 8px 32px;
     font-size: 14px;
     border-radius: 4px;
     border: 1px solid #ddd;
     background: #fff;
     color: #333;
+    transition: border-color 0.3s;
+}
+
+.suggestions {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.suggestions.active {
+    display: block;
+}
+
+.suggestions li {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.suggestions li i {
+    margin-right: 8px;
+    font-size: 12px;
+    color: #4b8c2a;
+}
+
+.suggestions li:hover {
+    background: #f8f9fa;
 }
 
 .filter-group {
@@ -85,7 +126,7 @@ body {
 #main-category, #sub-category {
     flex: 1;
     min-width: 150px;
-    padding: 8px;
+    padding: 8px 24px 8px 8px;
     font-size: 14px;
     border-radius: 4px;
     background: #fff;
@@ -94,8 +135,9 @@ body {
     appearance: none;
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234b8b3b"><path d="M7 10l5 5 5-5H7z"/></svg>');
     background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 16px;
+    background-position: right 8px center;
+    background-size: 14px;
+    transition: border-color 0.3s;
 }
 
 #sub-category:disabled {
@@ -104,8 +146,9 @@ body {
 }
 
 #equipment-search:focus, #main-category:focus, #sub-category:focus {
-    outline: 2px solid #4b8c2a;
-    outline-offset: 2px;
+    outline: none;
+    border-color: #4b8c2a;
+    box-shadow: 0 0 0 2px rgba(75, 140, 42, 0.2);
 }
 
 /* 主內容區樣式 */
@@ -114,31 +157,32 @@ body {
 }
 
 /* 卡片式設計 */
-.equipment-card, .status-display, .status-form {
+.equipment-card, .status-display, .status-form, .equipment-form {
     background-color: white;
     border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
+    padding: 1.2rem;
+    margin-bottom: 1.2rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .card-title {
     color: #4b8c2a;
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
 }
 
 /* 裝備表格樣式 */
 .equipment-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1rem;
+    margin-top: 0.8rem;
 }
 
 .equipment-table th, .equipment-table td {
-    padding: 0.8rem;
+    padding: 0.7rem;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    font-size: 0.95rem;
 }
 
 .equipment-table th {
@@ -150,6 +194,40 @@ body {
     background-color: #f8f9fa;
 }
 
+/* 分頁樣式 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 0.8rem;
+}
+
+.pagination button {
+    background: #4b8c2a;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+.pagination button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+    background: #3c7a2a;
+}
+
+.pagination span {
+    font-size: 0.9rem;
+    color: #333;
+}
+
 /* 操作按鈕樣式 */
 .operation-btn {
     padding: 0.3rem 0.6rem;
@@ -158,54 +236,70 @@ body {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    transition: background-color 0.3s;
+}
+
+.operation-btn:hover {
+    background-color: #cc3333;
 }
 
 /* 現況顯示樣式 */
 .status-content {
-    min-height: 100px;
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-/* 表單樣式 */
-.status-form .form-group {
-    margin-bottom: 1rem;
-}
-
-.status-form label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #333;
-}
-
-.status-form input, .status-form select, .status-form textarea {
-    width: 100%;
+    min-height: 80px;
     padding: 0.8rem;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: 0.95rem;
+}
+
+/* 表單樣式 */
+.status-form .form-group, .equipment-form .form-group {
+    margin-bottom: 0.8rem;
+}
+
+.status-form label, .equipment-form label {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.status-form input, .status-form select, .status-form textarea,
+.equipment-form input, .equipment-form select {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    transition: border-color 0.3s;
+}
+
+.status-form input:focus, .status-form select:focus, .status-form textarea:focus,
+.equipment-form input:focus, .equipment-form select:focus {
+    outline: none;
+    border-color: #4b8c2a;
+    box-shadow: 0 0 0 2px rgba(75, 140, 42, 0.2);
 }
 
 .status-form textarea {
-    height: 100px;
+    height: 80px;
     resize: vertical;
 }
 
-.status-form .submit-btn {
+.status-form .submit-btn, .equipment-form .submit-btn {
     background-color: #4b8c2a;
     color: white;
-    padding: 0.8rem 1.5rem;
+    padding: 0.7rem 1.2rem;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.95rem;
     width: 100%;
     transition: background-color 0.3s;
 }
 
-.status-form .submit-btn:hover {
+.status-form .submit-btn:hover, .equipment-form .submit-btn:hover {
     background-color: #3c7a2a;
 }
 
@@ -226,30 +320,31 @@ body {
     margin: 15% auto;
     padding: 15px;
     width: 80%;
-    max-width: 400px;
+    max-width: 360px;
     border-radius: 8px;
     text-align: center;
 }
 
 .modal-content h2 {
-    margin-top: 0;
+    margin: 0 0 0.8rem;
     color: #4b8c2a;
-    font-size: 18px;
+    font-size: 1.1rem;
 }
 
 .modal-content p {
-    margin: 8px 0;
-    font-size: 14px;
+    margin: 0 0 1rem;
+    font-size: 0.95rem;
 }
 
 .modal-content button {
     background: #4b8c2a;
     color: white;
     border: none;
-    padding: 8px 12px;
+    padding: 0.7rem 1.2rem;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 0.95rem;
+    transition: background-color 0.3s;
 }
 
 .modal-content button:hover {
@@ -260,7 +355,7 @@ body {
     position: absolute;
     top: 8px;
     right: 12px;
-    font-size: 20px;
+    font-size: 18px;
     cursor: pointer;
     color: #666;
 }
@@ -281,7 +376,7 @@ body {
 
     .search-group {
         flex-direction: column;
-        gap: 5px;
+        gap: 6px;
     }
 
     .search-input, .filter-group {
@@ -289,23 +384,28 @@ body {
     }
 
     #equipment-search {
-        padding: 10px 10px 10px 35px;
-        font-size: 16px;
+        padding: 10px 10px 10px 36px;
+        font-size: 15px;
     }
 
     .search-input i {
-        font-size: 16px;
+        font-size: 15px;
+    }
+
+    .suggestions li {
+        font-size: 15px;
+        padding: 10px;
     }
 
     #main-category, #sub-category {
         min-width: 100%;
-        font-size: 16px;
-        padding: 10px;
-        background-size: 18px;
+        font-size: 15px;
+        padding: 10px 28px 10px 10px;
+        background-size: 16px;
     }
 
     .content {
-        padding: 1rem;
+        padding: 0.8rem;
     }
 
     .equipment-table {
@@ -317,27 +417,35 @@ body {
         height: 100vh;
         overflow-y: auto;
     }
+
+    .pagination button {
+        padding: 0.3rem 0.7rem;
+        font-size: 0.85rem;
+    }
+
+    .pagination span {
+        font-size: 0.85rem;
+    }
 }
 
 @media (max-width: 480px) {
-    header h1 {
-        font-size: 1.2rem;
+    .header h1 {
+        font-size: 1.1rem;
     }
 
     .menu-toggle {
-        padding: 0.4rem 0.8rem;
+        padding: 0.3rem 0.7rem;
     }
 
     #equipment-search {
         font-size: 14px;
-        padding: 8px 8px 8px 30px;
-        background-size: 16px;
+        padding: 8px 8px 8px 32px;
     }
 
     #main-category, #sub-category {
         font-size: 14px;
-        padding: 8px;
-        background-size: 16px;
+        padding: 8px 24px 8px 8px;
+        background-size: 14px;
     }
 
     .card-title {
@@ -349,13 +457,18 @@ body {
         font-size: 0.9rem;
     }
 
-    .status-form input, .status-form select, .status-form textarea {
+    .status-form input, .status-form select, .status-form textarea,
+    .equipment-form input, .equipment-form select {
         padding: 0.6rem;
         font-size: 0.9rem;
     }
 
-    .status-form .submit-btn {
+    .status-form .submit-btn, .equipment-form .submit-btn {
         padding: 0.6rem 1rem;
         font-size: 0.9rem;
+    }
+
+    .modal-content {
+        max-width: 320px;
     }
 }
