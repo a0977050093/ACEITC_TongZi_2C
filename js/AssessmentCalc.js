@@ -410,24 +410,48 @@ function calculateAll() {
         resultHTML += '<div class="card">';
         resultHTML += '<div class="card-header">考核表計算結果</div>';
         resultHTML += '<div class="card-body">';
+
+        // 計算連續三個月
         const months = [];
         let currentDate = new Date(assessmentDate);
-        for (let i = 0; i < 3; i++) {
-            const startDate = new Date(currentDate);
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            const endDate = new Date(currentDate);
-            months.push(`連續第${i + 1}個月：${formatDate(startDate)} - ${formatDate(endDate)}`);
+        const startYear = currentDate.getFullYear();
+        const startMonth = currentDate.getMonth();
+        const startDay = currentDate.getDate();
+        const daysInStartMonth = new Date(startYear, startMonth + 1, 0).getDate();
+        const remainingDays = daysInStartMonth - startDay + 1;
+
+        if (remainingDays >= 5) {
+            // 足夠天數：當月到月底 + 下兩個整月
+            let endDate = new Date(startYear, startMonth, daysInStartMonth);
+            months.push(`連續第1個月：${formatDate(currentDate)} - ${formatDate(endDate)}`);
+            currentDate = new Date(startYear, startMonth + 1, 1);
+            endDate = new Date(startYear, startMonth + 2, 0);
+            months.push(`連續第2個月：${formatDate(currentDate)} - ${formatDate(endDate)}`);
+            currentDate = new Date(startYear, startMonth + 2, 1);
+            endDate = new Date(startYear, startMonth + 3, 0);
+            months.push(`連續第3個月：${formatDate(currentDate)} - ${formatDate(endDate)}`);
+            currentDate = new Date(startYear, startMonth + 3, 1); // 下一步的起始日期
+        } else {
+            // 少於5天：當月到下月底 + 下兩個整月
+            let endDate = new Date(startYear, startMonth + 1, 0);
+            months.push(`連續第1個月：${formatDate(currentDate)} - ${formatDate(endDate)}`);
+            currentDate = new Date(startYear, startMonth + 1, 1);
+            endDate = new Date(startYear, startMonth + 2, 0);
+            months.push(`連續第2個月：${formatDate(currentDate)} - ${formatDate(endDate)}`);
+            currentDate = new Date(startYear, startMonth + 2, 1);
+            endDate = new Date(startYear, startMonth + 3, 0);
+            months.push(`連續第3個月：${formatDate(currentDate)} - ${formatDate(endDate)}`);
+            currentDate = new Date(startYear, startMonth + 3, 1); // 下一步的起始日期
         }
 
+        // 計算連續四季
         const quarters = [];
         const quarterEnds = [
-            { month: 2, day: 31 },
-            { month: 5, day: 30 },
-            { month: 8, day: 30 },
-            { month: 11, day: 31 }
+            { month: 2, day: 31 }, // 3/31
+            { month: 5, day: 30 }, // 6/30
+            { month: 8, day: 30 }, // 9/30
+            { month: 11, day: 31 } // 12/31
         ];
-
-        currentDate.setDate(currentDate.getDate() + 1);
         for (let i = 0; i < 4; i++) {
             const startDate = new Date(currentDate);
             let quarterIndex = 0;
@@ -449,10 +473,10 @@ function calculateAll() {
             currentDate.setDate(currentDate.getDate() + 1);
         }
 
+        // 計算上下半年
         const quarterEndDate = new Date(currentDate);
         quarterEndDate.setDate(quarterEndDate.getDate() - 1);
         const releaseTime = formatDate(quarterEndDate);
-
         const halfYear = [];
         const isAfterJuly = quarterEndDate.getMonth() >= 6;
         if (isAfterJuly) {
@@ -528,7 +552,7 @@ function calculateAll() {
         let leaveDays = getLeaveDays(totalSeniority);
 
         const isFirstYear = leaveYear === parseInt(volunteerYear) + 1 && parseInt(volunteerMonth) > 1;
-        const prevYear = gregorianLeaveYear - 1; // 計算前一年度（113年）
+        const prevYear = gregorianLeaveYear - 1;
         const adat = Array(13).fill().map(() => Array(32).fill({ status: 1, reason: '' }));
 
         if (isFirstYear) {
@@ -561,7 +585,6 @@ function calculateAll() {
         }
 
         trainingDates.forEach(record => {
-            // 檢查受訓紀錄是否在 113 年（前一年度）
             if (record.start.getFullYear() === prevYear) {
                 if (record.start.getMonth() === record.end.getMonth()) {
                     for (let j = record.start.getDate(); j <= record.end.getDate(); j++) {
@@ -595,7 +618,6 @@ function calculateAll() {
                 }
             }
 
-            // 當月份只要有一天在營（非受訓日），該月就算在職
             if (inServiceDays > 0) {
                 isInService = true;
                 inServiceMonths++;
