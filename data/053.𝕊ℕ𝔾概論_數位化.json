@@ -1,0 +1,209 @@
+{
+  "questions": [
+    {
+      "type": "true_false",
+      "number": "難1",
+      "question": "人造衛星的定義：凡由人類設計建造、乘火箭或其他大型運載工具送入太空中，繞著地球或其他行星運行的裝備，稱之「人造衛星」。可提供實時、價格、測量、探勘、定位、導航、能源等技術研究，商業或軍事用途。",
+      "answer": true,
+      "reference": "講義 P3"
+    },
+    {
+      "type": "true_false",
+      "number": "難2",
+      "question": "以下為台灣灣地區可見的衛星名稱序對應：第一顆衛星 INMARSAT、繁衛星 Iridium、歐星衛星 Thuraya。",
+      "answer": true,
+      "reference": "講義 P15"
+    },
+    {
+      "type": "true_false",
+      "number": "難3",
+      "question": "其導航事宜衛星通訊系統，根據「任務」和「技術特」性，支持、學術、資期、資期和音樂三個系統，以收客全世界各地的導航與星里數更繁終物學。",
+      "answer": true,
+      "reference": "講義 P18"
+    },
+    {
+      "type": "true_false",
+      "number": "難4",
+      "question": "衛星工程系統構架要者：人造衛星主要能成功執行各項衛星任務，單個人造衛星本身是不行的，而需要有完整的衛星工程系統結構，一般可由下列系統組成：衛星通訊系統、運載火箭系統、回收包系統（限外運星大衛星）、測控系統、衛星系統、衛星應用系統。",
+      "answer": true,
+      "reference": "講義 P4"
+    },
+    {
+      "type": "true_false",
+      "number": "中5",
+      "question": "衛星本體：就是太空雲飛行要點中被裝載的「貨物」，區分：結構體、熱控系統、資進系統、電力系統、姿態控制系統。",
+      "answer": true,
+      "reference": "講義 P5"
+    },
+    {
+      "type": "true_false",
+      "number": "中6",
+      "question": "衛星姿態控制系統：用以維持衛星在太空飛行時，保持正確的姿態，包含下列組件：控制力矩陀螺儀（CMG）、反作用輪（RW）、推進系統（THRUSTER）。",
+      "answer": true,
+      "reference": "講義 P2"
+    },
+    {
+      "type": "true_false",
+      "number": "中7",
+      "question": "人造衛星依飛機「軌跡用途」區分：科學衛星、軍源衛星、氣象衛星、軍事衛星、航天器。",
+      "answer": true,
+      "reference": "講義 P6"
+    },
+    {
+      "type": "true_false",
+      "number": "中8",
+      "question": "人造衛星依軌道高度區分：低軌衛星（LEO）、中軌衛星（MEO）、大圓軌道（GEO）、傾斜同步軌道（IGSO）、極地軌道（PO）。",
+      "answer": false,
+      "reference": "講義 P5"
+    },
+    {
+      "type": "true_false",
+      "number": "中9",
+      "question": "反作用輪（RW）用以提供衛星姿態控制系統、動量交換、調整衛星姿態。",
+      "answer": true,
+      "reference": "講義 P6"
+    },
+    {
+      "type": "true_false",
+      "number": "中10",
+      "question": "衛星 GLONASS 戰鬥系統為美國（BDS-3 中國北斗三號）全域定位系統。",
+      "answer": false,
+      "reference": "講義 P7"
+    },
+    {
+      "type": "true_false",
+      "number": "中11",
+      "question": "俄國中軌衛星之為 19000 公里高度為低軌衛星之 2 倍。",
+      "answer": false,
+      "reference": "講義 P3"
+    },
+    {
+      "type": "true_false",
+      "number": "中12",
+      "question": "反應姿勢保持衛星的「位置」，並提供「時間」訊號。",
+      "answer": true,
+      "reference": "講義 P5"
+    },
+    {
+      "type": "true_false",
+      "number": "中13",
+      "question": "軍事衛星（Synthetic Aperture Radar 簡稱 SAR）可全天候工作。",
+      "answer": false,
+      "reference": "講義 P6"
+    },
+    {
+      "type": "true_false",
+      "number": "中14",
+      "question": "通信衛星所使用的通信頻率（電磁波）計費單位是：Hz（赫兹）、交換為：每秒鐘的變化週波（Cycle-frequency/Sec. 或 CPS）。",
+      "answer": true,
+      "reference": "講義 P14"
+    },
+    {
+      "type": "true_false",
+      "number": "中15",
+      "question": "衛星通信系統的網路型態機分類：「網狀型態」、「星型網狀」兩者可實現「點對點」、「點對多點」網路。",
+      "answer": true,
+      "reference": "講義 P9"
+    },
+    {
+      "type": "true_false",
+      "number": "中16",
+      "question": "「點對點道」為人造衛星在太空中運行的軌跡；按高度、高度、傾角、同步多點專線。",
+      "answer": true,
+      "reference": "講義 P5"
+    },
+    {
+      "type": "true_false",
+      "number": "中17",
+      "question": "1991 年「遠斯瑪學街」後人造升級的系統進入百萬多星的時代，以往軍事學為主的衛星運用途，快速的轉移民間商用途。",
+      "answer": true,
+      "reference": "講義 P3"
+    },
+    {
+      "type": "true_false",
+      "number": "中18",
+      "question": "人造衛星：由人類製造或建造，損失新進入海洋之中主要衛星的壽命。",
+      "answer": false,
+      "reference": "講義 P3"
+    },
+    {
+      "type": "true_false",
+      "number": "中19",
+      "question": "人造衛星又衛星本體顏色包含：運動通訊及指揮系統、無線系統。",
+      "answer": false,
+      "reference": "講義 P3"
+    },
+    {
+      "type": "single_choice",
+      "number": "易18",
+      "question": "機動衛星 INMARSAT 行動電話，下列哪一個按鍵方式為正常？",
+      "options": ["+ 100 870 912006007 # 字號", "+ 870 912006007 機出號(300)", "+ 886 912006007 # 字號", "+ 886 912006007 機出號"],
+      "answer": "+ 100 870 912006007 # 字號",
+      "reference": "講義 P21"
+    },
+    {
+      "type": "single_choice",
+      "number": "易19",
+      "question": "機動衛星 THURAYA 行動電話，將井單位主音行動電話，下列哪一個按鍵方式為正常？",
+      "options": ["+ 100 870 912006007 # 字號", "+ 870 912006007 機出號(300)", "+ 886 912006007 # 字號", "+ 886 912006007 機出號"],
+      "answer": "+ 100 870 912006007 # 字號",
+      "reference": "講義 P21"
+    },
+    {
+      "type": "single_choice",
+      "number": "易20",
+      "question": "機動衛星 INMARSAT 行動電話，目前地面通訊系統為何？",
+      "options": ["直接支援", "地面反對波", "地面反對", "波"],
+      "answer": "直接支援",
+      "reference": "講義 P10"
+    },
+    {
+      "type": "single_choice",
+      "number": "易21",
+      "question": "機星衛星通訊系統，運用中頻井一號 ST-2 商用通信衛星「通信天線」的接收能力為何？",
+      "options": ["機型", "機型", "機型", "機型"],
+      "answer": "機型",
+      "reference": "講義 P37"
+    },
+    {
+      "type": "single_choice",
+      "number": "易22",
+      "question": "機星衛星通訊系統，運用中頻井一號 ST-2 商用通信衛星「中頻器」的角度為何？",
+      "options": ["C 頻段", "Ku 頻段", "Ka 頻段", "L 頻段"],
+      "answer": "C 頻段",
+      "reference": "講義 P15"
+    },
+    {
+      "type": "single_choice",
+      "number": "易23",
+      "question": "Direct to Home 簡稱 DTH，其中文譯意為何？",
+      "options": ["機動服務", "衛星新聞聚集", "衛星直播", "資料電"],
+      "answer": "衛星直播",
+      "reference": "講義 P15"
+    },
+    {
+      "type": "single_choice",
+      "number": "易24",
+      "question": "Satellite News Gathering 簡稱 SNG，其中文譯意為何？",
+      "options": ["機動服務", "衛星新聞聚集", "衛星直播", "資料電"],
+      "answer": "衛星新聞聚集",
+      "reference": "講義 P15"
+    },
+    {
+      "type": "single_choice",
+      "number": "易25",
+      "question": "中國大陸衛星系統中，井井計系列為何種用途衛星？",
+      "options": ["衛星衛星", "衛星衛星", "衛星衛星", "衛星衛星"],
+      "answer": "衛星衛星",
+      "reference": "講義 P26"
+    },
+    {
+      "type": "single_choice",
+      "number": "易26",
+      "question": "衛星通訊系統中，「衛星機度」有下列哪項？",
+      "options": ["通信衛星", "衛星地面站", "衛星直播", "衛星"],
+      "answer": "衛星",
+      "reference": "講義 P3"
+    }
+  ]
+}
