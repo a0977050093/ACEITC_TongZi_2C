@@ -1,0 +1,349 @@
+{
+  "questions": [
+    {
+      "type": "single_choice",
+      "number": "易9",
+      "question": "下列何者不是中國大陸區域大衛星系統？",
+      "options": ["酒泉衛星", "大原衛星系統", "文昌航天系統", "瀋海"],
+      "answer": "酒泉衛星",
+      "reference": "講義 P27"
+    },
+    {
+      "type": "single_choice",
+      "number": "易10",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P7"
+    },
+    {
+      "type": "single_choice",
+      "number": "易11",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P21"
+    },
+    {
+      "type": "single_choice",
+      "number": "易12",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P21"
+    },
+    {
+      "type": "single_choice",
+      "number": "易13",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P15"
+    },
+    {
+      "type": "single_choice",
+      "number": "易14",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P15"
+    },
+    {
+      "type": "single_choice",
+      "number": "易15",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P15"
+    },
+    {
+      "type": "single_choice",
+      "number": "易16",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P15"
+    },
+    {
+      "type": "single_choice",
+      "number": "易17",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P15"
+    },
+    {
+      "type": "single_choice",
+      "number": "易18",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P26"
+    },
+    {
+      "type": "single_choice",
+      "number": "難5",
+      "question": "下列有關「衛星本體」的敘述何者正確？",
+      "options": ["中継站", "回收站", "測控站", "力"],
+      "answer": "中継站",
+      "reference": "講義 P4"
+    },
+    {
+      "type": "single_choice",
+      "number": "難6",
+      "question": "下列有關「衛星本體」的初期成為何？",
+      "options": ["車載減流", "航空", "測控", "力"],
+      "answer": "車載減流",
+      "reference": "講義 P18"
+    },
+    {
+      "type": "single_choice",
+      "number": "中7",
+      "question": "地球24、5度太陽同步軌道（簡稱ST）時，地球24、5度太陽同步軌道（簡稱ST）時？",
+      "options": ["地球88度地球共同步軌道", "地球88度地球共同步軌道", "地球88度地球共同步軌道", "地球88度地球共同步軌道"],
+      "answer": "地球88度地球共同步軌道",
+      "reference": "講義 P38"
+    },
+    {
+      "type": "single_choice",
+      "number": "中8",
+      "question": "一度生成取定位器內被指定機能星機及執行機，需為？",
+      "options": ["終端合", "地球合", "地球合", "衛星合"],
+      "answer": "終端合",
+      "reference": "講義 P12"
+    },
+    {
+      "type": "single_choice",
+      "number": "中9",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P27"
+    },
+    {
+      "type": "single_choice",
+      "number": "中10",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P7"
+    },
+    {
+      "type": "single_choice",
+      "number": "中11",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P21"
+    },
+    {
+      "type": "single_choice",
+      "number": "中12",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P21"
+    },
+    {
+      "type": "single_choice",
+      "number": "中13",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P15"
+    },
+    {
+      "type": "single_choice",
+      "number": "中14",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P15"
+    },
+    {
+      "type": "single_choice",
+      "number": "中15",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P15"
+    },
+    {
+      "type": "single_choice",
+      "number": "中16",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P15"
+    },
+    {
+      "type": "single_choice",
+      "number": "中17",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P15"
+    },
+    {
+      "type": "single_choice",
+      "number": "中18",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P26"
+    },
+    {
+      "type": "single_choice",
+      "number": "中19",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P3"
+    },
+    {
+      "type": "single_choice",
+      "number": "中20",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P3"
+    },
+    {
+      "type": "single_choice",
+      "number": "難1",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統"],
+      "answer": "運載火箭系統",
+      "reference": "講義 P27"
+    },
+    {
+      "type": "single_choice",
+      "number": "難2",
+      "question": "下列衛星通訊系統中，衛星本體是何？",
+      "options": ["地面站", "大遠衛星", "衛星站", "衛星"],
+      "answer": "衛星",
+      "reference": "講義 P7"
+    },
+    {
+      "type": "single_choice",
+      "number": "難3",
+      "question": "下列衛星通訊系統中，衛星本體是何？",
+      "options": ["衛星", "衛星站", "衛星通訊", "衛星通訊系統"],
+      "answer": "衛星",
+      "reference": "講義 P21"
+    },
+    {
+      "type": "single_choice",
+      "number": "難4",
+      "question": "衛星通訊系統中，天線通訊波形為何？",
+      "options": ["衛星", "衛星站", "衛星通訊", "衛星通訊系統"],
+      "answer": "衛星",
+      "reference": "講義 P21"
+    },
+    {
+      "type": "true_false",
+      "number": "中10",
+      "question": "多工卫星 CX-950e 使用 網路路由級術視頻 T1 時，其使用的色對為 4. 5. 耗時藍色對 1. 2. 視網膜色對。",
+      "answer": true,
+      "reference": "講義 P2-128"
+    },
+    {
+      "type": "true_false",
+      "number": "中11",
+      "question": "陸線飛先大器 LNA 能將下鏈封有射頻訊號放大機。",
+      "answer": false,
+      "reference": "講義 P2-16"
+    },
+    {
+      "type": "true_false",
+      "number": "中12",
+      "question": "記據有通訊基建；基概用時，先據北機、大機、好降時先拆大機用時基概後基建。",
+      "answer": true,
+      "reference": "講義 P2-68"
+    },
+    {
+      "type": "true_false",
+      "number": "中13",
+      "question": "裝位信標裝機收機 DTR 能將機有射頻通訊基建時，向機件。",
+      "answer": false,
+      "reference": "講義 P2-16"
+    },
+    {
+      "type": "true_false",
+      "number": "中14",
+      "question": "10/100 乙大網路卡其挑或項式為 RJ-45。",
+      "answer": true,
+      "reference": "講義 P2-118"
+    },
+    {
+      "type": "true_false",
+      "number": "中15",
+      "question": "中新二號 ST-2 合台灣機視超巴國測時；方位角為 237 度，俯仰角為 43 度。",
+      "answer": true,
+      "reference": "講義 P2-52"
+    },
+    {
+      "type": "true_false",
+      "number": "中16",
+      "question": "中新二號 ST-2 的軌道，在星終點 88 度北緯 0 度的位置。",
+      "answer": true,
+      "reference": "講義 P2-51"
+    },
+    {
+      "type": "true_false",
+      "number": "中17",
+      "question": "升頻轉換器能將調製機或送來的中頻訊號，轉換成上鏈射頻訊號。",
+      "answer": true,
+      "reference": "講義 P2-16"
+    },
+    {
+      "type": "true_false",
+      "number": "中18",
+      "question": "1991 年「遠斯瑪學街」後人造升級的系統進入百萬多星的時代，以往軍事學為主的衛星運用途，快速的轉移民間商用途。",
+      "answer": true,
+      "reference": "講義 P3"
+    },
+    {
+      "type": "true_false",
+      "number": "中19",
+      "question": "人造衛星：由人類製造或建造，損失新進入海洋之中主要衛星的壽命。",
+      "answer": false,
+      "reference": "講義 P3"
+    },
+    {
+      "type": "true_false",
+      "number": "中20",
+      "question": "人造衛星又衛星本體顏色包含：運動通訊及指揮系統、無線系統。",
+      "answer": false,
+      "reference": "講義 P3"
+    },
+    {
+      "type": "true_false",
+      "number": "難1",
+      "question": "「單數學機台」的長機色為哪色，計下列哪點？",
+      "answer": false,
+      "reference": "機動數位微波系統訓練手冊 P2-10"
+    },
+    {
+      "type": "true_false",
+      "number": "難2",
+      "question": "全採定位系統統合機收機星機，機為何？",
+      "answer": false,
+      "reference": "機動數位微波系統訓練手冊 P2-15"
+    },
+    {
+      "type": "true_false",
+      "number": "難3",
+      "question": "多工 CX-950e 使用 視頻時，其使用的是對為 4、5，耗時藍色對 1、2、視網膜色對。",
+      "answer": true,
+      "reference": "機動數位微波系統訓練手冊 P2-128"
+    },
+    {
+      "type": "true_false",
+      "number": "難4",
+      "question": "陸線飛先大器 LNA 能將下鏈封有射頻訊號放大機。",
+      "answer": false,
+      "reference": "機動數位微波系統訓練手冊 P2-16"
+    }
+  ]
+}
