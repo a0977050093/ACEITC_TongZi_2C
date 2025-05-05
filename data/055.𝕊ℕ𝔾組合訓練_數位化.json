@@ -1,0 +1,164 @@
+{
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "number": "中1",
+      "question": "下列有關「衛星本體」的敘述何者正確？",
+      "options": ["衛星衛星", "衛星衛星", "衛星衛星", "衛星衛星", "衛星衛星"],
+      "answer": ["衛星衛星", "衛星衛星"],
+      "reference": "講義 P2-112"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中2",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-113"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中3",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-112"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中4",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-113"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中5",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-112"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中6",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-113"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中7",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-112"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中8",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-113"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中9",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-112"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中10",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-113"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中11",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-112"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中12",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-113"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中13",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-112"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中14",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-113"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中15",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-112"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中16",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-113"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中17",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-112"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中18",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-113"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中19",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-112"
+    },
+    {
+      "type": "multiple_choice",
+      "number": "中20",
+      "question": "衛星通訊系統之組成，下列何者為非？",
+      "options": ["衛星通訊系統", "運載火箭系統", "測控系統", "衛星應用系統", "衛星"],
+      "answer": ["運載火箭系統"],
+      "reference": "講義 P2-113"
+    }
+  ]
+}
