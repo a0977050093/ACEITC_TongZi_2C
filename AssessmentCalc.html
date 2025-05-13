@@ -15,15 +15,16 @@
                 <!-- 基本資料 -->
                 <div class="form-section">
                     <h3>基本資料</h3>
+                    <small>🔺為必填選項</small>
                     <div class="form-group">
-                        <label for="leave-year">1️⃣慰休計算年度(民國年)：</label>
+                        <label for="leave-year">1️⃣慰休計算年度(民國年)🔺：</label>
                         <select id="leave-year" required>
                             <option value="">請選擇</option>
                             <!-- 動態生成選項 -->
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="birth-year">2️⃣出生日期(民國年)：</label>
+                        <label for="birth-year">2️⃣出生日期(民國年)🔺：</label>
                         <div class="date-input">
                             <select id="birth-year" required>
                                 <option value="">年</option>
@@ -41,7 +42,7 @@
                         <small>年份範圍：65-118</small>
                     </div>
                     <div class="form-group">
-                        <label for="gender">3️⃣性別：</label>
+                        <label for="gender">3️⃣性別🔺：</label>
                         <select id="gender" required>
                             <option value="">請選擇</option>
                             <option value="male">男</option>
@@ -50,7 +51,7 @@
                     </div>
                     <div class="form-group">
                         <input type="checkbox" id="use-volunteer-date" checked>
-                        <label for="use-volunteer-date">4️⃣志願役生效日期</label>
+                        <label for="use-volunteer-date">4️⃣志願役生效日期🔺：</label>
                         <small>(新進及初任考核表、慰勞假、APP計算)(民國年)</small>
                         <div class="date-input">
                             <select id="volunteer-year" required>
@@ -70,7 +71,7 @@
                     </div>
                     <div class="form-group">
                         <input type="checkbox" id="use-transfer-date">
-                        <label for="use-transfer-date">5️⃣調任職報到日期</label>
+                        <label for="use-transfer-date">5️⃣調任職報到日期：</label>
                         <small>(非初官及非新進考核表計算)(民國年)</small>
                         <div class="date-input">
                             <select id="transfer-year">
