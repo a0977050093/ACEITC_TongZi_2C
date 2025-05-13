@@ -16,14 +16,14 @@
                 <div class="form-section">
                     <h3>基本資料</h3>
                     <div class="form-group">
-                        <label for="leave-year">慰休年度（民國年）：</label>
+                        <label for="leave-year">慰休計算年度(民國年)：</label>
                         <select id="leave-year" required>
                             <option value="">請選擇</option>
                             <!-- 動態生成選項 -->
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="birth-year">出生日期（民國年）：</label>
+                        <label for="birth-year">出生日期(民國年)：</label>
                         <div class="date-input">
                             <select id="birth-year" required>
                                 <option value="">年</option>
@@ -50,7 +50,7 @@
                     </div>
                     <div class="form-group">
                         <input type="checkbox" id="use-volunteer-date" checked>
-                        <label for="use-volunteer-date">志願役生效日期（新進及初任考核表、慰勞假、APP計算）（民國年）：</label>
+                        <label for="use-volunteer-date">志願役生效日期(新進及初任考核表、慰勞假、APP計算)(民國年)：</label>
                         <div class="date-input">
                             <select id="volunteer-year" required>
                                 <option value="">年</option>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="form-group">
                         <input type="checkbox" id="use-transfer-date">
-                        <label for="use-transfer-date">調任職報到日期（考核表計算）（民國年）：</label>
+                        <label for="use-transfer-date">調任職報到日期(非初官及非新進考核表計算)(民國年)：</label>
                         <div class="date-input">
                             <select id="transfer-year">
                                 <option value="">年</option>
@@ -90,10 +90,10 @@
 
                 <!-- 再入營/育嬰資料 -->
                 <div class="form-section">
-                    <h3><input type="checkbox" id="is-reenlist"> 再入營/育嬰資料</h3>
+                    <h3><input type="checkbox" id="is-reenlist"> 再入營/留停資料</h3>
                     <div id="reenlist-details" style="display: none;">
                         <div class="form-group">
-                            <label for="reenlist-year">再入營/復職日期（民國年）：</label>
+                            <label for="reenlist-year">再入營/復職日期(民國年)：</label>
                             <div class="date-input">
                                 <select id="reenlist-year">
                                     <option value="">年</option>
@@ -111,7 +111,7 @@
                             <small>年份範圍：80-118</small>
                         </div>
                         <div class="form-group">
-                            <label for="first-retire-year">第一次退伍/育嬰生效日期（民國年）：</label>
+                            <label for="first-retire-year">第一次退伍/育嬰生效日期(民國年)：</label>
                             <div class="date-input">
                                 <select id="first-retire-year">
                                     <option value="">年</option>
