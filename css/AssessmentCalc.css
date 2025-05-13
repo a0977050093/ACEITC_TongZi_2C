@@ -217,3 +217,10 @@ small {
     font-weight: bold;
     text-align: center;
 }
+
+footer {
+    text-align: center;  /* 將文字置中 */
+    font-size: 8px;    /* 設定字型大小，根據需要調整數值 */
+    margin-top: 20px;   /* 可以添加一些上邊距，讓footer與上面內容有距離 */
+}
+
