@@ -47,7 +47,8 @@ function addTrainingRecord() {
                 <option value="">日</option>
             </select>
         </div>
-        <span>至</span>
+        <br><span>至</span></br>
+        
         <div class="date-input">
             <select class="training-end-year" id="training-end-year-${uniqueId}">
                 <option value="">年</option>
