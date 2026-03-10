@@ -1,0 +1,746 @@
+{
+  "subject_id": "army_operations_outline",
+  "subject_name": "陸軍作戰要綱",
+  "questions": [
+    {
+      "id": 1,
+      "type": "single_choice",
+      "question": "下列何者非敵情偵蒐與監控指導？",
+      "options": ["保持接觸", "單點突破", "機動彈性", "偵監結合"],
+      "answer": "單點突破",
+      "reference": "陸軍作戰要綱 6-32頁"
+    },
+    {
+      "id": 2,
+      "type": "single_choice",
+      "question": "下列何者非迫地攻擊之力量區分？",
+      "options": ["空間區分", "氣候區分", "時間區分", "地形區分"],
+      "answer": "氣候區分",
+      "reference": "陸軍作戰要綱 6-36頁"
+    },
+    {
+      "id": 3,
+      "type": "single_choice",
+      "question": "任務接替之方式，何者為非？",
+      "options": ["原地接替", "超越接替", "前方接替", "收容接替"],
+      "answer": "前方接替",
+      "reference": "陸軍作戰要綱 4-48頁"
+    },
+    {
+      "id": 4,
+      "type": "single_choice",
+      "question": "聯合作戰成功之基礎，何者為非？",
+      "options": ["相互瞭解", "充分協調", "有效統合", "通信限制"],
+      "answer": "通信限制",
+      "reference": "陸軍作戰要綱 1-19頁"
+    },
+    {
+      "id": 5,
+      "type": "single_choice",
+      "question": "正面攻擊時機，何者為正確？",
+      "options": ["敵側翼有依托或遮蔽延伸", "敵兵力均勢或衰弱時", "以防禦敵人為目的時", "以包圍敵人為目的時"],
+      "answer": "敵兵力均勢或衰弱時",
+      "reference": "陸軍作戰要綱 5-53頁"
+    },
+    {
+      "id": 6,
+      "type": "single_choice",
+      "question": "突穿過程區分，何者為非？",
+      "options": ["擴張戰果", "擴大突破口", "奪取最後目標", "造成突破口"],
+      "answer": "擴張戰果",
+      "reference": "陸軍作戰要綱 5-44頁"
+    },
+    {
+      "id": 7,
+      "type": "single_choice",
+      "question": "戰術性電子戰區分，何者為非？",
+      "options": ["電子戰攻擊", "電子戰遮蔽", "電子戰防護", "電子戰支援"],
+      "answer": "電子戰遮蔽",
+      "reference": "陸軍作戰要綱 4-8頁"
+    },
+    {
+      "id": 8,
+      "type": "single_choice",
+      "question": "戰略性電子戰，何者為非？",
+      "options": ["情報戰", "癱瘓戰", "謀略戰", "心理戰"],
+      "answer": "癱瘓戰",
+      "reference": "陸軍作戰要綱 4-8頁"
+    },
+    {
+      "id": 9,
+      "type": "single_choice",
+      "question": "反登陸作戰依「量地用兵」原則，區分為幾種地區，何者為非？",
+      "options": ["重要守備地區", "次要守備地區", "後方地區", "側方警戒地區"],
+      "answer": "後方地區",
+      "reference": "陸軍作戰要綱 6-39頁"
+    },
+    {
+      "id": 10,
+      "type": "single_choice",
+      "question": "反擊計畫屬於一般攻擊計畫，何者為非？",
+      "options": ["目標", "戰鬥方式", "攻擊方向", "任務編組", "指揮機構"],
+      "answer": "戰鬥方式",
+      "reference": "陸軍作戰要綱 5-91頁"
+    },
+    {
+      "id": 11,
+      "type": "single_choice",
+      "question": "攻擊準備之內容包括哪些？",
+      "options": ["敵情與地形偵查", "計畫作為", "攻擊部署與展開", "以上皆是"],
+      "answer": "以上皆是",
+      "reference": "陸軍作戰要綱 5-41頁"
+    },
+    {
+      "id": 12,
+      "type": "single_choice",
+      "question": "防禦準備之內容包括哪些，何者為非？",
+      "options": ["交通良好", "阻絕設置", "陣地構築", "火網編成"],
+      "answer": "交通良好",
+      "reference": "陸軍作戰要綱 5-72頁"
+    },
+    {
+      "id": 13,
+      "type": "single_choice",
+      "question": "政治作戰指導為何？",
+      "options": ["武力戰與民眾相結合", "戰前作戰與戰後作戰相結合", "有形戰鬥與無形戰力相結合", "以上皆是"],
+      "answer": "以上皆是",
+      "reference": "陸軍作戰要綱 1-52頁"
+    },
+    {
+      "id": 14,
+      "type": "single_choice",
+      "question": "內線作戰成功之主要條件？",
+      "options": ["機動能力受限", "有足夠之迴轉空間及良好之機動路線", "未具備空優", "保持戰力分合併用"],
+      "answer": "有足夠之迴轉空間及良好之機動路線",
+      "reference": "陸軍作戰要綱 5-25頁"
+    },
+    {
+      "id": 15,
+      "type": "single_choice",
+      "question": "中間目標之選定為何？",
+      "options": ["為達成任務必先奪取者", "於發起協同攻擊前必須先奪取者", "為確保掌握與整頓部隊", "以上皆是"],
+      "answer": "以上皆是",
+      "reference": "陸軍作戰要綱 5-58頁"
+    },
+    {
+      "id": 16,
+      "type": "single_choice",
+      "question": "何者之區顧，一併影響作戰，而運動兵力成為攻勢關鍵因素？",
+      "options": ["人事移動", "後勤整備", "預力整配", "行政整備"],
+      "answer": "預力整配",
+      "reference": "陸軍作戰要綱 6-19頁"
+    },
+    {
+      "id": 17,
+      "type": "single_choice",
+      "question": "包圍時機，何者為非？",
+      "options": ["敵正面兵、火力均顯衰弱", "敵側翼暴露", "敵軍作戰兵力分散或衰弱", "我有充分時間與兵力"],
+      "answer": "敵軍作戰兵力分散或衰弱",
+      "reference": "陸軍作戰要綱 5-48頁"
+    },
+    {
+      "id": 18,
+      "type": "single_choice",
+      "question": "聯合反登陸作戰指導，何者為非？",
+      "options": ["推敵於彼岸", "擊敵於水際", "近戰殲敵", "以上皆是"],
+      "answer": "以上皆是",
+      "reference": "陸軍作戰要綱 6-8頁"
+    },
+    {
+      "id": 19,
+      "type": "single_choice",
+      "question": "下列何者為重要登陸作戰條件之項目？",
+      "options": ["適宜登陸、著陸場", "具備足夠運輸工具", "保持地區優勢", "命令與統制"],
+      "answer": "適宜登陸、著陸場",
+      "reference": "陸軍作戰要綱 6-5頁"
+    },
+    {
+      "id": 20,
+      "type": "single_choice",
+      "question": "下列何者為反擊計畫屬於一般攻擊計畫之項目？",
+      "options": ["計畫編組", "敵情", "防禦方向", "假定事項"],
+      "answer": "計畫編組",
+      "reference": "陸軍作戰要綱 5-91頁"
+    },
+    {
+      "id": 21,
+      "type": "single_choice",
+      "question": "下列何者不是避實擊虛之目的？",
+      "options": ["保存戰力", "消耗敵時間", "遲滯敵人", "以火力摧毀敵人戰力"],
+      "answer": "以火力摧毀敵人戰力",
+      "reference": "陸軍作戰要綱 5-94頁"
+    },
+    {
+      "id": 22,
+      "type": "single_choice",
+      "question": "機動防禦之拘束打擊地區編製事項，何者為非？",
+      "options": ["地障利用", "阻絕設施", "拒兵陣地", "隱蔽路線", "預備阻止陣地"],
+      "answer": "隱蔽路線",
+      "reference": "陸軍作戰要綱 5-90頁"
+    },
+    {
+      "id": 23,
+      "type": "single_choice",
+      "question": "下列何者為防禦準備事項之項目？",
+      "options": ["警戒配置", "敵情偵搜", "計畫下達", "指揮與督導"],
+      "answer": "敵情偵搜",
+      "reference": "陸軍作戰要綱 5-76頁"
+    },
+    {
+      "id": 24,
+      "type": "single_choice",
+      "question": "優先目標之優先順序？",
+      "options": ["對我危害最大者", "敵之主力", "敵最臨戰方向", "以上皆是"],
+      "answer": "以上皆是",
+      "reference": "陸軍作戰要綱 5-57頁"
+    },
+    {
+      "id": 25,
+      "type": "single_choice",
+      "question": "聯合反登陸作戰指導，何者為非？",
+      "options": ["擊敵於海上", "拒敵於灘岸", "殲敵於灘岸", "殲敵於陣內", "以上皆是"],
+      "answer": "殲敵於陣內",
+      "reference": "陸軍作戰要綱 6-8頁"
+    },
+    {
+      "id": 26,
+      "type": "single_choice",
+      "question": "下列何者為轉進方式項目？",
+      "options": ["持續戰鬥", "迂迴戰鬥", "防護戰鬥", "脫離戰鬥"],
+      "answer": "脫離戰鬥",
+      "reference": "陸軍作戰要綱 5-112頁"
+    },
+    {
+      "id": 27,
+      "type": "single_choice",
+      "question": "反擊計畫屬於一般攻擊計畫制有，何者為非？",
+      "options": ["假定事項", "指揮方向", "目標", "任務編組"],
+      "answer": "指揮方向",
+      "reference": "陸軍作戰要綱 6-16頁"
+    },
+    {
+      "id": 28,
+      "type": "single_choice",
+      "question": "包圍階段，何者為非？",
+      "options": ["集中濟滅", "完成包圍圈", "壓縮包圍圈", "分割擊滅"],
+      "answer": "集中濟滅",
+      "reference": "陸軍作戰要綱 5-48頁"
+    },
+    {
+      "id": 29,
+      "type": "single_choice",
+      "question": "兵種聯合作戰指導原則，何者正確？",
+      "options": ["統一指揮", "長短相輔", "彈性運用", "以上皆是"],
+      "answer": "以上皆是",
+      "reference": "陸軍作戰要綱 1-28頁"
+    },
+    {
+      "id": 30,
+      "type": "single_choice",
+      "question": "下列何者不是部隊掌握之基礎？",
+      "options": ["統一之戰術思想", "嚴實嚴密之戰術能力", "明確之作戰構想", "周密靈活之通信連絡", "賦予明確之任務目標"],
+      "answer": "嚴實嚴密之戰術能力",
+      "reference": "陸軍作戰要綱 3-11頁"
+    },
+    {
+      "id": 31,
+      "type": "single_choice",
+      "question": "防禦方式之決定，係以何為基礎？",
+      "options": ["任務", "武器", "彈藥", "火力"],
+      "answer": "任務",
+      "reference": "陸軍作戰要綱 5-71頁"
+    },
+    {
+      "id": 32,
+      "type": "single_choice",
+      "question": "典型的突穿過程為何？",
+      "options": ["造成突破口", "擴大突破口", "奪取最後目標", "以上皆是"],
+      "answer": "以上皆是",
+      "reference": "陸軍作戰要綱 5-44頁"
+    },
+    {
+      "id": 33,
+      "type": "single_choice",
+      "question": "包圍通常依哪三個階段實施？",
+      "options": ["完成包圍圈", "壓縮包圍圈", "分割擊滅", "以上皆是"],
+      "answer": "以上皆是",
+      "reference": "陸軍作戰要綱 5-48頁"
+    },
+    {
+      "id": 34,
+      "type": "single_choice",
+      "question": "防禦準備之內容何者為非？",
+      "options": ["陣地構築", "火力發揚", "地形偵察", "火網編成", "阻絕設置"],
+      "answer": "火力發揚",
+      "reference": "陸軍作戰要綱 5-72頁"
+    },
+    {
+      "id": 35,
+      "type": "single_choice",
+      "question": "下列何者為逐次抵抗之戰術拒止地放敵攻擊方式？",
+      "options": ["梯次變換", "統一陣地", "連續陣地", "逐次抵抗"],
+      "answer": "逐次抵抗",
+      "reference": "陸軍作戰要綱 5-95頁"
+    },
+    {
+      "id": 36,
+      "type": "single_choice",
+      "question": "軍隊動員整備，作戰前須先期完成事項，何者為非？",
+      "options": ["編管", "擴編", "裝備", "訓練"],
+      "answer": "擴編",
+      "reference": "陸軍作戰要綱 6-23頁"
+    },
+    {
+      "id": 37,
+      "type": "single_choice",
+      "question": "政治作戰六大戰，何者為非？",
+      "options": ["情報戰", "心理戰", "赫怒戰", "思想戰"],
+      "answer": "赫怒戰",
+      "reference": "陸軍作戰要綱 1-51頁"
+    },
+    {
+      "id": 38,
+      "type": "single_choice",
+      "question": "攻擊實施之內容包括？",
+      "options": ["攻擊發起", "攻擊前進", "目標奪取", "以上皆是"],
+      "answer": "以上皆是",
+      "reference": "陸軍作戰要綱 5-41頁"
+    },
+    {
+      "id": 39,
+      "type": "single_choice",
+      "question": "政治作戰基本要求為何？",
+      "options": ["奪回自己", "團結群眾", "瓦解敵人", "火力支援"],
+      "answer": "團結群眾",
+      "reference": "陸軍作戰要綱 1-50頁"
+    },
+    {
+      "id": 40,
+      "type": "single_choice",
+      "question": "應急作戰特質，何者為非？",
+      "options": ["時間急迫", "戰力無限", "逐次準備", "節奏快速"],
+      "answer": "戰力無限",
+      "reference": "陸軍作戰要綱 6-74頁"
+    },
+    {
+      "id": 41,
+      "type": "single_choice",
+      "question": "行軍管制措施，何者為非？",
+      "options": ["行軍目標", "行軍路線", "行軍序列", "以上皆是"],
+      "answer": "以上皆是",
+      "reference": "陸軍作戰要綱 4-34頁"
+    },
+    {
+      "id": 42,
+      "type": "single_choice",
+      "question": "地面作戰管制方式，何者為非？",
+      "options": ["縱深管制", "計畫管制", "協調終管制", "通信管制"],
+      "answer": "通信管制",
+      "reference": "陸軍作戰要綱 3-26頁"
+    },
+    {
+      "id": 43,
+      "type": "single_choice",
+      "question": "反登陸作戰指導基本概念，何者為非？",
+      "options": ["獨立守備", "分區擊滅", "連續反擊", "以上皆是"],
+      "answer": "以上皆是",
+      "reference": "陸軍作戰要綱 6-10頁"
+    },
+    {
+      "id": 44,
+      "type": "single_choice",
+      "question": "行軍之方式，何者為非？",
+      "options": ["徒步行軍", "空運行軍", "乘車行軍", "徒車交替行軍"],
+      "answer": "空運行軍",
+      "reference": "陸軍作戰要綱 4-33頁"
+    },
+    {
+      "id": 45,
+      "type": "single_choice",
+      "question": "何者為防衛作戰最後成敗之關鍵地位？",
+      "options": ["空軍制空作戰", "海軍制海作戰", "陸軍反登陸作戰", "海軍陸戰隊"],
+      "answer": "陸軍反登陸作戰",
+      "reference": "陸軍作戰要綱 6-3頁"
+    },
+    {
+      "id": 46,
+      "type": "single_choice",
+      "question": "何者為指揮官完成機動防禦任務之決定性手段？",
+      "options": ["攻擊", "反擊", "轉進", "防禦"],
+      "answer": "反擊",
+      "reference": "陸軍作戰要綱 5-91頁"
+    },
+    {
+      "id": 47,
+      "type": "single_choice",
+      "question": "陸軍野戰部隊編成，何者為非？",
+      "options": ["旅", "營", "師", "連"],
+      "answer": "師",
+      "reference": "陸軍作戰要綱 2-14頁"
+    },
+    {
+      "id": 48,
+      "type": "single_choice",
+      "question": "何者為攻擊基本方式？",
+      "options": ["佯攻", "正面攻擊", "突擊", "迂迴攻擊"],
+      "answer": "正面攻擊",
+      "reference": "陸軍作戰要綱 5-41頁"
+    },
+    {
+      "id": 49,
+      "type": "single_choice",
+      "question": "情報作業程序步驟，何者為非？",
+      "options": ["指導", "蒐集", "分析", "運用"],
+      "answer": "蒐集",
+      "reference": "陸軍作戰要綱 4-4頁"
+    },
+    {
+      "id": 50,
+      "type": "single_choice",
+      "question": "作戰管制友軍運用原則，何者為非？",
+      "options": ["尊重建制權制劃分", "適切分配任務", "避免遲滯陣地", "機妥通信連絡"],
+      "answer": "避免遲滯陣地",
+      "reference": "陸軍作戰要綱 1-20頁"
+    },
+    {
+      "id": 51,
+      "type": "single_choice",
+      "question": "指揮層級之區分，何者為非？",
+      "options": ["建制", "編配", "戰鬥", "行政"],
+      "answer": "行政",
+      "reference": "陸軍作戰要綱 3-1頁"
+    },
+    {
+      "id": 52,
+      "type": "single_choice",
+      "question": "反登陸作戰計畫作為區分，何者為非？",
+      "options": ["作戰計畫", "後備整補計畫", "運輸計畫", "通信計畫"],
+      "answer": "後備整補計畫",
+      "reference": "陸軍作戰要綱 6-17頁"
+    },
+    {
+      "id": 53,
+      "type": "single_choice",
+      "question": "離島應援與規復作戰方式，何者為非？",
+      "options": ["正規登陸作戰", "有限登陸作戰", "正規與非正規登陸作戰併用", "空中突擊作戰", "逐次突擊作戰"],
+      "answer": "逐次突擊作戰",
+      "reference": "陸軍作戰要綱 6-82頁"
+    },
+    {
+      "id": 54,
+      "type": "single_choice",
+      "question": "防禦地區區分，何者為非？",
+      "options": ["警戒遲滯地區", "次要守備地區", "主戰地區", "後方地區"],
+      "answer": "後方地區",
+      "reference": "陸軍作戰要綱 5-73頁"
+    },
+    {
+      "id": 55,
+      "type": "single_choice",
+      "question": "防衛作戰特性，何者為非？",
+      "options": ["被動性", "獨立性", "聯戰性", "速決性", "遂滅性"],
+      "answer": "速決性",
+      "reference": "陸軍作戰要綱 6-28頁"
+    },
+    {
+      "id": 56,
+      "type": "single_choice",
+      "question": "轉進區分方式，何者為正確？",
+      "options": ["正面戰鬥", "退卻", "脫離戰鬥", "側面攻擊"],
+      "answer": "退卻",
+      "reference": "陸軍作戰要綱 5-112頁"
+    },
+    {
+      "id": 57,
+      "type": "single_choice",
+      "question": "機動力整備之項目，何者為非？",
+      "options": ["道路", "武器", "通信系統", "糧具"],
+      "answer": "武器",
+      "reference": "陸軍作戰要綱 6-19頁"
+    },
+    {
+      "id": 58,
+      "type": "single_choice",
+      "question": "戰場之變項，何者為非？",
+      "options": ["推進力", "排除力", "打擊力", "精神力", "維護力"],
+      "answer": "排除力",
+      "reference": "陸軍作戰要綱 6-19頁"
+    },
+    {
+      "id": 59,
+      "type": "single_choice",
+      "question": "陸軍反登陸作戰指導之基本概念，何者為非？",
+      "options": ["獨立守備", "分區擊滅", "連續反擊", "灘岸決勝"],
+      "answer": "灘岸決勝",
+      "reference": "陸軍作戰要綱 6-10頁"
+    },
+    {
+      "id": 60,
+      "type": "single_choice",
+      "question": "包圍區分哪幾種，何者為非？",
+      "options": ["三面包圍", "一翼包圍", "兩翼包圍", "四周包圍", "垂直包圍"],
+      "answer": "垂直包圍",
+      "reference": "陸軍作戰要綱 5-48頁"
+    },
+    {
+      "id": 61,
+      "type": "single_choice",
+      "question": "反登陸作戰依「量地用兵」原則，區分之守備地區為何？",
+      "options": ["重要守備地區", "次要守備地區", "後方地區", "側方警戒地區"],
+      "answer": "重要守備地區",
+      "reference": "陸軍作戰要綱 6-39頁"
+    },
+    {
+      "id": 62,
+      "type": "single_choice",
+      "question": "政治作戰指導包括哪些？",
+      "options": ["武力戰與民眾相結合", "戰前作戰與戰後作戰相結合", "有形戰鬥與無形戰力相結合", "以上皆是"],
+      "answer": "以上皆是",
+      "reference": "陸軍作戰要綱 1-55頁"
+    },
+    {
+      "id": 63,
+      "type": "single_choice",
+      "question": "下列何者為攻擊構想內容？",
+      "options": ["警戒區域", "障礙措施", "攻擊目標", "隨後行動"],
+      "answer": "攻擊目標",
+      "reference": "陸軍作戰要綱 5-56頁"
+    },
+    {
+      "id": 64,
+      "type": "single_choice",
+      "question": "下列何者為包圍時機內容？",
+      "options": ["敵正面兵、火力均顯衰弱", "敵側翼暴露", "敵後方無依托", "我有充分時間與兵力"],
+      "answer": "敵正面兵、火力均顯衰弱",
+      "reference": "陸軍作戰要綱 5-48頁"
+    },
+    {
+      "id": 65,
+      "type": "single_choice",
+      "question": "戰術性電子戰包含項目，下列何者為非？",
+      "options": ["電子戰支援", "電子戰守備", "電子戰攻擊", "電子戰防護"],
+      "answer": "電子戰守備",
+      "reference": "陸軍作戰要綱 4-8頁"
+    },
+    {
+      "id": 66,
+      "type": "single_choice",
+      "question": "以下何者為指揮程序步驟？",
+      "options": ["狀況判斷", "決心及作戰構想", "計畫與命令", "以上皆是"],
+      "answer": "以上皆是",
+      "reference": "陸軍作戰要綱 3-6頁"
+    },
+    {
+      "id": 67,
+      "type": "single_choice",
+      "question": "以下何者為作戰構想？",
+      "options": ["兵力與火力之運用", "應變措施", "隨後行動", "以上皆是"],
+      "answer": "以上皆是",
+      "reference": "陸軍作戰要綱 3-10頁"
+    },
+    {
+      "id": 68,
+      "type": "single_choice",
+      "question": "下列何者非防衛作戰後攻擊支援特性？",
+      "options": ["密集性", "隱蔽性", "獨立性", "重疊性"],
+      "answer": "隱蔽性",
+      "reference": "陸軍作戰要綱 1-38頁"
+    },
+    {
+      "id": 69,
+      "type": "single_choice",
+      "question": "下列何者非任務接替之方式？",
+      "options": ["原地接替", "超越接替", "前方接替", "收容接替"],
+      "answer": "前方接替",
+      "reference": "陸軍作戰要綱 4-48頁"
+    },
+    {
+      "id": 70,
+      "type": "single_choice",
+      "question": "下列何者非正面攻擊時機？",
+      "options": ["敵兵力優勢時", "以牽制敵人為目的時", "敵兵火力優勢時", "以突破敵人末目標時"],
+      "answer": "敵兵力優勢時",
+      "reference": "陸軍作戰要綱 5-53頁"
+    },
+
+    {
+      "id": 71,
+      "type": "multiple_choice",
+      "question": "戰軍登陸作戰基本條件為何？",
+      "options": ["保持海、空優勢", "具備足夠運輸工具", "適宜之灘、著陸場", "周密規劃統制"],
+      "answer": ["保持海、空優勢", "具備足夠運輸工具", "適宜之灘、著陸場", "周密規劃統制"],
+      "reference": "陸軍作戰要綱 6-5頁"
+    },
+    {
+      "id": 72,
+      "type": "multiple_choice",
+      "question": "兵種聯合作戰成功之基礎？",
+      "options": ["統一指揮", "互相瞭解", "充分協調", "精誠合作"],
+      "answer": ["互相瞭解", "充分協調", "精誠合作"],
+      "reference": "陸軍作戰要綱 1-28頁"
+    },
+    {
+      "id": 73,
+      "type": "multiple_choice",
+      "question": "聯合兵種指揮運用原則？",
+      "options": ["統一指揮", "火力發揮", "彈性運用", "長短相輔"],
+      "answer": ["統一指揮", "彈性運用", "長短相輔"],
+      "reference": "陸軍作戰要綱 1-29頁"
+    },
+    {
+      "id": 74,
+      "type": "multiple_choice",
+      "question": "作戰管制友軍運用原則為何？",
+      "options": ["尊重建制權制", "適切分配任務", "避免遲滯陣地", "敵軍能力現況"],
+      "answer": ["尊重建制權制", "適切分配任務", "避免遲滯陣地"],
+      "reference": "陸軍作戰要綱 2-22頁"
+    },
+    {
+      "id": 75,
+      "type": "multiple_choice",
+      "question": "地面作戰之管制種類為何？",
+      "options": ["線際行動管制", "火力支援管制", "指揮管制", "其他管制"],
+      "answer": ["線際行動管制", "火力支援管制", "指揮管制", "其他管制"],
+      "reference": "陸軍作戰要綱 3-25頁"
+    },
+    {
+      "id": 76,
+      "type": "multiple_choice",
+      "question": "野戰防空部隊作戰方式為何？",
+      "options": ["直接掩護", "區域接續掩護", "隨伴掩護", "區域掩護"],
+      "answer": ["直接掩護", "隨伴掩護", "區域掩護"],
+      "reference": "陸軍作戰要綱 3-21頁"
+    },
+    {
+      "id": 77,
+      "type": "multiple_choice",
+      "question": "軍事謀略運用一般原則為何？",
+      "options": ["秘匿布局", "嚴保慎重", "奇正併用", "敵前側場"],
+      "answer": ["秘匿布局", "嚴保慎重", "奇正併用"],
+      "reference": "陸軍作戰要綱 4-17頁"
+    },
+    {
+      "id": 78,
+      "type": "multiple_choice",
+      "question": "敵情偵蒐與監控指導為何？",
+      "options": ["全面多元", "偵監配合", "機動彈性", "分時掌控", "分段掃蕩"],
+      "answer": ["全面多元", "偵監配合", "機動彈性", "分時掌控"],
+      "reference": "陸軍作戰要綱 6-32頁"
+    },
+    {
+      "id": 79,
+      "type": "multiple_choice",
+      "question": "迫地攻擊之指揮為何？",
+      "options": ["統一計畫", "三面協調", "發揮壓力、賦予任務", "毀殲敵空、保存戰力", "區域劃分、綜合運用"],
+      "answer": ["統一計畫", "發揮壓力、賦予任務", "區域劃分、綜合運用"],
+      "reference": "陸軍作戰要綱 6-36頁"
+    },
+    {
+      "id": 80,
+      "type": "multiple_choice",
+      "question": "攻擊準備之內容包括哪些？",
+      "options": ["敵情與地形偵查", "後勤機動維修", "命令下達與管制", "攻擊部署與展開"],
+      "answer": ["敵情與地形偵查", "命令下達與管制", "攻擊部署與展開"],
+      "reference": "陸軍作戰要綱 5-41頁"
+    },
+    {
+      "id": 81,
+      "type": "multiple_choice",
+      "question": "指揮層級之區分為何？",
+      "options": ["建制", "編配", "配屬", "作戰管制"],
+      "answer": ["建制", "編配", "配屬", "作戰管制"],
+      "reference": "陸軍作戰要綱 3-1頁"
+    },
+    {
+      "id": 82,
+      "type": "multiple_choice",
+      "question": "攻擊基本方式包括哪些？",
+      "options": ["突穿", "包圍", "迂迴", "正面攻擊"],
+      "answer": ["突穿", "包圍", "迂迴", "正面攻擊"],
+      "reference": "陸軍作戰要綱 5-41頁"
+    },
+    {
+      "id": 83,
+      "type": "multiple_choice",
+      "question": "應急作戰特質為何？",
+      "options": ["時間充足", "逐次準備", "戰力有限", "節奏快速"],
+      "answer": ["逐次準備", "戰力有限", "節奏快速"],
+      "reference": "陸軍作戰要綱 6-74頁"
+    },
+    {
+      "id": 84,
+      "type": "multiple_choice",
+      "question": "應急作戰特質為何？",
+      "options": ["時間充足", "戰力有限", "逐次準備", "節奏快速"],
+      "answer": ["戰力有限", "逐次準備", "節奏快速"],
+      "reference": "陸軍作戰要綱 6-74頁"
+    },
+    {
+      "id": 85,
+      "type": "multiple_choice",
+      "question": "情報作業程序（四大步驟）為何？",
+      "options": ["指導", "蒐集", "處理", "運用"],
+      "answer": ["指導", "蒐集", "處理", "運用"],
+      "reference": "陸軍作戰要綱 4-4頁"
+    },
+    {
+      "id": 86,
+      "type": "multiple_choice",
+      "question": "行軍之方式為何？",
+      "options": ["徒步行軍", "機進行軍", "乘車行軍", "徒車交替行軍"],
+      "answer": ["徒步行軍", "機進行軍", "乘車行軍", "徒車交替行軍"],
+      "reference": "陸軍作戰要綱 4-33頁"
+    },
+    {
+      "id": 87,
+      "type": "multiple_choice",
+      "question": "機進攻擊目標之選定為何？",
+      "options": ["擊滅後方之敵", "置敵於不戰狀態", "敵之主力", "對我危害最大者"],
+      "answer": ["置敵於不戰狀態", "敵之主力", "對我危害最大者"],
+      "reference": "陸軍作戰要綱 5-57頁"
+    },
+    {
+      "id": 88,
+      "type": "multiple_choice",
+      "question": "聯合作戰成功之基礎為何？",
+      "options": ["相互瞭解", "充分協調", "周密計畫", "有效配合"],
+      "answer": ["相互瞭解", "充分協調", "周密計畫", "有效配合"],
+      "reference": "陸軍作戰要綱 1-19頁"
+    },
+    {
+      "id": 89,
+      "type": "multiple_choice",
+      "question": "兵種聯合作戰指導原則，何者正確？",
+      "options": ["統一指揮", "彈性運用", "長短相輔", "聯絡受限"],
+      "answer": ["統一指揮", "彈性運用", "長短相輔"],
+      "reference": "陸軍作戰要綱 1-29頁"
+    },
+    {
+      "id": 90,
+      "type": "multiple_choice",
+      "question": "持久作戰通常以何為著眼？",
+      "options": ["牽制敵人", "削弱敵人", "阻滯敵人", "逐次消耗敵人戰力"],
+      "answer": ["削弱敵人", "阻滯敵人", "逐次消耗敵人戰力"],
+      "reference": "陸軍作戰要綱 5-11頁"
+    },
+    {
+      "id": 91,
+      "type": "multiple_choice",
+      "question": "參謀判斷區分為何？",
+      "options": ["人事", "情報", "作戰", "後勤"],
+      "answer": ["人事", "情報", "作戰", "後勤"],
+      "reference": "陸軍作戰要綱 3-9頁"
+    },
+    {
+      "id": 92,
+      "type": "multiple_choice",
+      "question": "中間目標之選定？",
+      "options": ["為達成任務必先奪取者", "礙於指揮與聯絡各支援部隊", "地形要點或敵軍特大力量", "於發起協同攻擊前可攻擊"],
+      "answer": ["為達成任務必先奪取者", "地形要點或敵軍特大力量", "於發起協同攻擊前可攻擊"],
+      "reference": "陸軍作戰要綱 3-6頁"
+    },
+    {
+      "id": 93,
+      "type": "multiple_choice",
+      "question": "指揮機構區分為何？",
+      "options": ["陸軍戰略指揮機構", "野戰戰略指揮機構", 
