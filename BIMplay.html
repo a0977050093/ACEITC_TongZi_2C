@@ -186,16 +186,21 @@
   /* Modal */
   .modal-overlay {
     display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.88); z-index: 100;
+    background: rgba(0,0,0,0.92); z-index: 100;
     align-items: center; justify-content: center;
-    padding: 24px; backdrop-filter: blur(4px);
+    padding: 16px; backdrop-filter: blur(6px);
   }
   .modal-overlay.show { display: flex; animation: fadeIn 0.2s ease; }
   @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
   .modal-card {
     background: var(--panel); border: 2px solid var(--accent);
-    border-radius: 8px; padding: 28px 24px 22px;
-    max-width: 440px; width: 100%; text-align: center;
+    border-radius: 8px; padding: 24px 20px 18px;
+    /* ★ 放大：最大寬度從 440px → 700px，並限制最大高度讓內容不超出螢幕 */
+    max-width: 700px;
+    width: 100%;
+    max-height: 92vh;
+    overflow-y: auto;
+    text-align: center;
     animation: slideUp 0.22s ease; position: relative;
   }
   .modal-card.border-綜合 { border-color: var(--accent2); }
@@ -206,7 +211,11 @@
   .modal-title.color-學霸 { color: var(--accent3); }
   .modal-subtitle { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 16px; text-transform: uppercase; }
   .modal-image-area {
-    width: 100%; aspect-ratio: 4/3;
+    width: 100%;
+    /* ★ 放大：aspect-ratio 從 4/3 → 3/2，視覺更大；移除固定比例也可 */
+    aspect-ratio: 4 / 3;
+    /* ★ 加上最小高度，確保在大螢幕上夠大 */
+    min-height: 320px;
     background: #1a1a1a; border: 2px dashed var(--border);
     border-radius: 6px; display: flex; flex-direction: column;
     align-items: center; justify-content: center;
@@ -214,17 +223,18 @@
   }
   .modal-image-area img { width:100%; height:100%; object-fit:contain; display:none; }
   .modal-placeholder { display:flex; flex-direction:column; align-items:center; gap:7px; color:var(--muted); }
-  .modal-placeholder .icon { font-size: 2rem; opacity: 0.3; }
+  .modal-placeholder .icon { font-size: 2.5rem; opacity: 0.3; }
   .modal-placeholder .fname {
-    font-family: monospace; font-size: 0.7rem;
+    font-family: monospace; font-size: 0.75rem;
     color: var(--accent); background: rgba(240,192,64,0.08);
-    padding: 3px 8px; border-radius: 3px;
+    padding: 4px 10px; border-radius: 3px;
   }
   .modal-placeholder p { font-size: 0.72rem; }
   .modal-close {
     position: absolute; top: 10px; right: 12px;
     background: none; border: none; color: var(--muted);
-    font-size: 1.2rem; cursor: pointer; transition: color 0.15s;
+    font-size: 1.4rem; cursor: pointer; transition: color 0.15s;
+    line-height: 1;
   }
   .modal-close:hover { color: var(--text); }
   .modal-hint { font-size: 0.65rem; color: var(--muted); line-height: 1.7; }
@@ -354,7 +364,7 @@ const QUESTIONS = {
   ],
   學霸: [
     "ISQM國際服務品質制度管理中，顧客最直接感受的是哪三項服務構面，每個構面分別觀察重點為何？",   // 學霸1
-    "顧客在禁菸區時，秉持著不對顧客說”不”的我們，應如何制止？請說明步驟流程技巧？",   // 學霸2
+    "顧客在禁菸區時，秉持著不對顧客說"不"的我們，應如何制止？請說明步驟流程技巧？",   // 學霸2
     "顧客要離開時，身為服務人員的我們，應如何歡送？請說明步驟流程技巧",   // 學霸3
     "當發生顧客抱怨，身為服務人員的您，該用哪些服務技巧來處理該項客訴？請依序指示",   // 學霸4
     "身為櫃檯總機人員，接聽電話同時，現場有顧客上前詢問問題時，該如何示意？",   // 學霸5
