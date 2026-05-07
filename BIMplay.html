@@ -3,565 +3,788 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>題目抽籤機</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Oswald:wght@700&display=swap" rel="stylesheet">
+<title>抽題機</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700;900&family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #0d0d0d;
-    --panel: #151515;
-    --accent: #f0c040;
-    --accent2: #e05a2b;
-    --accent3: #5bc4a0;
-    --text: #f5f0e8;
-    --muted: #666;
-    --border: #2a2a2a;
-  }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Noto Sans TC', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 28px 20px 40px;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(240,192,64,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(240,192,64,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .wrapper {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    max-width: 560px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 22px;
-  }
-
-  .header { text-align: center; }
-
-  .header h1 {
-    font-family: 'Oswald', sans-serif;
-    font-size: clamp(1.8rem, 7vw, 2.8rem);
-    letter-spacing: 0.1em;
-    color: var(--accent);
-    text-transform: uppercase;
-    line-height: 1;
-  }
-
-  .header p {
-    font-size: 0.78rem;
-    color: var(--muted);
-    margin-top: 5px;
-    letter-spacing: 0.06em;
-  }
-
-  .cat-tabs {
-    display: flex;
-    gap: 8px;
-    width: 100%;
-  }
-
-  .cat-tab {
-    flex: 1;
-    padding: 9px 4px;
-    border-radius: 5px;
-    border: 2px solid var(--border);
-    background: transparent;
-    color: var(--muted);
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-
-  .cat-tab:hover {
-    border-color: var(--muted);
-    color: var(--text);
-  }
-
-  .cat-tab.active-基礎 {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: rgba(240,192,64,0.08);
-  }
-
-  .cat-tab.active-綜合 {
-    border-color: var(--accent2);
-    color: var(--accent2);
-    background: rgba(224,90,43,0.08);
-  }
-
-  .cat-tab.active-學霸 {
-    border-color: var(--accent3);
-    color: var(--accent3);
-    background: rgba(91,196,160,0.08);
-  }
-
-  .cat-tab:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-
-  .number-badge {
-    font-family: 'Oswald', sans-serif;
-    font-size: clamp(3.2rem, 14vw, 5rem);
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1;
-    letter-spacing: 0.04em;
-    user-select: none;
-    min-height: 1.1em;
-    display: flex;
-    align-items: baseline;
-    gap: 0.06em;
-  }
-
-  .number-badge .cat-part {
-    font-size: 0.42em;
-    opacity: 0.8;
-  }
-
-  .number-badge.rolling {
-    color: var(--accent);
-    text-shadow: 0 0 40px rgba(240,192,64,0.4);
-  }
-
-  .number-badge.locked-基礎 {
-    color: var(--accent);
-    text-shadow: 0 0 50px rgba(240,192,64,0.35);
-  }
-
-  .number-badge.locked-綜合 {
-    color: var(--accent2);
-    text-shadow: 0 0 50px rgba(224,90,43,0.35);
-  }
-
-  .number-badge.locked-學霸 {
-    color: var(--accent3);
-    text-shadow: 0 0 50px rgba(91,196,160,0.35);
-  }
-
-  .question-card {
-    width: 100%;
-    background: var(--panel);
-    border: 2px solid var(--border);
-    border-radius: 8px;
-    padding: 20px 22px;
-    min-height: 90px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    transition: border-color 0.3s;
-  }
-
-  .question-card.border-基礎 {
-    border-color: rgba(240,192,64,0.45);
-  }
-
-  .question-card.border-綜合 {
-    border-color: rgba(224,90,43,0.45);
-  }
-
-  .question-card.border-學霸 {
-    border-color: rgba(91,196,160,0.45);
-  }
-
-  .question-text {
-    font-size: 1.05rem;
-    line-height: 1.75;
-    color: var(--text);
-    white-space: pre-wrap;
-  }
-
-  .question-placeholder {
-    font-size: 0.85rem;
-    color: var(--muted);
-    letter-spacing: 0.06em;
-  }
-
-  .status-badge {
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    color: var(--muted);
-    padding: 3px 12px;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-  }
-
-  .progress-section {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .progress-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
-    margin-bottom: 5px;
-  }
-
-  .progress-label.lbl-基礎 { color: var(--accent); }
-  .progress-label.lbl-綜合 { color: var(--accent2); }
-  .progress-label.lbl-學霸 { color: var(--accent3); }
-
-  .progress-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-  }
-
-  .dot {
-    width: 24px;
-    height: 24px;
-    border-radius: 4px;
-    background: var(--border);
-    border: 1.5px solid #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.52rem;
-    color: var(--muted);
-    transition: all 0.2s;
-    font-family: 'Oswald', sans-serif;
-    font-weight: 700;
-  }
-
-  .dot.current-基礎 {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #000;
-    transform: scale(1.2);
-    box-shadow: 0 0 10px rgba(240,192,64,0.5);
-  }
-
-  .dot.current-綜合 {
-    background: var(--accent2);
-    border-color: var(--accent2);
-    color: #fff;
-    transform: scale(1.2);
-    box-shadow: 0 0 10px rgba(224,90,43,0.5);
-  }
-
-  .dot.current-學霸 {
-    background: var(--accent3);
-    border-color: var(--accent3);
-    color: #000;
-    transform: scale(1.2);
-    box-shadow: 0 0 10px rgba(91,196,160,0.5);
-  }
-
-  .btn-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    width: 100%;
-  }
-
-  .btn {
-    padding: 13px 8px;
-    border: none;
-    border-radius: 4px;
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    cursor: pointer;
-    transition: all 0.15s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: white;
-    opacity: 0;
-    transition: opacity 0.1s;
-  }
-
-  .btn:active::after { opacity: 0.08; }
-
-  .btn-start {
-    background: var(--accent);
-    color: #000;
-  }
-
-  .btn-start:hover {
-    filter: brightness(1.1);
-    transform: translateY(-1px);
-  }
-
-  .btn-stop {
-    background: var(--accent2);
-    color: #fff;
-  }
-
-  .btn-stop:hover {
-    filter: brightness(1.1);
-    transform: translateY(-1px);
-  }
-
-  .btn-answer {
-    background: transparent;
-    color: var(--accent);
-    border: 2px solid var(--accent);
-  }
-
-  .btn-answer:hover {
-    background: rgba(240,192,64,0.1);
-    transform: translateY(-1px);
-  }
-
-  .btn-clear {
-    background: transparent;
-    color: var(--muted);
-    border: 2px solid var(--border);
-  }
-
-  .btn-clear:hover {
-    border-color: var(--muted);
-    color: var(--text);
-    transform: translateY(-1px);
-  }
-
-  .btn:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-    transform: none;
-  }
-
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.88);
-    z-index: 100;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    backdrop-filter: blur(4px);
-  }
-
-  .modal-overlay.show {
-    display: flex;
-    animation: fadeIn 0.2s ease;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  .modal-card {
-    background: var(--panel);
-    border: 2px solid var(--accent);
-    border-radius: 8px;
-    padding: 28px 24px 22px;
-    max-width: 440px;
-    width: 100%;
-    text-align: center;
-    animation: slideUp 0.22s ease;
-    position: relative;
-  }
-
-  .modal-card.border-綜合 { border-color: var(--accent2); }
-  .modal-card.border-學霸 { border-color: var(--accent3); }
-
-  @keyframes slideUp {
-    from { transform: translateY(16px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-
-  .modal-title {
-    font-family: 'Oswald', sans-serif;
-    font-size: 1.5rem;
-    color: var(--accent);
-    letter-spacing: 0.06em;
-    margin-bottom: 3px;
-  }
-
-  .modal-title.color-綜合 { color: var(--accent2); }
-  .modal-title.color-學霸 { color: var(--accent3); }
-
-  .modal-subtitle {
-    font-size: 0.7rem;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    margin-bottom: 16px;
-    text-transform: uppercase;
-  }
-
-  .modal-image-area {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    background: #1a1a1a;
-    border: 2px dashed var(--border);
-    border-radius: 6px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    margin-bottom: 14px;
-  }
-
-  .modal-image-area img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: none;
-  }
-
-  .modal-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 7px;
-    color: var(--muted);
-  }
-
-  .modal-placeholder .icon {
-    font-size: 2rem;
-    opacity: 0.3;
-  }
-
-  .modal-placeholder .fname {
-    font-family: monospace;
-    font-size: 0.7rem;
-    color: var(--accent);
-    background: rgba(240,192,64,0.08);
-    padding: 3px 8px;
-    border-radius: 3px;
-  }
-
-  .modal-placeholder p {
-    font-size: 0.72rem;
-  }
-
-  .modal-close {
-    position: absolute;
-    top: 10px;
-    right: 12px;
-    background: none;
-    border: none;
-    color: var(--muted);
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: color 0.15s;
-  }
-
-  .modal-close:hover {
-    color: var(--text);
-  }
-
-  .modal-hint {
-    font-size: 0.65rem;
-    color: var(--muted);
-    line-height: 1.7;
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a0f;
+  --surface: #111118;
+  --card: #16161e;
+  --border: #1e1e2e;
+  --accent: #7c6af7;
+  --accent-glow: rgba(124,106,247,0.25);
+  --gold: #f0c040;
+  --gold-glow: rgba(240,192,64,0.2);
+  --teal: #4ecdc4;
+  --rose: #ff6b6b;
+  --text: #e8e8f0;
+  --muted: #555568;
+  --muted2: #333344;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans TC', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── BACKGROUND ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 20% 10%, rgba(124,106,247,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(78,205,196,0.04) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124,106,247,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,106,247,0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── LAYOUT ─── */
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 660px;
+  margin: 0 auto;
+  padding: 40px 20px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ─── HEADER ─── */
+.header {
+  text-align: center;
+  padding-bottom: 8px;
+}
+
+.header-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+.header h1 {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(3.5rem, 12vw, 6rem);
+  letter-spacing: 0.08em;
+  color: var(--text);
+  line-height: 0.9;
+  position: relative;
+  display: inline-block;
+}
+
+.header h1 span {
+  color: var(--accent);
+  text-shadow: 0 0 40px var(--accent-glow);
+}
+
+.header-sub {
+  margin-top: 10px;
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  font-family: 'DM Mono', monospace;
+}
+
+.header-sub em {
+  color: var(--teal);
+  font-style: normal;
+}
+
+/* ─── POOL TOGGLE ─── */
+.pool-info {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pool-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pool-count {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.8rem;
+  color: var(--accent);
+  line-height: 1;
+  text-shadow: 0 0 20px var(--accent-glow);
+}
+
+.pool-breakdown {
+  display: flex;
+  gap: 14px;
+}
+
+.pool-item {
+  text-align: center;
+}
+
+.pool-item-num {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.pool-item-lbl {
+  font-size: 0.6rem;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+}
+
+.pool-item.basic .pool-item-num { color: var(--gold); }
+.pool-item.comp .pool-item-num { color: var(--rose); }
+.pool-item.pro .pool-item-num { color: var(--teal); }
+
+/* ─── 學霸 TOGGLE ─── */
+.pro-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.pro-toggle-label {
+  font-size: 0.75rem;
+  color: var(--teal);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+}
+
+.toggle-switch {
+  width: 40px;
+  height: 22px;
+  background: var(--border);
+  border-radius: 11px;
+  position: relative;
+  transition: background 0.25s;
+  border: 1px solid var(--muted2);
+}
+
+.toggle-switch.on {
+  background: var(--teal);
+  border-color: var(--teal);
+}
+
+.toggle-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  background: var(--text);
+  border-radius: 50%;
+  transition: transform 0.25s;
+}
+
+.toggle-switch.on .toggle-knob {
+  transform: translateX(18px);
+  background: #0a0a0f;
+}
+
+/* ─── ROLL STAGE ─── */
+#rollStage {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 40px 30px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#rollStage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124,106,247,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.roll-number {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(6rem, 20vw, 10rem);
+  line-height: 1;
+  color: var(--muted2);
+  transition: color 0.2s, text-shadow 0.2s;
+  letter-spacing: 0.05em;
+  position: relative;
+}
+
+.roll-number.rolling {
+  color: var(--accent);
+  text-shadow: 0 0 60px var(--accent-glow), 0 0 120px var(--accent-glow);
+  animation: flicker 0.06s infinite alternate;
+}
+
+.roll-number.locked {
+  color: var(--gold);
+  text-shadow: 0 0 40px var(--gold-glow), 0 0 80px var(--gold-glow);
+  animation: none;
+}
+
+@keyframes flicker {
+  from { opacity: 1; }
+  to { opacity: 0.85; }
+}
+
+.roll-cat-badge {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  padding: 3px 12px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+  border: 1px solid transparent;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.roll-cat-badge.show { opacity: 1; }
+.roll-cat-badge.cat-基礎 { color: var(--gold); border-color: rgba(240,192,64,0.3); background: rgba(240,192,64,0.06); }
+.roll-cat-badge.cat-綜合 { color: var(--rose); border-color: rgba(255,107,107,0.3); background: rgba(255,107,107,0.06); }
+.roll-cat-badge.cat-學霸 { color: var(--teal); border-color: rgba(78,205,196,0.3); background: rgba(78,205,196,0.06); }
+
+.roll-status {
+  font-size: 0.7rem;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.1em;
+  margin-top: 8px;
+  min-height: 1.2em;
+}
+
+/* ─── BUTTONS ─── */
+.btn-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.btn {
+  padding: 14px 10px;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+
+.btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+  transform: none !important;
+  filter: none !important;
+}
+
+.btn-roll {
+  background: var(--accent);
+  color: #fff;
+  grid-column: 1 / -1;
+  font-size: 1.05rem;
+  box-shadow: 0 4px 24px rgba(124,106,247,0.3);
+}
+
+.btn-roll:not(:disabled):hover {
+  filter: brightness(1.12);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(124,106,247,0.45);
+}
+
+.btn-stop {
+  background: var(--rose);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(255,107,107,0.25);
+}
+
+.btn-stop:not(:disabled):hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+.btn-again {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+
+.btn-again:not(:disabled):hover {
+  border-color: var(--muted);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+/* ─── Q&A CARD ─── */
+#qaSection {
+  display: none;
+  flex-direction: column;
+  gap: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+#qaSection.visible {
+  display: flex;
+  animation: slideDown 0.35s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.qa-question {
+  background: var(--card);
+  padding: 28px 28px 24px;
+  position: relative;
+}
+
+.qa-q-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qa-q-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.qa-q-number {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 3.5rem;
+  line-height: 1;
+  color: var(--gold);
+  text-shadow: 0 0 30px var(--gold-glow);
+  margin-bottom: 12px;
+  letter-spacing: 0.05em;
+}
+
+.qa-q-cat {
+  font-size: 0.65rem;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.qa-q-text {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--text);
+  font-weight: 400;
+}
+
+/* ─── ANSWER SECTION ─── */
+.qa-answer-toggle {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.qa-answer-toggle:hover { background: var(--border); }
+
+.qa-toggle-btn {
+  width: 100%;
+  padding: 16px 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: 0.08em;
+}
+
+.qa-toggle-btn .arrow {
+  font-size: 0.7rem;
+  transition: transform 0.25s;
+  opacity: 0.6;
+}
+
+.qa-toggle-btn.open .arrow { transform: rotate(180deg); }
+
+.qa-answer-body {
+  display: none;
+  background: var(--card);
+  border-top: 1px solid var(--muted2);
+  padding: 24px 28px 28px;
+}
+
+.qa-answer-body.open { display: block; animation: fadeIn 0.25s ease; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.qa-a-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qa-a-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.answer-text {
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: var(--text);
+  white-space: pre-wrap;
+}
+
+.answer-placeholder {
+  text-align: center;
+  padding: 30px 0;
+  color: var(--muted);
+}
+
+.answer-placeholder .icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 10px;
+  opacity: 0.3;
+}
+
+.answer-placeholder p {
+  font-size: 0.75rem;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+
+.answer-placeholder code {
+  font-family: 'DM Mono', monospace;
+  color: var(--teal);
+  background: rgba(78,205,196,0.08);
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 0.7rem;
+}
+
+/* ─── PROGRESS ─── */
+.progress-wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+
+.progress-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.progress-group { margin-bottom: 14px; }
+.progress-group:last-child { margin-bottom: 0; }
+
+.progress-group-label {
+  font-size: 0.62rem;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.1em;
+  margin-bottom: 7px;
+}
+
+.progress-group-label.lbl-基礎 { color: var(--gold); }
+.progress-group-label.lbl-綜合 { color: var(--rose); }
+.progress-group-label.lbl-學霸 { color: var(--teal); }
+
+.dots-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  background: var(--muted2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5rem;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.dot.active-基礎 {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #000;
+  transform: scale(1.25);
+  box-shadow: 0 0 10px rgba(240,192,64,0.5);
+}
+
+.dot.active-綜合 {
+  background: var(--rose);
+  border-color: var(--rose);
+  color: #fff;
+  transform: scale(1.25);
+  box-shadow: 0 0 10px rgba(255,107,107,0.5);
+}
+
+.dot.active-學霸 {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #000;
+  transform: scale(1.25);
+  box-shadow: 0 0 10px rgba(78,205,196,0.5);
+}
+
+/* ─── BACK TO TOP ─── */
+.back-top {
+  position: fixed;
+  bottom: 28px;
+  right: 22px;
+  z-index: 99;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(124,106,247,0.45);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+}
+
+.back-top.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.back-top:hover {
+  filter: brightness(1.15);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(124,106,247,0.6);
+}
+
+.back-top svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ─── DIVIDER ─── */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
 </style>
 </head>
 
 <body>
-<div class="wrapper">
 
+<div class="page" id="topAnchor">
+
+  <!-- HEADER -->
   <div class="header">
-    <h1>抽題機</h1>
-    <p>基礎 35題 · 綜合 10題 · 學霸 5題</p>
-  </div>
-
-  <div class="cat-tabs">
-    <button class="cat-tab active-基礎" id="tab-基礎" onclick="selectCategory('基礎')">⭐ 基礎</button>
-    <button class="cat-tab" id="tab-綜合" onclick="selectCategory('綜合')">🔥 綜合</button>
-    <button class="cat-tab" id="tab-學霸" onclick="selectCategory('學霸')">💎 學霸</button>
-  </div>
-
-  <div class="number-badge" id="numBadge">?</div>
-
-  <div class="question-card" id="questionCard">
-    <div class="question-placeholder" id="questionPlaceholder">選擇類別，按「開始」抽題</div>
-    <div class="question-text" id="questionText" style="display:none"></div>
-  </div>
-
-  <div class="status-badge" id="statusBadge">等待開始</div>
-
-  <div class="progress-section">
-    <div class="progress-group">
-      <div class="progress-label lbl-基礎">⭐ 基礎 1–35</div>
-      <div class="progress-row" id="dots-基礎"></div>
-    </div>
-
-    <div class="progress-group">
-      <div class="progress-label lbl-綜合">🔥 綜合 1–10</div>
-      <div class="progress-row" id="dots-綜合"></div>
-    </div>
-
-    <div class="progress-group">
-      <div class="progress-label lbl-學霸">💎 學霸 1–5</div>
-      <div class="progress-row" id="dots-學霸"></div>
+    <div class="header-eyebrow">Quiz Lottery System</div>
+    <h1>抽<span>題</span>機</h1>
+    <div class="header-sub">
+      基礎 35題 ＋ 綜合 10題 合併抽題 &nbsp;·&nbsp; <em>💎 學霸</em> 可開啟加入
     </div>
   </div>
 
-  <div class="btn-grid">
-    <button class="btn btn-start" id="btnStart" onclick="startRoll()">▶ 開始</button>
-    <button class="btn btn-stop" id="btnStop" onclick="stopRoll()" disabled>■ 停止</button>
-    <button class="btn btn-answer" id="btnAnswer" onclick="showAnswer()" disabled>🃏 解答</button>
-    <button class="btn btn-clear" id="btnClear" onclick="clearCard()" disabled>✕ 清除</button>
-  </div>
+  <!-- POOL INFO -->
+  <div class="pool-info">
+    <div>
+      <div class="pool-label">題庫總數</div>
+      <div class="pool-count" id="poolTotal">45</div>
+    </div>
 
-</div>
-
-<div class="modal-overlay" id="modal">
-  <div class="modal-card" id="modalCard">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-
-    <div class="modal-title" id="modalTitle">基礎 1</div>
-    <div class="modal-subtitle">解答圖卡</div>
-
-    <div class="modal-image-area">
-      <img id="modalImg" src="" alt="解答圖卡">
-      <div class="modal-placeholder" id="modalPlaceholder">
-        <div class="icon">🖼️</div>
-        <p id="modalLoadingText">解答圖片載入中...</p>
-        <div class="fname" id="modalFilename">基礎_01.jpg</div>
-        <p style="font-size:0.62rem; opacity:0.5; margin-top:1px">請將圖片放於同目錄</p>
+    <div class="pool-breakdown">
+      <div class="pool-item basic">
+        <div class="pool-item-num">35</div>
+        <div class="pool-item-lbl">基礎</div>
+      </div>
+      <div class="pool-item comp">
+        <div class="pool-item-num">10</div>
+        <div class="pool-item-lbl">綜合</div>
+      </div>
+      <div class="pool-item pro" id="proPoolItem" style="opacity:0.3">
+        <div class="pool-item-num">5</div>
+        <div class="pool-item-lbl">學霸</div>
       </div>
     </div>
 
-    <div class="modal-hint">
-      命名格式：
-      <code style="color:var(--accent)">基礎_01.jpg</code> ·
-      <code style="color:var(--accent2)">綜合_03.jpg</code> ·
-      <code style="color:var(--accent3)">學霸_02.jpg</code>
+    <label class="pro-toggle" id="proToggle">
+      <div class="pro-toggle-label">學霸<br>模式</div>
+      <div class="toggle-switch" id="toggleSwitch">
+        <div class="toggle-knob"></div>
+      </div>
+    </label>
+  </div>
+
+  <!-- ROLL STAGE -->
+  <div id="rollStage">
+    <div class="roll-cat-badge" id="catBadge"></div>
+    <div class="roll-number" id="rollNum">—</div>
+    <div class="roll-status" id="rollStatus">點擊「開始抽題」</div>
+  </div>
+
+  <!-- BUTTONS -->
+  <div class="btn-row">
+    <button class="btn btn-roll" id="btnRoll" onclick="startRoll()">▶ 開始抽題</button>
+    <button class="btn btn-stop" id="btnStop" onclick="stopRoll()" disabled>■ 停止</button>
+    <button class="btn btn-again" id="btnAgain" onclick="resetAll()" disabled>↺ 重新抽</button>
+  </div>
+
+  <!-- Q&A SECTION -->
+  <div class="section-divider" id="qaDivider" style="display:none">題目與解答</div>
+
+  <div id="qaSection">
+    <div class="qa-question">
+      <div class="qa-q-label">QUESTION</div>
+      <div class="qa-q-number" id="qaNum">—</div>
+      <div class="qa-q-cat" id="qaCat"></div>
+      <div class="qa-q-text" id="qaText"></div>
+    </div>
+
+    <div class="qa-answer-toggle">
+      <button class="qa-toggle-btn" id="ansToggleBtn" onclick="toggleAnswer()">
+        <span>🃏 顯示解答</span>
+        <span class="arrow">▲</span>
+      </button>
+      <div class="qa-answer-body" id="ansBody">
+        <div class="qa-a-label">ANSWER</div>
+        <div class="answer-placeholder" id="ansPlaceholder">
+          <span class="icon">🖼️</span>
+          <p>解答圖片命名格式：</p>
+          <p><code id="ansFilename">基礎_01.jpg</code></p>
+          <p style="margin-top:6px; font-size:0.65rem; opacity:0.5">將圖片放於同目錄下即可自動顯示</p>
+        </div>
+        <img id="ansImg" src="" alt="" style="display:none; width:100%; border-radius:6px;">
+        <div class="answer-text" id="ansText" style="display:none"></div>
+      </div>
     </div>
   </div>
-</div>
+
+  <!-- PROGRESS -->
+  <div class="section-divider">題號紀錄</div>
+
+  <div class="progress-wrap">
+    <div class="progress-title">已抽題號 &nbsp;/ 進度追蹤</div>
+
+    <div class="progress-group">
+      <div class="progress-group-label lbl-基礎">⭐ 基礎 1–35</div>
+      <div class="dots-row" id="dots-基礎"></div>
+    </div>
+
+    <div class="progress-group">
+      <div class="progress-group-label lbl-綜合">🔥 綜合 1–10</div>
+      <div class="dots-row" id="dots-綜合"></div>
+    </div>
+
+    <div class="progress-group" id="proProgressGroup">
+      <div class="progress-group-label lbl-學霸">💎 學霸 1–5</div>
+      <div class="dots-row" id="dots-學霸"></div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop" onclick="scrollToTop()" title="回到最上層">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
 
 <script>
-const IMAGE_EXT = 'jpg';
-
+/* ─── DATA ─── */
 const QUESTIONS = {
   基礎: [
     "顧客不願意上門的原因有哪些？",
@@ -605,70 +828,57 @@ const QUESTIONS = {
     "請說明接待貴賓坐電梯時，服務人員接待步驟流程細節技巧？",
     "引導顧客前往某處時，該如何引導？請說明引導的方法與細節技巧？",
     "身為總機人員，接到打錯電話時，應如何回答？請說明步驟流程技巧？",
-    "就容貌服裝而言，身為服務人員的我們(男士西裝、女士著套裝) ，應注意哪些地方？",
+    "就容貌服裝而言，身為服務人員的我們(男士西裝、女士著套裝)，應注意哪些地方？",
     "行進間遇到顧客詢問事情，服務人員該如何應對？",
-    "與對方互相交換名片時(雙方) ，要如何進行交換名片動作？請說明步驟流程技巧？",
+    "與對方互相交換名片時(雙方)，要如何進行交換名片動作？請說明步驟流程技巧？",
     "ISQM服務品質制度服務管理中，行銷服務、內部服務、教育訓練構面中，每個構面分別觀察重點為何？",
     "BIM行為形象服務禮儀系統過程中，哪些單元屬於心理層面？內容應用重點為何？",
     "BIM行為形象服務禮儀系統課程中，哪些單元屬於行為面？內容應用重點為何？"
   ],
   學霸: [
     "ISQM國際服務品質制度管理中，顧客最直接感受的是哪三項服務構面，每個構面分別觀察重點為何？",
-    "顧客在禁菸區時，秉持著不對顧客說”不”的我們，應如何制止？請說明步驟流程技巧？",
+    "顧客在禁菸區時，秉持著不對顧客說「不」的我們，應如何制止？請說明步驟流程技巧？",
     "顧客要離開時，身為服務人員的我們，應如何歡送？請說明步驟流程技巧",
     "當發生顧客抱怨，身為服務人員的您，該用哪些服務技巧來處理該項客訴？請依序指示",
     "身為櫃檯總機人員，接聽電話同時，現場有顧客上前詢問問題時，該如何示意？"
   ]
 };
 
-const CAT_COUNTS = {
-  基礎: 35,
-  綜合: 10,
-  學霸: 5
-};
+const CAT_COUNTS = { 基礎: 35, 綜合: 10, 學霸: 5 };
 
-let currentCat = '基礎';
-let currentNum = null;
+/* ─── STATE ─── */
+let proMode = false;
 let rolling = false;
 let rollTimer = null;
-let stopped = false;
+let lockedCat = null;
+let lockedNum = null;
+let answerOpen = false;
+let currentRollingCat = null;
+let currentRollingNum = null;
 
-const IMAGE_CACHE = {};
-const PRELOADED_CATEGORIES = {};
+/* ─── INIT ─── */
+buildDots();
+updatePoolTotal();
+document.getElementById('proProgressGroup').style.opacity = '0.3';
 
-function getFilename(cat, num) {
-  return `${cat}_${String(num).padStart(2, '0')}.${IMAGE_EXT}`;
-}
+document.getElementById('proToggle').addEventListener('click', () => {
+  if (rolling) return;
+  proMode = !proMode;
+  document.getElementById('toggleSwitch').classList.toggle('on', proMode);
+  document.getElementById('proPoolItem').style.opacity = proMode ? '1' : '0.3';
+  document.getElementById('proProgressGroup').style.opacity = proMode ? '1' : '0.3';
+  updatePoolTotal();
+});
 
-function preloadImage(cat, num) {
-  const filename = getFilename(cat, num);
-
-  if (IMAGE_CACHE[filename]) {
-    return IMAGE_CACHE[filename];
-  }
-
-  const img = new Image();
-  img.src = filename;
-  IMAGE_CACHE[filename] = img;
-
-  return img;
-}
-
-function preloadCategory(cat) {
-  if (PRELOADED_CATEGORIES[cat]) return;
-
-  PRELOADED_CATEGORIES[cat] = true;
-
-  for (let i = 1; i <= CAT_COUNTS[cat]; i++) {
-    preloadImage(cat, i);
-  }
+function updatePoolTotal() {
+  const total = 35 + 10 + (proMode ? 5 : 0);
+  document.getElementById('poolTotal').textContent = total;
 }
 
 function buildDots() {
-  ['基礎', '綜合', '學霸'].forEach(cat => {
+  ['基礎','綜合','學霸'].forEach(cat => {
     const row = document.getElementById(`dots-${cat}`);
     row.innerHTML = '';
-
     for (let i = 1; i <= CAT_COUNTS[cat]; i++) {
       const d = document.createElement('div');
       d.className = 'dot';
@@ -679,202 +889,192 @@ function buildDots() {
   });
 }
 
-function updateDots() {
-  ['基礎', '綜合', '學霸'].forEach(cat => {
-    for (let i = 1; i <= CAT_COUNTS[cat]; i++) {
-      const d = document.getElementById(`dot-${cat}-${i}`);
-      if (!d) continue;
-
-      d.className =
-        stopped && cat === currentCat && i === currentNum
-          ? `dot current-${cat}`
-          : 'dot';
-    }
-  });
-}
-
-function selectCategory(cat) {
-  if (rolling) return;
-
-  currentCat = cat;
-  preloadCategory(cat);
-
-  ['基礎', '綜合', '學霸'].forEach(c => {
-    document.getElementById(`tab-${c}`).className =
-      'cat-tab' + (c === cat ? ` active-${c}` : '');
-  });
-
-  if (!stopped) {
-    document.getElementById('statusBadge').textContent =
-      `已選：${cat}（共 ${CAT_COUNTS[cat]} 題）`;
-  }
+function pickRandom() {
+  // 決定類別比例
+  const pool = [];
+  for (let i = 1; i <= 35; i++) pool.push({ cat: '基礎', num: i });
+  for (let i = 1; i <= 10; i++) pool.push({ cat: '綜合', num: i });
+  if (proMode) for (let i = 1; i <= 5; i++) pool.push({ cat: '學霸', num: i });
+  const pick = pool[Math.floor(Math.random() * pool.length)];
+  return pick;
 }
 
 function startRoll() {
+  if (rolling) return;
   rolling = true;
-  stopped = false;
-  currentNum = null;
+  lockedCat = null;
+  lockedNum = null;
+  answerOpen = false;
 
-  document.getElementById('btnStart').disabled = true;
+  // hide Q&A
+  document.getElementById('qaSection').className = '';
+  document.getElementById('qaSection').style.display = 'none';
+  document.getElementById('qaDivider').style.display = 'none';
+  document.getElementById('ansBody').className = 'qa-answer-body';
+  document.getElementById('ansToggleBtn').className = 'qa-toggle-btn';
+
+  // buttons
+  document.getElementById('btnRoll').disabled = true;
   document.getElementById('btnStop').disabled = false;
-  document.getElementById('btnAnswer').disabled = true;
-  document.getElementById('btnClear').disabled = true;
+  document.getElementById('btnAgain').disabled = true;
+  document.getElementById('proToggle').style.pointerEvents = 'none';
+  document.getElementById('proToggle').style.opacity = '0.4';
 
-  ['基礎', '綜合', '學霸'].forEach(cat => {
-    document.getElementById(`tab-${cat}`).disabled = true;
-  });
+  // reset dots
+  updateDots(null, null);
 
-  const badge = document.getElementById('numBadge');
-  badge.className = 'number-badge rolling';
-
-  document.getElementById('questionCard').className = 'question-card';
-  document.getElementById('questionPlaceholder').style.display = 'block';
-  document.getElementById('questionPlaceholder').textContent = '抽題中...';
-  document.getElementById('questionText').style.display = 'none';
-  document.getElementById('statusBadge').textContent = '抽題中...';
-
-  updateDots();
+  const numEl = document.getElementById('rollNum');
+  const badge = document.getElementById('catBadge');
+  numEl.className = 'roll-number rolling';
+  document.getElementById('rollStatus').textContent = '抽題中…';
 
   rollTimer = setInterval(() => {
-    const r = Math.floor(Math.random() * CAT_COUNTS[currentCat]) + 1;
-    badge.innerHTML = `<span class="cat-part">${currentCat}</span>${r}`;
-  }, 55);
+    const pick = pickRandom();
+    currentRollingCat = pick.cat;
+    currentRollingNum = pick.num;
+
+    numEl.textContent = String(pick.num).padStart(2, '0');
+
+    badge.textContent = pick.cat;
+    badge.className = `roll-cat-badge show cat-${pick.cat}`;
+  }, 60);
 }
 
 function stopRoll() {
   if (!rolling) return;
-
   clearInterval(rollTimer);
-
   rolling = false;
-  stopped = true;
 
-  currentNum = Math.floor(Math.random() * CAT_COUNTS[currentCat]) + 1;
+  // final pick
+  const pick = pickRandom();
+  lockedCat = pick.cat;
+  lockedNum = pick.num;
 
-  preloadImage(currentCat, currentNum);
+  const numEl = document.getElementById('rollNum');
+  numEl.className = 'roll-number locked';
+  numEl.textContent = String(lockedNum).padStart(2, '0');
 
-  const badge = document.getElementById('numBadge');
-  badge.className = `number-badge locked-${currentCat}`;
-  badge.innerHTML = `<span class="cat-part">${currentCat}</span>${currentNum}`;
+  document.getElementById('catBadge').textContent = lockedCat;
+  document.getElementById('catBadge').className = `roll-cat-badge show cat-${lockedCat}`;
+  document.getElementById('rollStatus').textContent = `${lockedCat} 第 ${lockedNum} 題`;
 
-  document.getElementById('questionPlaceholder').style.display = 'none';
-  document.getElementById('questionText').style.display = 'block';
-  document.getElementById('questionText').textContent =
-    QUESTIONS[currentCat][currentNum - 1];
-
-  document.getElementById('questionCard').className =
-    `question-card border-${currentCat}`;
-
-  document.getElementById('statusBadge').textContent =
-    `${currentCat} ${currentNum} 題`;
-
-  document.getElementById('btnStart').disabled = true;
+  // buttons
   document.getElementById('btnStop').disabled = true;
-  document.getElementById('btnAnswer').disabled = false;
-  document.getElementById('btnClear').disabled = false;
+  document.getElementById('btnAgain').disabled = false;
+  document.getElementById('proToggle').style.pointerEvents = '';
+  document.getElementById('proToggle').style.opacity = '';
 
-  ['基礎', '綜合', '學霸'].forEach(cat => {
-    document.getElementById(`tab-${cat}`).disabled = false;
-  });
+  // show Q&A
+  showQA(lockedCat, lockedNum);
 
-  updateDots();
+  // update dots
+  updateDots(lockedCat, lockedNum);
 }
 
-async function showAnswer() {
-  if (!stopped || currentNum === null) return;
+function showQA(cat, num) {
+  const q = QUESTIONS[cat][num - 1];
+  const filename = `${cat}_${String(num).padStart(2,'0')}.jpg`;
 
-  const filename = getFilename(currentCat, currentNum);
-  const cachedImg = preloadImage(currentCat, currentNum);
+  // cat badge colors
+  const catColors = { 基礎: '#f0c040', 綜合: '#ff6b6b', 學霸: '#4ecdc4' };
+  const catIcons = { 基礎: '⭐', 綜合: '🔥', 學霸: '💎' };
 
-  document.getElementById('modalTitle').textContent =
-    `${currentCat} ${currentNum}`;
+  document.getElementById('qaNum').textContent = String(num).padStart(2,'0');
+  document.getElementById('qaNum').style.color = catColors[cat];
 
-  document.getElementById('modalTitle').className =
-    `modal-title color-${currentCat}`;
+  document.getElementById('qaCat').innerHTML =
+    `<span style="color:${catColors[cat]}">${catIcons[cat]} ${cat}</span>`;
 
-  document.getElementById('modalCard').className =
-    `modal-card border-${currentCat}`;
+  document.getElementById('qaText').textContent = q;
 
-  document.getElementById('modalFilename').textContent = filename;
-  document.getElementById('modalLoadingText').textContent = '解答圖片載入中...';
+  // answer
+  document.getElementById('ansFilename').textContent = filename;
+  document.getElementById('ansPlaceholder').style.display = 'block';
+  document.getElementById('ansImg').style.display = 'none';
+  document.getElementById('ansImg').src = '';
+  document.getElementById('ansText').style.display = 'none';
 
-  const img = document.getElementById('modalImg');
-  const ph = document.getElementById('modalPlaceholder');
-
-  img.style.display = 'none';
-  ph.style.display = 'flex';
-
-  document.getElementById('modal').classList.add('show');
-
-  try {
-    if (cachedImg.decode) {
-      await cachedImg.decode();
-    }
-
-    img.onload = function() {
-      img.style.display = 'block';
-      ph.style.display = 'none';
-    };
-
-    img.onerror = function() {
-      img.style.display = 'none';
-      ph.style.display = 'flex';
-      document.getElementById('modalLoadingText').textContent = '圖片載入失敗，請確認檔名與位置';
-    };
-
-    img.src = filename;
-
-    if (cachedImg.complete) {
-      img.style.display = 'block';
-      ph.style.display = 'none';
-    }
-
-  } catch (e) {
+  // Load image
+  const img = document.getElementById('ansImg');
+  img.onload = function() {
+    document.getElementById('ansPlaceholder').style.display = 'none';
+    img.style.display = 'block';
+  };
+  img.onerror = function() {
+    document.getElementById('ansPlaceholder').style.display = 'block';
     img.style.display = 'none';
-    ph.style.display = 'flex';
-    document.getElementById('modalLoadingText').textContent = '圖片載入失敗，請確認檔名與位置';
-  }
+  };
+  img.src = filename;
+
+  // show section
+  document.getElementById('qaDivider').style.display = 'flex';
+  const qaSection = document.getElementById('qaSection');
+  qaSection.style.display = 'flex';
+  requestAnimationFrame(() => {
+    qaSection.className = 'visible';
+    // smooth scroll to it
+    setTimeout(() => {
+      qaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 80);
+  });
 }
 
-function closeModal() {
-  document.getElementById('modal').classList.remove('show');
+function toggleAnswer() {
+  answerOpen = !answerOpen;
+  const body = document.getElementById('ansBody');
+  const btn = document.getElementById('ansToggleBtn');
+  body.className = 'qa-answer-body' + (answerOpen ? ' open' : '');
+  btn.className = 'qa-toggle-btn' + (answerOpen ? ' open' : '');
 }
 
-function clearCard() {
-  closeModal();
+function resetAll() {
+  lockedCat = null;
+  lockedNum = null;
+  answerOpen = false;
 
-  stopped = false;
-  currentNum = null;
+  document.getElementById('rollNum').className = 'roll-number';
+  document.getElementById('rollNum').textContent = '—';
+  document.getElementById('catBadge').className = 'roll-cat-badge';
+  document.getElementById('rollStatus').textContent = '點擊「開始抽題」';
 
-  document.getElementById('numBadge').className = 'number-badge';
-  document.getElementById('numBadge').textContent = '?';
-
-  document.getElementById('questionCard').className = 'question-card';
-
-  document.getElementById('questionPlaceholder').style.display = 'block';
-  document.getElementById('questionPlaceholder').textContent =
-    '選擇類別，按「開始」抽題';
-
-  document.getElementById('questionText').style.display = 'none';
-
-  document.getElementById('statusBadge').textContent =
-    `已選：${currentCat}（共 ${CAT_COUNTS[currentCat]} 題）`;
-
-  document.getElementById('btnAnswer').disabled = true;
-  document.getElementById('btnClear').disabled = true;
-  document.getElementById('btnStart').disabled = false;
+  document.getElementById('btnRoll').disabled = false;
   document.getElementById('btnStop').disabled = true;
+  document.getElementById('btnAgain').disabled = true;
 
-  updateDots();
+  document.getElementById('qaSection').className = '';
+  document.getElementById('qaSection').style.display = 'none';
+  document.getElementById('qaDivider').style.display = 'none';
+  document.getElementById('ansBody').className = 'qa-answer-body';
+  document.getElementById('ansToggleBtn').className = 'qa-toggle-btn';
+
+  updateDots(null, null);
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-document.getElementById('modal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
+function updateDots(cat, num) {
+  ['基礎','綜合','學霸'].forEach(c => {
+    for (let i = 1; i <= CAT_COUNTS[c]; i++) {
+      const d = document.getElementById(`dot-${c}-${i}`);
+      if (!d) continue;
+      d.className = (cat === c && num === i) ? `dot active-${c}` : 'dot';
+    }
+  });
+}
+
+/* ─── BACK TO TOP ─── */
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('backTop');
+  if (window.scrollY > 200) {
+    btn.classList.add('show');
+  } else {
+    btn.classList.remove('show');
+  }
 });
 
-buildDots();
-selectCategory('基礎');
-preloadCategory('基礎');
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 </script>
 </body>
 </html>
